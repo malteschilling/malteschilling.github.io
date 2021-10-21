@@ -216,25 +216,24 @@
 <section id="lernziel-der-vorlesung" class="slide level1">
 <h1>Lernziel der Vorlesung</h1>
 <p>Die Vorlesung ist als Teil der Vorlesung <em>Algorithmen und Datenstrukturen</em> konzipiert.</p>
-<p>TODO</p>
-<!-- ## Voraussetzungen
-
-Informatik I – *Grundlagen der Programmierung* (grundlegende Programmierparadigma sind bekannt; Programmierung in funktionalen und objektorientierten Programmiersprachen).
-
-Dazu aus der Vorlesung *Algorithmen und Datenstrukturen* wird die Einführung von grundlegenden Datenstrukturen (Listen, Arrays, Bäume, ...) vorausgesetzt.
-
-## Ziel und Fokus {.fragment}
-
-**Lernziel** (aus der Modulbeschreibung): *"Kosten von Berechnungen mathematisch zu modellieren und auszuwerten"*.
-
-Konkret: 
-
-* Kennen von Kriterien für die Analyse.
-* Einordnung von Laufzeitanalysen in Komplexitätsklassen.
-
-### Fokus der Vorlesung:
-
-Auf Laufzeitanalyse von Algorithmen (average-case). -->
+<div class="box columns fragment">
+<h2 id="voraussetzungen">Voraussetzungen</h2>
+<ul>
+<li>Informatik I – <em>Grundlagen der Programmierung</em> (grundlegende Programmierparadigma sind bekannt; Programmierung in funktionalen und objektorientierten Programmiersprachen).</li>
+<li>Aus <em>Algorithmen und Datenstrukturen</em> wird die Einführung von grundlegenden Datenstrukturen (Listen, Arrays, Bäume, …)</li>
+<li>und von Asymptotischeen Komplexitätsklassen vorausgesetzt.</li>
+<li>Dazu werden Grundlagen Wahrscheinlichkeitsrechnung erwartet.</li>
+</ul>
+</div>
+<div class="box columns fragment">
+<h2 id="ziel-und-fokus">Ziel und Fokus</h2>
+<p><strong>Lernziel</strong> (aus der Modulbeschreibung): <em>“Kosten von Berechnungen mathematisch zu modellieren und auszuwerten”</em>.</p>
+<p>Konkret:</p>
+<ul>
+<li>Kennen von Kriterien für die Analyse von Algorithmen.</li>
+<li>Bestimmen der Laufzeit für Best-, Worst- und Average-Case.</li>
+</ul>
+</div>
 </section>
 </div>
 <div class="slide-wrapper">
@@ -308,6 +307,10 @@ Auf Laufzeitanalyse von Algorithmen (average-case). -->
 <p>Wir nehmen Korrektheit als Voraussetzung für die weitere Analyse an.<br />
 Unser Fokus in der heutigen Vorlesung liegt auf der Laufzeit-Analyse von Algorithmen.</p>
 </div>
+<div class="box columns bottom footer">
+<h2 class="bottom footer" id="section-2"></h2>
+<p><span class="citation" data-cites="nebel2012entwurf">(Nebel 2012)</span></p>
+</div>
 </section>
 </div>
 <div class="slide-wrapper">
@@ -316,33 +319,33 @@ Unser Fokus in der heutigen Vorlesung liegt auf der Laufzeit-Analyse von Algorit
 <h1 data-layout="columns">Beispiel: Lineare Suche</h1>
 <div class="single-column-row">
 <div class="box columns top">
-<h2 class="top" id="section-2"></h2>
+<h2 class="top" id="section-3"></h2>
 <p><strong>Eingabe:</strong> Das zu suchende Element <span class="math inline">\(K\)</span> und ein Input-Array <span class="math inline">\(E\)</span> mit <span class="math inline">\(n &gt; 0\)</span> Einträgen.</p>
 </div>
 </div>
 <div class="multi-column-row multi-column-row-3">
 <div class="grow-1 column column-1">
 <div class="box columns left fragment">
-<h2 class="left" id="section-3"></h2>
+<h2 class="left" id="section-4"></h2>
 <img class="decker" data-src="../data/algorithmen/waldo.jpg" alt="waldo.jpg" style="height:400px;">
 </div>
 </div>
 <div class="grow-2 column column-2" data-grow="2">
 <div class="box columns center fragment" data-grow="2">
-<h2 class="center" data-grow="2" id="section-4"></h2>
+<h2 class="center" data-grow="2" id="section-5"></h2>
 <img class="decker" data-src="../data/algorithmen/where_is_waldo.jpg" alt="where_is_waldo.jpg" style="width:512px;">
 </div>
 </div>
 <div class="grow-2 column column-3" data-grow="2">
 <div class="box columns right fragment" data-grow="2">
-<h2 class="right" data-grow="2" id="section-5"></h2>
+<h2 class="right" data-grow="2" id="section-6"></h2>
 <img class="decker" data-src="../data/algorithmen/there_is_waldo.jpg" alt="there_is_waldo.jpg" style="width:512px;">
 </div>
 </div>
 </div>
 <div class="single-column-row">
 <div class="box columns bottom fragment">
-<h2 class="bottom" id="section-6"></h2>
+<h2 class="bottom" id="section-7"></h2>
 <p><strong>Ausgabe:</strong> Antwort, ob oder wo <span class="math inline">\(K\)</span> in <span class="math inline">\(E\)</span> enthalten ist.</p>
 </div>
 </div>
@@ -355,16 +358,16 @@ Unser Fokus in der heutigen Vorlesung liegt auf der Laufzeit-Analyse von Algorit
 <p><strong>Eingabe:</strong> Das zu suchende Element <span class="math inline">\(K\)</span> und ein Input-Array <span class="math inline">\(E\)</span> mit <span class="math inline">\(n &gt; 0\)</span> Einträgen.</p>
 <p><span class="math display">\[K = 4, E=[8, 5, 2, 7, 1, 4, 3, 6]\]</span></p>
 <div class="box columns fragment">
-<h2 id="section-7"></h2>
+<h2 id="section-8"></h2>
 <p><strong>Ausgabe:</strong> Antwort, ob <span class="math inline">\(K\)</span> in <span class="math inline">\(E\)</span> enthalten ist.</p>
 <p><span class="math display">\[\text{True}\]</span></p>
 </div>
 <div class="box columns fragment">
 <h2 id="pseudocode">Pseudocode</h2>
-<div class="sourceCode" id="cb1" label="Python"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> index <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> index <span class="op">&lt;</span> n<span class="op">;</span> index<span class="op">++):</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>E<span class="op">[</span>index<span class="op">]</span> <span class="op">==</span> K<span class="op">):</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span> <span class="co">// Element wurde gefunden</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="cf">return</span> <span class="kw">false</span><span class="op">;</span> <span class="co">// Fall: wurde nicht gefunden</span></span></code></pre></div>
+<div class="sourceCode" id="cb1" label="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="bu">int</span> index <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> index <span class="op">&lt;</span> n<span class="op">;</span> index<span class="op">++</span>):</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (E[index] <span class="op">==</span> K):</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> true<span class="op">;</span> <span class="op">//</span> Element wurde gefunden</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="cf">return</span> false<span class="op">;</span> <span class="op">//</span> Fall: wurde nicht gefunden</span></code></pre></div>
 <p><br />
 </p>
 <p>Wir wollen nun die Laufzeit bestimmen, als die Zahl notwendiger Rechenschritte.</p>
@@ -386,34 +389,31 @@ Unser Fokus in der heutigen Vorlesung liegt auf der Laufzeit-Analyse von Algorit
 </div>
 </div>
 <div class="multi-column-row multi-column-row-3">
-<div class="grow-2 column column-1" data-grow="2">
-<div class="box columns fragment left" data-grow="2">
-<h2 class="left" data-grow="2" id="abstraktes-modell-random-access-machine">Abstraktes Modell: <em>Random Access Machine</em></h2>
-<ul>
-<li>Ein <strong>Prozessor</strong> arbeitet ein Programm sequentiell ab.</li>
-<li>Alle Daten sind <strong>direkt zugreifbar</strong> im Speicher – und jeder Speicherzugriff dauert gleich lang.</li>
-<li>Jedes Datum paßt in eine Speichereinheit.</li>
-<li>Primitive Operationen benötigen konstante Zeit:
-<ul>
-<li>Zuweisung</li>
-<li>arithmetische und logische Operationen<br />
-</li>
-<li>Vergleichsoperationen</li>
-<li>Ablaufsteuerung</li>
-</ul></li>
-</ul>
+<div class="grow-1 column column-1">
+<div class="box columns fragment left">
+<h2 class="left" id="abstraktes-modell">Abstraktes Modell:</h2>
+<p>Daher verwenden wir ein abstraktes Maschinenmodell (z.B. <em>Random Access Machine</em>).</p>
+<!--
+* Ein **Prozessor** arbeitet ein Programm sequentiell ab.
+* Alle Daten sind **direkt zugreifbar** im Speicher -- und jeder Speicherzugriff dauert gleich lang.
+* Jedes Datum paßt in eine Speichereinheit.
+* Primitive Operationen benötigen konstante Zeit:
+	* Zuweisung
+	* arithmetische und logische Operationen  
+	* Vergleichsoperationen
+	* Ablaufsteuerung -->
 </div>
 </div>
 <div class="grow-1 column column-3">
 <div class="box columns fragment right">
-<h2 class="right" id="section-8"></h2>
-<img class="decker" data-src="../data/algorithmen/yanofsky_algorithm.png" alt="yanofsky_algorithm.png" style="height:420px;">
+<h2 class="right" id="section-9"></h2>
+<img class="decker" data-src="../data/algorithmen/yanofsky_algorithm.png" alt="yanofsky_algorithm.png" style="height:440px;">
 </div>
 </div>
 </div>
 <div class="single-column-row">
 <div class="box columns footer bottom">
-<h2 class="footer bottom" id="section-9"></h2>
+<h2 class="footer bottom" id="section-10"></h2>
 <p><span class="citation" data-cites="yanofsky2010">(Yanofsky 2010)</span></p>
 </div>
 </div>
@@ -444,7 +444,7 @@ Unser Fokus in der heutigen Vorlesung liegt auf der Laufzeit-Analyse von Algorit
 <h1 data-layout="columns">Abhängigkeit der Laufzeit von Eingabegröße</h1>
 <div class="single-column-row">
 <div class="box columns top">
-<h2 class="top" id="section-10"></h2>
+<h2 class="top" id="section-11"></h2>
 <p>Ferner hängt die Laufzeit auch von der Eingabegröße ab.</p>
 </div>
 </div>
@@ -464,7 +464,7 @@ Unser Fokus in der heutigen Vorlesung liegt auf der Laufzeit-Analyse von Algorit
 </div>
 <div class="single-column-row">
 <div class="box columns bottom footer">
-<h2 class="bottom footer" id="section-11"></h2>
+<h2 class="bottom footer" id="section-12"></h2>
 <p>https://mymodernmet.com/wheres-waldo-social-distancing-cartoon/</p>
 </div>
 </div>
@@ -494,14 +494,14 @@ Unser Fokus in der heutigen Vorlesung liegt auf der Laufzeit-Analyse von Algorit
 </div>
 <div class="grow-1 column column-3">
 <div class="box columns right">
-<h2 class="right" id="section-12"></h2>
+<h2 class="right" id="section-13"></h2>
 <img class="decker" data-src="../data/algorithmen/schranken.png" alt="schranken.png" style="height:400px;">
 </div>
 </div>
 </div>
 <div class="single-column-row">
 <div class="box columns bottom footer">
-<h2 class="bottom footer" id="section-13"></h2>
+<h2 class="bottom footer" id="section-14"></h2>
 <p><span class="citation" data-cites="katoen2020">(Katoen 2020)</span></p>
 </div>
 </div>
@@ -513,7 +513,7 @@ Unser Fokus in der heutigen Vorlesung liegt auf der Laufzeit-Analyse von Algorit
 <h1 data-layout="columns">Analyse der Laufzeit von Algorithmen</h1>
 <div class="single-column-row">
 <div class="box columns answer top">
-<h2 class="answer top" id="section-14"></h2>
+<h2 class="answer top" id="section-15"></h2>
 <p><span class="math inline">\(D_n =\)</span> Menge aller Eingaben der Länge <span class="math inline">\(n\)</span></p>
 <p><span class="math inline">\(t(I) =\)</span> für Eingabe <span class="math inline">\(I\)</span> benötigte Anzahl elementarer Operationen</p>
 </div>
@@ -582,7 +582,7 @@ D_8 &amp;=&amp; \{[8, 5, 2, 7, 1, 4, 3, 6], \\
 </div>
 <div class="single-column-row">
 <div class="box columns bottom fragment">
-<h2 class="bottom" id="section-15"></h2>
+<h2 class="bottom" id="section-16"></h2>
 <p>Für <span class="math inline">\(I = [4, 1, 2, 3, 5, 6, 7, 8] \in D_8\)</span> benötigen wir <span class="math inline">\(t(I)=1\)</span> Vergleich.</p>
 <p>Allgemein: Mit <span class="math inline">\(I = [K, ...]\)</span> bleibt <span class="math inline">\(t(I)=1\)</span> konstant. Und damit ist <span class="math inline">\(B(n) = 1\)</span>.</p>
 </div>
@@ -608,7 +608,7 @@ D_8 &amp;=&amp; \{[8, 5, 2, 7, 1, 4, 3, 6], \\
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="cf">return</span> false<span class="op">;</span> <span class="op">//</span> Fall: wurde nicht gefunden</span></code></pre></div>
 </div>
 <div class="box columns bottom fragment">
-<h2 class="bottom" id="section-16"></h2>
+<h2 class="bottom" id="section-17"></h2>
 <p>Für <span class="math inline">\(I = [1, 2, 3, 5, 6, 7, 8, 4] \in D_8\)</span> benötigen wir <span class="math inline">\(t(I)=8\)</span> Vergleich.</p>
 <p>Allgemein: Mit <span class="math inline">\(I = [..., K]\)</span> benötigen wir <span class="math inline">\(t(I)=n\)</span> Vergleiche. Und damit ist <span class="math inline">\(W(n) = n\)</span>.</p>
 </div>
@@ -635,7 +635,7 @@ E(X) = x_1 * P(X = x_1) + x_2 * P(X = x_2) + ... + x_N * P(X = x_N) = \sum_{i=1}
 </div>
 <div class="grow-1 column column-3">
 <div class="box columns fragment right">
-<h2 class="right" id="section-17"></h2>
+<h2 class="right" id="section-18"></h2>
 <p>Wir haben vier mögliche Ausgänge:</p>
 <table>
 <thead>
@@ -692,12 +692,16 @@ E(X) = x_1 * P(X = x_1) + x_2 * P(X = x_2) + ... + x_N * P(X = x_N) = \sum_{i=1}
 <div class="slide-wrapper">
 <hr />
 <section id="analyse-für-den-erwarteten-fall" class="slide level1">
-<h1>Analyse für den erwarteten Fall</h1>
+<h1>Analyse für den Erwarteten Fall</h1>
 <div class="box columns definition">
 <h2 class="definition" id="average-case-szenario">Average-Case Szenario</h2>
 <p>Die Average-Case Laufzeit ist die von dem Algorithmus durchschnittlich benötigte Anzahl elementarer Operationen auf einer beliebigen Eingabe der Länge <span class="math inline">\(n\)</span>.</p>
 <p><span class="math display">\[A(n) = \sum_{I \in D_N} P(I) * t(I)\]</span></p>
 <p><span class="math inline">\(P(I) =\)</span> Wahrscheinlichkeit, dass Eingabe <span class="math inline">\(I\)</span> auftritt</p>
+</div>
+<div class="box columns bottom footer">
+<h2 class="bottom footer" id="section-19"></h2>
+<p><span class="citation" data-cites="ottmann2012">(Ottmann and Widmayer 2012)</span></p>
 </div>
 </section>
 </div>
@@ -722,12 +726,8 @@ E(X) = x_1 * P(X = x_1) + x_2 * P(X = x_2) + ... + x_N * P(X = x_N) = \sum_{i=1}
 <ul>
 <li><span class="math inline">\(W (n) = n\)</span>, da <span class="math inline">\(n\)</span> Vergleiche notwendig für den Fall, das die ganze Liste durchlaufen werden muss (Element nicht enthalten oder <span class="math inline">\(K == E[n]\)</span></li>
 <li><span class="math inline">\(B(n) = 1\)</span>, da ein Vergleich ausreicht, wenn <span class="math inline">\(K == E[1]\)</span> ist.</li>
+<li><span class="math inline">\(A(n) \color{red}{?}\)</span></li>
 </ul>
-<div>
-<ul>
-<li class="fragment"><span class="math inline">\(A(n) \approx \frac{1}{2} n\)</span> <span class="math inline">\(\color{red}{?}\)</span> – nur, wenn <span class="math inline">\(K\)</span> in <span class="math inline">\(E\)</span> enthalten und abhängig von der Verteilung der Elemente (Gegenbeispiel: Sprache).</li>
-</ul>
-</div>
 </div>
 </section>
 </div>
@@ -736,7 +736,7 @@ E(X) = x_1 * P(X = x_1) + x_2 * P(X = x_2) + ... + x_N * P(X = x_N) = \sum_{i=1}
 <section id="average-case-für-lineare-suche" class="slide level1">
 <h1>Average-Case für lineare Suche</h1>
 <p>Erwartungswert: <span class="math inline">\(\frac{n}{2}\)</span> erscheint intuitiv, ist aber abhängig davon, ob das Element enthalten ist.</p>
-<div class="box columns">
+<div class="box columns fragment">
 <h2 id="unterscheidung-zwei-fälle">Unterscheidung zwei Fälle</h2>
 <ul>
 <li><span class="math inline">\(K\)</span> kommt in <span class="math inline">\(E\)</span> vor oder</li>
@@ -744,11 +744,11 @@ E(X) = x_1 * P(X = x_1) + x_2 * P(X = x_2) + ... + x_N * P(X = x_N) = \sum_{i=1}
 </ul>
 </div>
 <div class="box columns">
-<h2 id="section-18"></h2>
-<div class="sourceCode" id="cb5" label="Python"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> index <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> index <span class="op">&lt;</span> n<span class="op">;</span> index<span class="op">++):</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>E<span class="op">[</span>index<span class="op">]</span> <span class="op">==</span> K<span class="op">):</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span> <span class="co">// Oder: index ausgeben</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="cf">return</span> <span class="kw">false</span><span class="op">;</span> <span class="co">// Fall nicht gefunden</span></span></code></pre></div>
+<h2 id="section-20"></h2>
+<div class="sourceCode" id="cb5" label="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="bu">int</span> index <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> index <span class="op">&lt;</span> n<span class="op">;</span> index<span class="op">++</span>):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (E[index] <span class="op">==</span> K):</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> true<span class="op">;</span> <span class="op">//</span> Oder: index ausgeben</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="cf">return</span> false<span class="op">;</span> <span class="op">//</span> Fall nicht gefunden</span></code></pre></div>
 </div>
 </section>
 </div>
@@ -780,9 +780,39 @@ A_{K \in E} (n) &amp;=&amp; \sum_{i=0}^{n-1} \color{red}P(K == E[i] | \text{K in
 <div class="slide-wrapper">
 <hr />
 <section id="average-case-für-lineare-suche-1" class="slide level1">
-<h1>Average Case für lineare Suche</h1>
+<h1>Average-Case für lineare Suche</h1>
 <div class="box columns">
 <h2 id="insgesamt-ergibt-sich-damit">Insgesamt ergibt sich damit:</h2>
+<p><span class="math display">\[\begin{eqnarray*} 
+A(n) &amp;=&amp; P(\text{K in E}) * \color{blue}A_{K \in E}(n) \color{black}+ P(\text{K nicht in E}) * A_{K \notin E}(n) \\
+\end{eqnarray*}\]</span></p>
+<p> </p>
+<p><br />
+</p>
+<p> </p>
+<p> </p>
+<p> </p>
+<p> </p>
+<p> </p>
+<p> </p>
+<p> </p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+</section>
+</div>
+<div class="slide-wrapper">
+<hr />
+<section id="average-case-für-lineare-suche-2" class="slide level1">
+<h1>Average-Case für lineare Suche</h1>
+<div class="box columns">
+<h2 id="insgesamt-ergibt-sich-damit-1">Insgesamt ergibt sich damit:</h2>
 <p><span class="math-incremental"><span class="math display">\[
 \begin{eqnarray*} 
 A(n) &amp;=&amp; P(\text{K in E}) * \color{blue}A_{K \in E}(n) \color{black}+ P(\text{K nicht in E}) * A_{K \notin E}(n) \\
@@ -824,12 +854,8 @@ A(n) &amp;=&amp; P(\text{K in E}) * \color{blue}A_{K \in E}(n) \color{black}+ P(
 <p>Vergleich einer Zahl <span class="math inline">\(K\)</span> mit dem Element <span class="math inline">\(E[index]\)</span> aus z.B. <span class="math inline">\(E = [8, 5, 2, 7, 1, 4, 3, 6]\)</span>.</p>
 </div>
 <div class="box columns fragment">
-<h2 id="zeitkomplexität-1">Zeitkomplexität</h2>
-<ul>
-<li><span class="math inline">\(W (n) = n \in \mathcal{O}(n)\)</span></li>
-<li><span class="math inline">\(B(n) = 1 \in \mathcal{O}(1)\)</span></li>
-<li><span class="math inline">\(A(n) = P(\text{K in E}) \frac{-n+1}{2} + n \in \mathcal{O}(n)\)</span></li>
-</ul>
+<h2 id="laufzeit-2">Laufzeit:</h2>
+<p><span class="math inline">\(W (n) = n \in \mathcal{O}(n)\)</span>; <span class="math inline">\(B(n) = 1 \in \mathcal{O}(1)\)</span>; <span class="math inline">\(A(n) = P(\text{K in E}) \frac{-n+1}{2} + n \in \mathcal{O}(n)\)</span></p>
 </div>
 </section>
 </div>
@@ -845,7 +871,7 @@ A(n) &amp;=&amp; P(\text{K in E}) * \color{blue}A_{K \in E}(n) \color{black}+ P(
 <h1 data-layout="columns">Beispiel: Waldo auf twitter</h1>
 <div class="single-column-row">
 <div class="box columns top">
-<h2 class="top" id="section-19"></h2>
+<h2 class="top" id="section-21"></h2>
 <p>Als Beispiel: Wir suchen in twitter Waldo. <img class="decker" data-src="../data/algorithmen/Twitter_bird_logo_2012.svg.png" alt="Twitter_bird_logo_2012.svg.png" style="height:40px;"></p>
 <p>Unsere Annahme: Waldo ist prominent – er ist jemand dem alle folgen und von dem alle immer News bekommen möchten.</p>
 </div>
@@ -853,23 +879,23 @@ A(n) &amp;=&amp; P(\text{K in E}) * \color{blue}A_{K \in E}(n) \color{black}+ P(
 <div class="multi-column-row multi-column-row-3">
 <div class="grow-2 column column-1" data-grow="2">
 <div class="box columns left" data-grow="2">
-<h2 class="left" data-grow="2" id="section-20"></h2>
+<h2 class="left" data-grow="2" id="section-22"></h2>
 <img class="decker" data-src="../data/algorithmen/promi_graph_w1.png" alt="promi_graph_w1.png" style="height:420px;">
 </div>
 </div>
 <div class="grow-3 column column-2" data-grow="3">
 <div class="box columns center fragment" data-grow="3">
-<h2 class="center" data-grow="3" id="section-21"></h2>
+<h2 class="center" data-grow="3" id="section-23"></h2>
 <img class="decker" data-src="../data/algorithmen/promi_graph_w2.png" alt="promi_graph_w2.png" style="height:420px;">
 </div>
 </div>
 <div class="grow-4 column column-3" data-grow="4">
 <div class="box columns right fragment" data-grow="4">
-<h2 class="right" data-grow="4" id="section-22"></h2>
+<h2 class="right" data-grow="4" id="section-24"></h2>
 <img class="decker" data-src="../data/algorithmen/twitter-follower-network-graph-community.png" alt="twitter-follower-network-graph-community.png" style="height:400px;">
 </div>
 <div class="box columns footer">
-<h2 class="footer" id="section-23"></h2>
+<h2 class="footer" id="section-25"></h2>
 <p>http://allthingsgraphed.com/2014/11/02/twitter-friends-network/</p>
 </div>
 </div>
@@ -889,8 +915,8 @@ A(n) &amp;=&amp; P(\text{K in E}) * \color{blue}A_{K \in E}(n) \color{black}+ P(
 <div class="multi-column-row multi-column-row-3">
 <div class="grow-1 column column-1">
 <div class="box columns left">
-<h2 class="left" id="section-24"></h2>
-<img class="decker" data-src="../data/algorithmen/promi_graph_1a.png" alt="promi_graph_1a.png" style="height:300px;">
+<h2 class="left" id="section-26"></h2>
+<img class="decker" data-src="../data/algorithmen/promi_graph_w1.png" alt="promi_graph_w1.png" style="height:360px;">
 </div>
 </div>
 <div class="grow-1 column column-3">
@@ -926,8 +952,8 @@ K_{ij} = \left[\begin{array}{cccc}
 <div class="multi-column-row multi-column-row-3">
 <div class="grow-1 column column-1">
 <div class="box columns left">
-<h2 class="left" id="section-25"></h2>
-<img class="decker" data-src="../data/algorithmen/promi_graph_2.png" alt="promi_graph_2.png" style="height:400px;">
+<h2 class="left" id="section-27"></h2>
+<img class="decker" data-src="../data/algorithmen/promi_graph_w2.png" alt="promi_graph_w2.png" style="height:400px;">
 </div>
 </div>
 <div class="grow-1 column column-3">
@@ -968,7 +994,7 @@ K_{ij} = \left[\begin{array}{cccc}
 <ul>
 <li><span class="math inline">\(n \in \mathbb{N}\)</span> Personen,</li>
 <li>von diesen ist genau eine Person ein Prominenter,</li>
-<li><span class="math inline">\(n \times n\)</span> Veerbindungsmatrix, so dass für <span class="math inline">\(0 \leq i, j \leq n:\)</span> <span class="math display">\[ 
+<li><span class="math inline">\(n \times n\)</span> Verbindungsmatrix, so dass für <span class="math inline">\(0 \leq i, j \leq n:\)</span> <span class="math display">\[ 
 K[i, j] = \begin{cases}
   1 &amp; \text{wenn Person } i \text{ Person } j \text{ folgt}\\
   0              &amp; \text{ansonsten}
@@ -1114,15 +1140,48 @@ K[i, j] = \begin{cases}
 </div>
 <div class="slide-wrapper">
 <hr />
-<section id="summary-und-einordnung" class="slide level1 section" data-background-color="#2CA02C">
-<h1 class="section" data-background-color="#2CA02C">Summary und Einordnung</h1>
+<section id="verbesserter-algorithmus" class="slide level1" data-layout="columns">
+<h1 data-layout="columns">Verbesserter Algorithmus</h1>
+<div class="single-column-row">
+<div class="box columns top">
+<h2 class="top" id="section-28"></h2>
+<ul>
+<li>Durchlaufe jede Spalte einzeln (also <span class="math inline">\(n\)</span> Spalten – äußere for-Schleife),</li>
+<li>von oben nach unten (für <span class="math inline">\(j=0\)</span> bis maximal <span class="math inline">\(j=n-1\)</span>).</li>
+</ul>
+</div>
+</div>
+<div class="multi-column-row multi-column-row-3">
+<div class="grow-1 column column-1">
+<div class="box columns left">
+<h2 class="left" id="section-29"></h2>
+<div class="sourceCode" id="cb7" label="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> K <span class="kw">in</span> K_list:</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  promi <span class="op">=</span> <span class="op">-</span><span class="dv">1</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  comparison_count <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, K.shape[<span class="dv">0</span>]):</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    promi_found <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, K.shape[<span class="dv">0</span>]):</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> K[j,i]<span class="op">==</span><span class="dv">0</span>:</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        promi_found <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>      comparison_count <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> promi_found:</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>      promi <span class="op">=</span> i</span></code></pre></div>
+</div>
+</div>
+<div class="grow-1 column column-3">
+<div class="box columns right">
+<h2 class="right" id="laufzeiten-wn-an-bn">Laufzeiten: <span class="math inline">\(W(n)?\)</span> <span class="math inline">\(A(n)?\)</span> <span class="math inline">\(B(n)\)</span>?</h2>
+<p><span class="math inline">\(A(n) = \sum_{I \in D_N} P(I) * t(I)\)</span></p>
+</div>
+</div>
+</div>
 </section>
 </div>
 <div class="slide-wrapper">
 <hr />
-<section id="quiz" class="slide level1">
-<h1>Quiz</h1>
-<p>TODO</p>
+<section id="summary-und-einordnung" class="slide level1 section" data-background-color="#2CA02C">
+<h1 class="section" data-background-color="#2CA02C">Summary und Einordnung</h1>
 </section>
 </div>
 <div class="slide-wrapper">
@@ -1192,6 +1251,12 @@ Katoen, Joost-Pieter. 2020. <span>“Datenstrukturen Und Algorithmen.”</span> 
 </div>
 <div id="ref-knuth97" class="csl-entry" role="doc-biblioentry">
 Knuth, Donald E. 1997. <em>The Art of Computer Programming, Vol. 1: Fundamental Algorithms</em>. Third. Reading, Mass.: Addison-Wesley.
+</div>
+<div id="ref-nebel2012entwurf" class="csl-entry" role="doc-biblioentry">
+Nebel, Markus. 2012. <em>Entwurf Und Analyse von Algorithmen: Markus Nebel</em>. Studienb<span>ü</span>cher Informatik. Wiesbaden: Vieweg &amp; Teubner. <a href="http://d-nb.info/1018322566/04">http://d-nb.info/1018322566/04</a>.
+</div>
+<div id="ref-ottmann2012" class="csl-entry" role="doc-biblioentry">
+Ottmann, Thomas, and Peter Widmayer. 2012. <em>Algorithmen Und Datenstrukturen, 5. Auflage.</em> Spektrum Akademischer Verlag.
 </div>
 <div id="ref-yanofsky2010" class="csl-entry" role="doc-biblioentry">
 Yanofsky, Noson S. 2010. <span>“<span class="nocase">Towards a Definition of an Algorithm</span>.”</span> <em>Journal of Logic and Computation</em> 21 (2): 253–86. doi:<a href="https://doi.org/10.1093/logcom/exq016">10.1093/logcom/exq016</a>.

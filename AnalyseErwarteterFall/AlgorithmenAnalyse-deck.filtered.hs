@@ -1,8 +1,20 @@
 [HorizontalRule
 ,Header 1 ("lernziel-der-vorlesung",[],[]) [Str "Lernziel",Space,Str "der",Space,Str "Vorlesung"]
 ,Para [Str "Die",Space,Str "Vorlesung",Space,Str "ist",Space,Str "als",Space,Str "Teil",Space,Str "der",Space,Str "Vorlesung",Space,Emph [Str "Algorithmen",Space,Str "und",Space,Str "Datenstrukturen"],Space,Str "konzipiert."]
-,Para [Str "TODO"]
-,RawBlock (Format "html") "<!-- ## Voraussetzungen\n\nInformatik I \8211 *Grundlagen der Programmierung* (grundlegende Programmierparadigma sind bekannt; Programmierung in funktionalen und objektorientierten Programmiersprachen).\n\nDazu aus der Vorlesung *Algorithmen und Datenstrukturen* wird die Einf\252hrung von grundlegenden Datenstrukturen (Listen, Arrays, B\228ume, ...) vorausgesetzt.\n\n## Ziel und Fokus {.fragment}\n\n**Lernziel** (aus der Modulbeschreibung): *\"Kosten von Berechnungen mathematisch zu modellieren und auszuwerten\"*.\n\nKonkret: \n\n* Kennen von Kriterien f\252r die Analyse.\n* Einordnung von Laufzeitanalysen in Komplexit\228tsklassen.\n\n### Fokus der Vorlesung:\n\nAuf Laufzeitanalyse von Algorithmen (average-case). -->"
+,Div ("",["box","columns","fragment"],[])
+ [Header 2 ("voraussetzungen",[],[]) [Str "Voraussetzungen"]
+ ,BulletList
+  [[Plain [Str "Informatik",Space,Str "I",Space,Str "\8211",Space,Emph [Str "Grundlagen",Space,Str "der",Space,Str "Programmierung"],Space,Str "(grundlegende",Space,Str "Programmierparadigma",Space,Str "sind",Space,Str "bekannt;",Space,Str "Programmierung",Space,Str "in",Space,Str "funktionalen",Space,Str "und",Space,Str "objektorientierten",Space,Str "Programmiersprachen)."]]
+  ,[Plain [Str "Aus",Space,Emph [Str "Algorithmen",Space,Str "und",Space,Str "Datenstrukturen"],Space,Str "wird",Space,Str "die",Space,Str "Einf\252hrung",Space,Str "von",Space,Str "grundlegenden",Space,Str "Datenstrukturen",Space,Str "(Listen,",Space,Str "Arrays,",Space,Str "B\228ume,",Space,Str "\8230)"]]
+  ,[Plain [Str "und",Space,Str "von",Space,Str "Asymptotischeen",Space,Str "Komplexit\228tsklassen",Space,Str "vorausgesetzt."]]
+  ,[Plain [Str "Dazu",Space,Str "werden",Space,Str "Grundlagen",Space,Str "Wahrscheinlichkeitsrechnung",Space,Str "erwartet."]]]]
+,Div ("",["box","columns","fragment"],[])
+ [Header 2 ("ziel-und-fokus",[],[]) [Str "Ziel",Space,Str "und",Space,Str "Fokus"]
+ ,Para [Strong [Str "Lernziel"],Space,Str "(aus",Space,Str "der",Space,Str "Modulbeschreibung):",Space,Emph [Quoted DoubleQuote [Str "Kosten",Space,Str "von",Space,Str "Berechnungen",Space,Str "mathematisch",Space,Str "zu",Space,Str "modellieren",Space,Str "und",Space,Str "auszuwerten"]],Str "."]
+ ,Para [Str "Konkret:"]
+ ,BulletList
+  [[Plain [Str "Kennen",Space,Str "von",Space,Str "Kriterien",Space,Str "f\252r",Space,Str "die",Space,Str "Analyse",Space,Str "von",Space,Str "Algorithmen."]]
+  ,[Plain [Str "Bestimmen",Space,Str "der",Space,Str "Laufzeit",Space,Str "f\252r",Space,Str "Best-,",Space,Str "Worst-",Space,Str "und",Space,Str "Average-Case."]]]]
 ,HorizontalRule
 ,Header 1 ("algorithmen",["section"],[("data-background-color","#2CA02C")]) [Str "Algorithmen"]
 ,HorizontalRule
@@ -48,40 +60,43 @@
 ,Div ("",["box","columns","fragment"],[])
  [Header 2 ("vorannahme",[],[]) [Str "Vorannahme"]
  ,Para [Str "Wir",Space,Str "nehmen",Space,Str "Korrektheit",Space,Str "als",Space,Str "Voraussetzung",Space,Str "f\252r",Space,Str "die",Space,Str "weitere",Space,Str "Analyse",Space,Str "an.",LineBreak,Str "Unser",Space,Str "Fokus",Space,Str "in",Space,Str "der",Space,Str "heutigen",Space,Str "Vorlesung",Space,Str "liegt",Space,Str "auf",Space,Str "der",Space,Str "Laufzeit-Analyse",Space,Str "von",Space,Str "Algorithmen."]]
+,Div ("",["box","columns","bottom","footer"],[])
+ [Header 2 ("section-2",["bottom","footer"],[]) []
+ ,Para [Cite [Citation {citationId = "nebel2012entwurf", citationPrefix = [], citationSuffix = [], citationMode = NormalCitation, citationNoteNum = 3, citationHash = 0}] [Str "(Nebel",Space,Str "2012)"]]]
 ,HorizontalRule
 ,Header 1 ("beispiel-lineare-suche",[],[("layout","columns")]) [Str "Beispiel:",Space,Str "Lineare",Space,Str "Suche"]
 ,Div ("",["single-column-row"],[])
  [Div ("",["box","columns","top"],[])
-  [Header 2 ("section-2",["top"],[]) []
+  [Header 2 ("section-3",["top"],[]) []
   ,Para [Strong [Str "Eingabe:"],Space,Str "Das",Space,Str "zu",Space,Str "suchende",Space,Str "Element",Space,Math InlineMath "K",Space,Str "und",Space,Str "ein",Space,Str "Input-Array",Space,Math InlineMath "E",Space,Str "mit",Space,Math InlineMath "n > 0",Space,Str "Eintr\228gen."]]]
 ,Div ("",["multi-column-row","multi-column-row-3"],[])
  [Div ("",["grow-1","column","column-1"],[])
   [Div ("",["box","columns","left","fragment"],[])
-   [Header 2 ("section-3",["left"],[]) []
+   [Header 2 ("section-4",["left"],[]) []
    ,RawBlock (Format "html") "<img class=\"decker\" data-src=\"../data/algorithmen/waldo.jpg\" alt=\"waldo.jpg\" style=\"height:400px;\">"]]
  ,Div ("",["grow-2","column","column-2"],[("grow","2")])
   [Div ("",["box","columns","center","fragment"],[("grow","2")])
-   [Header 2 ("section-4",["center"],[("grow","2")]) []
+   [Header 2 ("section-5",["center"],[("grow","2")]) []
    ,RawBlock (Format "html") "<img class=\"decker\" data-src=\"../data/algorithmen/where_is_waldo.jpg\" alt=\"where_is_waldo.jpg\" style=\"width:512px;\">"]]
  ,Div ("",["grow-2","column","column-3"],[("grow","2")])
   [Div ("",["box","columns","right","fragment"],[("grow","2")])
-   [Header 2 ("section-5",["right"],[("grow","2")]) []
+   [Header 2 ("section-6",["right"],[("grow","2")]) []
    ,RawBlock (Format "html") "<img class=\"decker\" data-src=\"../data/algorithmen/there_is_waldo.jpg\" alt=\"there_is_waldo.jpg\" style=\"width:512px;\">"]]]
 ,Div ("",["single-column-row"],[])
  [Div ("",["box","columns","bottom","fragment"],[])
-  [Header 2 ("section-6",["bottom"],[]) []
+  [Header 2 ("section-7",["bottom"],[]) []
   ,Para [Strong [Str "Ausgabe:"],Space,Str "Antwort,",Space,Str "ob",Space,Str "oder",Space,Str "wo",Space,Math InlineMath "K",Space,Str "in",Space,Math InlineMath "E",Space,Str "enthalten",Space,Str "ist."]]]
 ,HorizontalRule
 ,Header 1 ("beispiel-lineare-suche-1",[],[]) [Str "Beispiel:",Space,Str "Lineare",Space,Str "Suche"]
 ,Para [Strong [Str "Eingabe:"],Space,Str "Das",Space,Str "zu",Space,Str "suchende",Space,Str "Element",Space,Math InlineMath "K",Space,Str "und",Space,Str "ein",Space,Str "Input-Array",Space,Math InlineMath "E",Space,Str "mit",Space,Math InlineMath "n > 0",Space,Str "Eintr\228gen."]
 ,Para [Math DisplayMath "K = 4, E=[8, 5, 2, 7, 1, 4, 3, 6]"]
 ,Div ("",["box","columns","fragment"],[])
- [Header 2 ("section-7",[],[]) []
+ [Header 2 ("section-8",[],[]) []
  ,Para [Strong [Str "Ausgabe:"],Space,Str "Antwort,",Space,Str "ob",Space,Math InlineMath "K",Space,Str "in",Space,Math InlineMath "E",Space,Str "enthalten",Space,Str "ist."]
  ,Para [Math DisplayMath "\\text{True}"]]
 ,Div ("",["box","columns","fragment"],[])
  [Header 2 ("pseudocode",[],[]) [Str "Pseudocode"]
- ,CodeBlock ("",["java"],[("label","Python")]) "for (int index = 0; index < n; index++):\n    if (E[index] == K):\n        return true; // Element wurde gefunden\nreturn false; // Fall: wurde nicht gefunden"
+ ,CodeBlock ("",["python"],[("label","Python")]) "for (int index = 0; index < n; index++):\n    if (E[index] == K):\n        return true; // Element wurde gefunden\nreturn false; // Fall: wurde nicht gefunden"
  ,Para [LineBreak]
  ,Para [Str "Wir",Space,Str "wollen",Space,Str "nun",Space,Str "die",Space,Str "Laufzeit",Space,Str "bestimmen,",Space,Str "als",Space,Str "die",Space,Str "Zahl",Space,Str "notwendiger",Space,Str "Rechenschritte."]]
 ,HorizontalRule
@@ -94,27 +109,19 @@
    [[Plain [Str "verwendeter",Space,Str "Hardware,",Space,Str "Computer,"]]
    ,[Plain [Str "Programmiersprache."]]]]]
 ,Div ("",["multi-column-row","multi-column-row-3"],[])
- [Div ("",["grow-2","column","column-1"],[("grow","2")])
-  [Div ("",["box","columns","fragment","left"],[("grow","2")])
-   [Header 2 ("abstraktes-modell-random-access-machine",["left"],[("grow","2")]) [Str "Abstraktes",Space,Str "Modell:",Space,Emph [Str "Random",Space,Str "Access",Space,Str "Machine"]]
-   ,BulletList
-    [[Plain [Str "Ein",Space,Strong [Str "Prozessor"],Space,Str "arbeitet",Space,Str "ein",Space,Str "Programm",Space,Str "sequentiell",Space,Str "ab."]]
-    ,[Plain [Str "Alle",Space,Str "Daten",Space,Str "sind",Space,Strong [Str "direkt",Space,Str "zugreifbar"],Space,Str "im",Space,Str "Speicher",Space,Str "\8211",Space,Str "und",Space,Str "jeder",Space,Str "Speicherzugriff",Space,Str "dauert",Space,Str "gleich",Space,Str "lang."]]
-    ,[Plain [Str "Jedes",Space,Str "Datum",Space,Str "pa\223t",Space,Str "in",Space,Str "eine",Space,Str "Speichereinheit."]]
-    ,[Plain [Str "Primitive",Space,Str "Operationen",Space,Str "ben\246tigen",Space,Str "konstante",Space,Str "Zeit:"]
-     ,BulletList
-      [[Plain [Str "Zuweisung"]]
-      ,[Plain [Str "arithmetische",Space,Str "und",Space,Str "logische",Space,Str "Operationen",LineBreak]]
-      ,[Plain [Str "Vergleichsoperationen"]]
-      ,[Plain [Str "Ablaufsteuerung"]]]]]]]
+ [Div ("",["grow-1","column","column-1"],[])
+  [Div ("",["box","columns","fragment","left"],[])
+   [Header 2 ("abstraktes-modell",["left"],[]) [Str "Abstraktes",Space,Str "Modell:"]
+   ,Para [Str "Daher",Space,Str "verwenden",Space,Str "wir",Space,Str "ein",Space,Str "abstraktes",Space,Str "Maschinenmodell",Space,Str "(z.B.",Space,Emph [Str "Random",Space,Str "Access",Space,Str "Machine"],Str ")."]
+   ,RawBlock (Format "html") "<!--\n* Ein **Prozessor** arbeitet ein Programm sequentiell ab.\n* Alle Daten sind **direkt zugreifbar** im Speicher -- und jeder Speicherzugriff dauert gleich lang.\n* Jedes Datum pa\223t in eine Speichereinheit.\n* Primitive Operationen ben\246tigen konstante Zeit:\n\t* Zuweisung\n\t* arithmetische und logische Operationen  \n\t* Vergleichsoperationen\n\t* Ablaufsteuerung -->"]]
  ,Div ("",["grow-1","column","column-3"],[])
   [Div ("",["box","columns","fragment","right"],[])
-   [Header 2 ("section-8",["right"],[]) []
-   ,RawBlock (Format "html") "<img class=\"decker\" data-src=\"../data/algorithmen/yanofsky_algorithm.png\" alt=\"yanofsky_algorithm.png\" style=\"height:420px;\">"]]]
+   [Header 2 ("section-9",["right"],[]) []
+   ,RawBlock (Format "html") "<img class=\"decker\" data-src=\"../data/algorithmen/yanofsky_algorithm.png\" alt=\"yanofsky_algorithm.png\" style=\"height:440px;\">"]]]
 ,Div ("",["single-column-row"],[])
  [Div ("",["box","columns","footer","bottom"],[])
-  [Header 2 ("section-9",["footer","bottom"],[]) []
-  ,Para [Cite [Citation {citationId = "yanofsky2010", citationPrefix = [], citationSuffix = [], citationMode = NormalCitation, citationNoteNum = 3, citationHash = 0}] [Str "(Yanofsky",Space,Str "2010)"]]]]
+  [Header 2 ("section-10",["footer","bottom"],[]) []
+  ,Para [Cite [Citation {citationId = "yanofsky2010", citationPrefix = [], citationSuffix = [], citationMode = NormalCitation, citationNoteNum = 4, citationHash = 0}] [Str "(Yanofsky",Space,Str "2010)"]]]]
 ,HorizontalRule
 ,Header 1 ("elementare-operationen",[],[]) [Str "Elementare",Space,Str "Operationen"]
 ,Para [Str "Wir",Space,Str "sind",Space,Str "in",Space,Str "der",Space,Str "Analyse",Space,Str "nicht",Space,Str "interessiert",Space,Str "an",Space,Str "der",Space,Str "exakten",Space,Str "Zahl",Space,Str "von",Space,Str "Rechenschritten",Space,Str "oder",Space,Str "Operationen."]
@@ -131,7 +138,7 @@
 ,Header 1 ("abh\228ngigkeit-der-laufzeit-von-eingabegr\246\223e",[],[("layout","columns")]) [Str "Abh\228ngigkeit",Space,Str "der",Space,Str "Laufzeit",Space,Str "von",Space,Str "Eingabegr\246\223e"]
 ,Div ("",["single-column-row"],[])
  [Div ("",["box","columns","top"],[])
-  [Header 2 ("section-10",["top"],[]) []
+  [Header 2 ("section-11",["top"],[]) []
   ,Para [Str "Ferner",Space,Str "h\228ngt",Space,Str "die",Space,Str "Laufzeit",Space,Str "auch",Space,Str "von",Space,Str "der",Space,Str "Eingabegr\246\223e",Space,Str "ab."]]]
 ,Div ("",["multi-column-row","multi-column-row-3"],[])
  [Div ("",["grow-1","column","column-1"],[])
@@ -144,7 +151,7 @@
    ,RawBlock (Format "html") "<img class=\"decker\" data-src=\"../data/algorithmen/wheres_waldo.jpg\" alt=\"wheres_waldo.jpg\" style=\"width:640px;\">"]]]
 ,Div ("",["single-column-row"],[])
  [Div ("",["box","columns","bottom","footer"],[])
-  [Header 2 ("section-11",["bottom","footer"],[]) []
+  [Header 2 ("section-12",["bottom","footer"],[]) []
   ,Para [Str "https://mymodernmet.com/wheres-waldo-social-distancing-cartoon/"]]]
 ,HorizontalRule
 ,Header 1 ("effizienz-von-algorithmen",["section"],[("data-background-color","#2CA02C")]) [Str "Effizienz",Space,Str "von",Space,Str "Algorithmen"]
@@ -161,17 +168,17 @@
     ,[Plain [Str "und",Space,Str "damit",Space,Str "abstrahierend",Space,Str "\252ber",Space,Str "konkreter",Space,Str "Zeitdauer",Space,Str "und",Space,Str "stattdessen",Space,Str "bezogen",Space,Str "auf",Space,Str "eine",Space,Str "festgelegte",Space,Str "elementare",Space,Str "Operation."]]]]]
  ,Div ("",["grow-1","column","column-3"],[])
   [Div ("",["box","columns","right"],[])
-   [Header 2 ("section-12",["right"],[]) []
+   [Header 2 ("section-13",["right"],[]) []
    ,RawBlock (Format "html") "<img class=\"decker\" data-src=\"../data/algorithmen/schranken.png\" alt=\"schranken.png\" style=\"height:400px;\">"]]]
 ,Div ("",["single-column-row"],[])
  [Div ("",["box","columns","bottom","footer"],[])
-  [Header 2 ("section-13",["bottom","footer"],[]) []
-  ,Para [Cite [Citation {citationId = "katoen2020", citationPrefix = [], citationSuffix = [], citationMode = NormalCitation, citationNoteNum = 4, citationHash = 0}] [Str "(Katoen",Space,Str "2020)"]]]]
+  [Header 2 ("section-14",["bottom","footer"],[]) []
+  ,Para [Cite [Citation {citationId = "katoen2020", citationPrefix = [], citationSuffix = [], citationMode = NormalCitation, citationNoteNum = 5, citationHash = 0}] [Str "(Katoen",Space,Str "2020)"]]]]
 ,HorizontalRule
 ,Header 1 ("analyse-der-laufzeit-von-algorithmen",[],[("layout","columns")]) [Str "Analyse",Space,Str "der",Space,Str "Laufzeit",Space,Str "von",Space,Str "Algorithmen"]
 ,Div ("",["single-column-row"],[])
  [Div ("",["box","columns","answer","top"],[])
-  [Header 2 ("section-14",["answer","top"],[]) []
+  [Header 2 ("section-15",["answer","top"],[]) []
   ,Para [Math InlineMath "D_n =",Space,Str "Menge",Space,Str "aller",Space,Str "Eingaben",Space,Str "der",Space,Str "La\776nge",Space,Math InlineMath "n"]
   ,Para [Math InlineMath "t(I) =",Space,Str "fu\776r",Space,Str "Eingabe",Space,Math InlineMath "I",Space,Str "beno\776tigte",Space,Str "Anzahl",Space,Str "elementarer",Space,Str "Operationen"]]
  ,Div ("",["box","columns","fragment"],[])
@@ -209,7 +216,7 @@
    ,CodeBlock ("",["python"],[("label","Python")]) "for (int index = 0; index < n; index++):\n    if (E[index] == K):\n        return true; // Element wurde gefunden\nreturn false; // Fall: wurde nicht gefunden"]]]
 ,Div ("",["single-column-row"],[])
  [Div ("",["box","columns","bottom","fragment"],[])
-  [Header 2 ("section-15",["bottom"],[]) []
+  [Header 2 ("section-16",["bottom"],[]) []
   ,Para [Str "F\252r",Space,Math InlineMath "I = [4, 1, 2, 3, 5, 6, 7, 8] \\in D_8",Space,Str "ben\246tigen",Space,Str "wir",Space,Math InlineMath "t(I)=1",Space,Str "Vergleich."]
   ,Para [Str "Allgemein:",Space,Str "Mit",Space,Math InlineMath "I = [K, ...]",Space,Str "bleibt",Space,Math InlineMath "t(I)=1",Space,Str "konstant.",Space,Str "Und",Space,Str "damit",Space,Str "ist",Space,Math InlineMath "B(n) = 1",Str "."]]]
 ,HorizontalRule
@@ -224,7 +231,7 @@
  ,Para [Str "Input:",Space,Math InlineMath "K = 4, D_8 = \\{[8, 5, 2, 7, 1, 4, 3, 6], [1, 2, 3, 4, 5, 6, 7, 8], ...\\}"]
  ,CodeBlock ("",["python"],[("label","Python")]) "for (int index = 0; index < n; index++):\n    if (E[index] == K):\n        return true; // Element wurde gefunden\nreturn false; // Fall: wurde nicht gefunden"]
 ,Div ("",["box","columns","bottom","fragment"],[])
- [Header 2 ("section-16",["bottom"],[]) []
+ [Header 2 ("section-17",["bottom"],[]) []
  ,Para [Str "F\252r",Space,Math InlineMath "I = [1, 2, 3, 5, 6, 7, 8, 4] \\in D_8",Space,Str "ben\246tigen",Space,Str "wir",Space,Math InlineMath "t(I)=8",Space,Str "Vergleich."]
  ,Para [Str "Allgemein:",Space,Str "Mit",Space,Math InlineMath "I = [..., K]",Space,Str "ben\246tigen",Space,Str "wir",Space,Math InlineMath "t(I)=n",Space,Str "Vergleiche.",Space,Str "Und",Space,Str "damit",Space,Str "ist",Space,Math InlineMath "W(n) = n",Str "."]]
 ,HorizontalRule
@@ -240,7 +247,7 @@
    ,Para [Str "Bei",Space,Str "einem",Space,Str "Gl\252cksspiel",Space,Str "wird",Space,Str "eine",Space,Str "M\252nze",Space,Str "zweimal",Space,Str "hintereinander",Space,Str "geworfen.",Space,Str "Wenn",Space,Str "einmal",Space,Emph [Str "Kopf"],Space,Str "erscheint,",Space,Str "gewinnen",Space,Str "wir",Space,Math InlineMath "1",Space,Str "Euro,",Space,Str "wenn",Space,Str "beidemale",Space,Emph [Str "Kopf"],Space,Str "erscheint,",Space,Str "gewinnen",Space,Str "wir",Space,Math InlineMath "5",Space,Str "Euro.",Space,Str "Wie",Space,Str "hoch",Space,Str "ist",Space,Str "unser",Space,Str "erwarteter",Space,Str "Gewinn,",Space,Str "wenn",Space,Str "wir",Space,Str "einmal",Space,Str "spielen?"]]]
  ,Div ("",["grow-1","column","column-3"],[])
   [Div ("",["box","columns","fragment","right"],[])
-   [Header 2 ("section-17",["right"],[]) []
+   [Header 2 ("section-18",["right"],[]) []
    ,Para [Str "Wir",Space,Str "haben",Space,Str "vier",Space,Str "m\246gliche",Space,Str "Ausg\228nge:"]
    ,Table ("",[],[]) (Caption Nothing
     [])
@@ -314,12 +321,15 @@
   [Header 2 ("erwartungswert-1",["bottom"],[]) [Str "Erwartungswert"]
   ,Para [Math DisplayMath "E(X) = \\sum_{i=1}^4 x_i P(X = x_i) = \\frac{1}{4} * 5 + \\frac{1}{4} * 1 + \\frac{1}{4} * 1 + \\frac{1}{4} * 0 = \\frac{7}{4}"]]]
 ,HorizontalRule
-,Header 1 ("analyse-f\252r-den-erwarteten-fall",[],[]) [Str "Analyse",Space,Str "f\252r",Space,Str "den",Space,Str "erwarteten",Space,Str "Fall"]
+,Header 1 ("analyse-f\252r-den-erwarteten-fall",[],[]) [Str "Analyse",Space,Str "f\252r",Space,Str "den",Space,Str "Erwarteten",Space,Str "Fall"]
 ,Div ("",["box","columns","definition"],[])
  [Header 2 ("average-case-szenario",["definition"],[]) [Str "Average-Case",Space,Str "Szenario"]
  ,Para [Str "Die",Space,Str "Average-Case",Space,Str "Laufzeit",Space,Str "ist",Space,Str "die",Space,Str "von",Space,Str "dem",Space,Str "Algorithmus",Space,Str "durchschnittlich",Space,Str "beno\776tigte",Space,Str "Anzahl",Space,Str "elementarer",Space,Str "Operationen",Space,Str "auf",Space,Str "einer",Space,Str "beliebigen",Space,Str "Eingabe",Space,Str "der",Space,Str "La\776nge",Space,Math InlineMath "n",Str "."]
  ,Para [Math DisplayMath "A(n) = \\sum_{I \\in D_N} P(I) * t(I)"]
  ,Para [Math InlineMath "P(I) =",Space,Str "Wahrscheinlichkeit,",Space,Str "dass",Space,Str "Eingabe",Space,Math InlineMath "I",Space,Str "auftritt"]]
+,Div ("",["box","columns","bottom","footer"],[])
+ [Header 2 ("section-19",["bottom","footer"],[]) []
+ ,Para [Cite [Citation {citationId = "ottmann2012", citationPrefix = [], citationSuffix = [], citationMode = NormalCitation, citationNoteNum = 6, citationHash = 0}] [Str "(Ottmann",Space,Str "and",Space,Str "Widmayer",Space,Str "2012)"]]]
 ,HorizontalRule
 ,Header 1 ("analyse-f\252r-die-lineare-suche",[],[]) [Str "Analyse",Space,Str "f\252r",Space,Str "die",Space,Str "Lineare",Space,Str "Suche"]
 ,Div ("",["box","columns"],[])
@@ -334,21 +344,19 @@
  [Header 2 ("zeitkomplexit\228t",[],[]) [Str "Zeitkomplexit\228t"]
  ,BulletList
   [[Plain [Math InlineMath "W (n) = n",Str ",",Space,Str "da",Space,Math InlineMath "n",Space,Str "Vergleiche",Space,Str "notwendig",Space,Str "f\252r",Space,Str "den",Space,Str "Fall,",Space,Str "das",Space,Str "die",Space,Str "ganze",Space,Str "Liste",Space,Str "durchlaufen",Space,Str "werden",Space,Str "muss",Space,Str "(Element",Space,Str "nicht",Space,Str "enthalten",Space,Str "oder",Space,Math InlineMath "K == E[n]"]]
-  ,[Plain [Math InlineMath "B(n) = 1",Str ",",Space,Str "da",Space,Str "ein",Space,Str "Vergleich",Space,Str "ausreicht,",Space,Str "wenn",Space,Math InlineMath "K == E[1]",Space,Str "ist."]]]
- ,Div ("",["incremental"],[])
-  [BulletList
-   [[Plain [Math InlineMath "A(n) \\approx \\frac{1}{2} n",Space,Math InlineMath "\\color{red}{?}",Space,Str "\8211",Space,Str "nur,",Space,Str "wenn",Space,Math InlineMath "K",Space,Str "in",Space,Math InlineMath "E",Space,Str "enthalten",Space,Str "und",Space,Str "abh\228ngig",Space,Str "von",Space,Str "der",Space,Str "Verteilung",Space,Str "der",Space,Str "Elemente",Space,Str "(Gegenbeispiel:",Space,Str "Sprache)."]]]]]
+  ,[Plain [Math InlineMath "B(n) = 1",Str ",",Space,Str "da",Space,Str "ein",Space,Str "Vergleich",Space,Str "ausreicht,",Space,Str "wenn",Space,Math InlineMath "K == E[1]",Space,Str "ist."]]
+  ,[Plain [Math InlineMath "A(n) \\color{red}{?}"]]]]
 ,HorizontalRule
 ,Header 1 ("average-case-f\252r-lineare-suche",[],[]) [Str "Average-Case",Space,Str "f\252r",Space,Str "lineare",Space,Str "Suche"]
 ,Para [Str "Erwartungswert:",Space,Math InlineMath "\\frac{n}{2}",Space,Str "erscheint",Space,Str "intuitiv,",Space,Str "ist",Space,Str "aber",Space,Str "abh\228ngig",Space,Str "davon,",Space,Str "ob",Space,Str "das",Space,Str "Element",Space,Str "enthalten",Space,Str "ist."]
-,Div ("",["box","columns"],[])
+,Div ("",["box","columns","fragment"],[])
  [Header 2 ("unterscheidung-zwei-f\228lle",[],[]) [Str "Unterscheidung",Space,Str "zwei",Space,Str "F\228lle"]
  ,BulletList
   [[Plain [Math InlineMath "K",Space,Str "kommt",Space,Str "in",Space,Math InlineMath "E",Space,Str "vor",Space,Str "oder"]]
   ,[Plain [Math InlineMath "K",Space,Str "kommt",Space,Str "nicht",Space,Str "in",Space,Math InlineMath "E",Space,Str "vor."]]]]
 ,Div ("",["box","columns"],[])
- [Header 2 ("section-18",[],[]) []
- ,CodeBlock ("",["java"],[("label","Python")]) "for (int index = 0; index < n; index++):\n    if (E[index] == K):\n        return true; // Oder: index ausgeben\nreturn false; // Fall nicht gefunden"]
+ [Header 2 ("section-20",[],[]) []
+ ,CodeBlock ("",["python"],[("label","Python")]) "for (int index = 0; index < n; index++):\n    if (E[index] == K):\n        return true; // Oder: index ausgeben\nreturn false; // Fall nicht gefunden"]
 ,HorizontalRule
 ,Header 1 ("average-case-f\252r-lineare-suche-wenn-k-in-e-enthalten-ist",[],[]) [Str "Average-Case",Space,Str "f\252r",Space,Str "lineare",Space,Str "Suche",Space,Str "wenn",Space,Math InlineMath "K",Space,Str "in",Space,Math InlineMath "E",Space,Str "enthalten",Space,Str "ist"]
 ,Div ("",["incremental"],[])
@@ -360,9 +368,27 @@
  [Header 2 ("damit-ergibt-sich-als-average-case",[],[]) [Str "Damit",Space,Str "ergibt",Space,Str "sich",Space,Str "als",Space,Str "average-case:"]
  ,Para [Span ("",["math-incremental"],[]) [Math DisplayMath "\n\\begin{eqnarray*} \nA_{K \\in E} (n) &=& \\sum_{i=0}^{n-1} \\color{red}P(K == E[i] | \\text{K in E})\\color{black} * \\color{green}t(K == E[i]) \\\\\n&=& \\sum_{i=0}^{n-1} \\color{red}\\left( \\frac{1}{n} \\right)\\color{black} * \\color{green}(i+1) \\\\\n&=& \\color{red}\\left( \\frac{1}{n} \\right) \\color{darkorange}\\sum_{i=0}^{n-1} (i+1) \\\\\n&=& \\left( \\frac{1}{n} \\right) * \\color{darkorange}\\frac{n(n+1)}{2} \\\\\n\\color{blue}A_{K \\in E} (n) &\\color{blue}=& \\color{blue}\\frac{n+1}{2}\n\\end{eqnarray*}\n"]]]
 ,HorizontalRule
-,Header 1 ("average-case-f\252r-lineare-suche-1",[],[]) [Str "Average",Space,Str "Case",Space,Str "f\252r",Space,Str "lineare",Space,Str "Suche"]
+,Header 1 ("average-case-f\252r-lineare-suche-1",[],[]) [Str "Average-Case",Space,Str "f\252r",Space,Str "lineare",Space,Str "Suche"]
 ,Div ("",["box","columns"],[])
  [Header 2 ("insgesamt-ergibt-sich-damit",[],[]) [Str "Insgesamt",Space,Str "ergibt",Space,Str "sich",Space,Str "damit:"]
+ ,Para [RawInline (Format "tex") "\\begin{eqnarray*} \nA(n) &=& P(\\text{K in E}) * \\color{blue}A_{K \\in E}(n) \\color{black}+ P(\\text{K nicht in E}) * A_{K \\notin E}(n) \\\\\n\\end{eqnarray*}"]
+ ,Para [Str "\160"]
+ ,Para [LineBreak]
+ ,Para [Str "\160"]
+ ,Para [Str "\160"]
+ ,Para [Str "\160"]
+ ,Para [Str "\160"]
+ ,Para [Str "\160"]
+ ,Para [Str "\160"]
+ ,Para [Str "\160"]
+ ,Para [LineBreak]
+ ,Para [LineBreak]
+ ,Para [LineBreak]
+ ,Para [LineBreak]]
+,HorizontalRule
+,Header 1 ("average-case-f\252r-lineare-suche-2",[],[]) [Str "Average-Case",Space,Str "f\252r",Space,Str "lineare",Space,Str "Suche"]
+,Div ("",["box","columns"],[])
+ [Header 2 ("insgesamt-ergibt-sich-damit-1",[],[]) [Str "Insgesamt",Space,Str "ergibt",Space,Str "sich",Space,Str "damit:"]
  ,Para [Span ("",["math-incremental"],[]) [Math DisplayMath "\n\\begin{eqnarray*} \nA(n) &=& P(\\text{K in E}) * \\color{blue}A_{K \\in E}(n) \\color{black}+ P(\\text{K nicht in E}) * A_{K \\notin E}(n) \\\\\n&=& P(\\text{K in E}) \\color{blue}\\frac{n+1}{2}\\color{black} + \\color{red}P(\\text{K nicht in E})\\color{black} * A_{K \\notin E}(n) \\\\\n&=& P(\\text{K in E}) \\frac{n+1}{2} + \\color{red}(1 - P(\\text{K in E}))\\color{black} * \\color{green}A_{K \\notin E}(n) \\\\\n&=& P(\\text{K in E}) \\frac{n+1}{2} + (1 - P(\\text{K in E})) * \\color{green}n \\\\\n&=& P(\\text{K in E}) \\frac{-n+1}{2} + n \n\\end{eqnarray*}\n"]]]
 ,Div ("",["box","columns","fragment"],[])
  [Header 2 ("beispiele",[],[]) [Str "Beispiele"]
@@ -385,35 +411,32 @@
  [Header 2 ("elementare-operation-1",[],[]) [Str "Elementare",Space,Str "Operation"]
  ,Para [Str "Vergleich",Space,Str "einer",Space,Str "Zahl",Space,Math InlineMath "K",Space,Str "mit",Space,Str "dem",Space,Str "Element",Space,Math InlineMath "E[index]",Space,Str "aus",Space,Str "z.B.",Space,Math InlineMath "E = [8, 5, 2, 7, 1, 4, 3, 6]",Str "."]]
 ,Div ("",["box","columns","fragment"],[])
- [Header 2 ("zeitkomplexit\228t-1",[],[]) [Str "Zeitkomplexit\228t"]
- ,BulletList
-  [[Plain [Math InlineMath "W (n) = n \\in \\mathcal{O}(n)"]]
-  ,[Plain [Math InlineMath "B(n) = 1 \\in \\mathcal{O}(1)"]]
-  ,[Plain [Math InlineMath "A(n) = P(\\text{K in E}) \\frac{-n+1}{2} + n \\in \\mathcal{O}(n)"]]]]
+ [Header 2 ("laufzeit-2",[],[]) [Str "Laufzeit:"]
+ ,Para [Math InlineMath "W (n) = n \\in \\mathcal{O}(n)",Str ";",Space,Math InlineMath "B(n) = 1 \\in \\mathcal{O}(1)",Str ";",Space,Math InlineMath "A(n) = P(\\text{K in E}) \\frac{-n+1}{2} + n \\in \\mathcal{O}(n)"]]
 ,HorizontalRule
 ,Header 1 ("beispiel-analyse-where-is-waldo",["section"],[("data-background-color","#2CA02C")]) [Str "Beispiel",Space,Str "Analyse:",Space,Str "Where",Space,Str "is",Space,Str "Waldo?"]
 ,HorizontalRule
 ,Header 1 ("beispiel-waldo-auf-twitter",[],[("layout","columns")]) [Str "Beispiel:",Space,Str "Waldo",Space,Str "auf",Space,Str "twitter"]
 ,Div ("",["single-column-row"],[])
  [Div ("",["box","columns","top"],[])
-  [Header 2 ("section-19",["top"],[]) []
+  [Header 2 ("section-21",["top"],[]) []
   ,Para [Str "Als",Space,Str "Beispiel:",Space,Str "Wir",Space,Str "suchen",Space,Str "in",Space,Str "twitter",Space,Str "Waldo.",Space,RawInline (Format "html") "<img class=\"decker\" data-src=\"../data/algorithmen/Twitter_bird_logo_2012.svg.png\" alt=\"Twitter_bird_logo_2012.svg.png\" style=\"height:40px;\">"]
   ,Para [Str "Unsere",Space,Str "Annahme:",Space,Str "Waldo",Space,Str "ist",Space,Str "prominent",Space,Str "\8211",Space,Str "er",Space,Str "ist",Space,Str "jemand",Space,Str "dem",Space,Str "alle",Space,Str "folgen",Space,Str "und",Space,Str "von",Space,Str "dem",Space,Str "alle",Space,Str "immer",Space,Str "News",Space,Str "bekommen",Space,Str "m\246chten."]]]
 ,Div ("",["multi-column-row","multi-column-row-3"],[])
  [Div ("",["grow-2","column","column-1"],[("grow","2")])
   [Div ("",["box","columns","left"],[("grow","2")])
-   [Header 2 ("section-20",["left"],[("grow","2")]) []
+   [Header 2 ("section-22",["left"],[("grow","2")]) []
    ,RawBlock (Format "html") "<img class=\"decker\" data-src=\"../data/algorithmen/promi_graph_w1.png\" alt=\"promi_graph_w1.png\" style=\"height:420px;\">"]]
  ,Div ("",["grow-3","column","column-2"],[("grow","3")])
   [Div ("",["box","columns","center","fragment"],[("grow","3")])
-   [Header 2 ("section-21",["center"],[("grow","3")]) []
+   [Header 2 ("section-23",["center"],[("grow","3")]) []
    ,RawBlock (Format "html") "<img class=\"decker\" data-src=\"../data/algorithmen/promi_graph_w2.png\" alt=\"promi_graph_w2.png\" style=\"height:420px;\">"]]
  ,Div ("",["grow-4","column","column-3"],[("grow","4")])
   [Div ("",["box","columns","right","fragment"],[("grow","4")])
-   [Header 2 ("section-22",["right"],[("grow","4")]) []
+   [Header 2 ("section-24",["right"],[("grow","4")]) []
    ,RawBlock (Format "html") "<img class=\"decker\" data-src=\"../data/algorithmen/twitter-follower-network-graph-community.png\" alt=\"twitter-follower-network-graph-community.png\" style=\"height:400px;\">"]
   ,Div ("",["box","columns","footer"],[])
-   [Header 2 ("section-23",["footer"],[]) []
+   [Header 2 ("section-25",["footer"],[]) []
    ,Para [Str "http://allthingsgraphed.com/2014/11/02/twitter-friends-network/"]]]]
 ,HorizontalRule
 ,Header 1 ("prominenten-beispiel",[],[("layout","columns")]) [Str "Prominenten",Space,Str "Beispiel"]
@@ -424,8 +447,8 @@
 ,Div ("",["multi-column-row","multi-column-row-3"],[])
  [Div ("",["grow-1","column","column-1"],[])
   [Div ("",["box","columns","left"],[])
-   [Header 2 ("section-24",["left"],[]) []
-   ,RawBlock (Format "html") "<img class=\"decker\" data-src=\"../data/algorithmen/promi_graph_1a.png\" alt=\"promi_graph_1a.png\" style=\"height:300px;\">"]]
+   [Header 2 ("section-26",["left"],[]) []
+   ,RawBlock (Format "html") "<img class=\"decker\" data-src=\"../data/algorithmen/promi_graph_w1.png\" alt=\"promi_graph_w1.png\" style=\"height:360px;\">"]]
  ,Div ("",["grow-1","column","column-3"],[])
   [Div ("",["box","columns","right"],[])
    [Header 2 ("matrix-darstellung",["right"],[]) [Str "Matrix-Darstellung"]
@@ -441,8 +464,8 @@
 ,Div ("",["multi-column-row","multi-column-row-3"],[])
  [Div ("",["grow-1","column","column-1"],[])
   [Div ("",["box","columns","left"],[])
-   [Header 2 ("section-25",["left"],[]) []
-   ,RawBlock (Format "html") "<img class=\"decker\" data-src=\"../data/algorithmen/promi_graph_2.png\" alt=\"promi_graph_2.png\" style=\"height:400px;\">"]]
+   [Header 2 ("section-27",["left"],[]) []
+   ,RawBlock (Format "html") "<img class=\"decker\" data-src=\"../data/algorithmen/promi_graph_w2.png\" alt=\"promi_graph_w2.png\" style=\"height:400px;\">"]]
  ,Div ("",["grow-1","column","column-3"],[])
   [Div ("",["box","columns","right"],[])
    [Header 2 ("matrix-darstellung-1",["right"],[]) [Str "Matrix-Darstellung"]
@@ -460,7 +483,7 @@
  ,BulletList
   [[Plain [Math InlineMath "n \\in \\mathbb{N}",Space,Str "Personen,"]]
   ,[Plain [Str "von",Space,Str "diesen",Space,Str "ist",Space,Str "genau",Space,Str "eine",Space,Str "Person",Space,Str "ein",Space,Str "Prominenter,"]]
-  ,[Plain [Math InlineMath "n \\times n",Space,Str "Veerbindungsmatrix,",Space,Str "so",Space,Str "dass",Space,Str "f\252r",Space,Math InlineMath "0 \\leq i, j \\leq n:",SoftBreak,Math DisplayMath " \nK[i, j] = \\begin{cases}\n  1 & \\text{wenn Person } i \\text{ Person } j \\text{ folgt}\\\\\n  0              & \\text{ansonsten}\n\\end{cases}\n"]]]]
+  ,[Plain [Math InlineMath "n \\times n",Space,Str "Verbindungsmatrix,",Space,Str "so",Space,Str "dass",Space,Str "f\252r",Space,Math InlineMath "0 \\leq i, j \\leq n:",SoftBreak,Math DisplayMath " \nK[i, j] = \\begin{cases}\n  1 & \\text{wenn Person } i \\text{ Person } j \\text{ folgt}\\\\\n  0              & \\text{ansonsten}\n\\end{cases}\n"]]]]
 ,Div ("",["box","columns"],[])
  [Header 2 ("ausgabe",[],[]) [Str "Ausgabe"]
  ,Para [Str "Person",Space,Math InlineMath "k",Space,Str "wird",Space,Str "als",Space,Str "prominente",Space,Str "Person",Space,Str "zur\252ck",Space,Str "gegeben,",Space,Str "genau",Space,Str "dann",Space,Str "wenn"]
@@ -562,10 +585,24 @@
   ,[Plain [Str "Was",Space,Str "ergibt",Space,Str "sich",Space,Str "dann",Space,Str "f\252r",Space,Str "eine",Space,Str "Average-Case",Space,Str "Laufzeit",Space,Str "nach",Space,Math InlineMath "A(n) = \\sum_{I \\in D_N} P(I) * t(I)",Str "?"]]
   ,[Plain [Str "Und",Space,Str "was",Space,Str "f\252r",Space,Str "eine",Space,Str "Best-",Space,Str "und",Space,Str "Worst-Case",Space,Str "Laufzeit?"]]]]
 ,HorizontalRule
-,Header 1 ("summary-und-einordnung",["section"],[("data-background-color","#2CA02C")]) [Str "Summary",Space,Str "und",Space,Str "Einordnung"]
+,Header 1 ("verbesserter-algorithmus",[],[("layout","columns")]) [Str "Verbesserter",Space,Str "Algorithmus"]
+,Div ("",["single-column-row"],[])
+ [Div ("",["box","columns","top"],[])
+  [Header 2 ("section-28",["top"],[]) []
+  ,BulletList
+   [[Plain [Str "Durchlaufe",Space,Str "jede",Space,Str "Spalte",Space,Str "einzeln",Space,Str "(also",Space,Math InlineMath "n",Space,Str "Spalten",Space,Str "\8211",Space,Str "\228u\223ere",Space,Str "for-Schleife),"]]
+   ,[Plain [Str "von",Space,Str "oben",Space,Str "nach",Space,Str "unten",Space,Str "(f\252r",Space,Math InlineMath "j=0",Space,Str "bis",Space,Str "maximal",Space,Math InlineMath "j=n-1",Str ")."]]]]]
+,Div ("",["multi-column-row","multi-column-row-3"],[])
+ [Div ("",["grow-1","column","column-1"],[])
+  [Div ("",["box","columns","left"],[])
+   [Header 2 ("section-29",["left"],[]) []
+   ,CodeBlock ("",["python"],[("label","Python")]) "for K in K_list:\n  promi = -1\n  comparison_count = 0\n  for i in range(0, K.shape[0]):\n    promi_found = True\n    for j in range(0, K.shape[0]):\n      if K[j,i]==0:\n        promi_found = False\n        break\n      comparison_count += 1\n    if promi_found:\n      promi = i"]]
+ ,Div ("",["grow-1","column","column-3"],[])
+  [Div ("",["box","columns","right"],[])
+   [Header 2 ("laufzeiten-wn-an-bn",["right"],[]) [Str "Laufzeiten:",Space,Math InlineMath "W(n)?",Space,Math InlineMath "A(n)?",Space,Math InlineMath "B(n)",Str "?"]
+   ,Para [Math InlineMath "A(n) = \\sum_{I \\in D_N} P(I) * t(I)"]]]]
 ,HorizontalRule
-,Header 1 ("quiz",[],[]) [Str "Quiz"]
-,Para [Str "TODO"]
+,Header 1 ("summary-und-einordnung",["section"],[("data-background-color","#2CA02C")]) [Str "Summary",Space,Str "und",Space,Str "Einordnung"]
 ,HorizontalRule
 ,Header 1 ("zusammenfassung",[],[]) [Str "Zusammenfassung"]
 ,Div ("",["box","columns"],[])
@@ -609,5 +646,9 @@
   [Para [Str "Katoen,",Space,Str "Joost-Pieter.",Space,Str "2020.",Space,Span ("",[],[]) [Str "\8220",Str "Datenstrukturen",Space,Str "Und",Space,Str "Algorithmen",Str ".",Str "\8221"],Space,Str "Lecture",Space,Str "Notes,",Space,Str "RWTH",Space,Str "Aachen."]]
  ,Div ("ref-knuth97",["csl-entry"],[])
   [Para [Str "Knuth,",Space,Str "Donald",Space,Str "E.",Space,Str "1997.",Space,Emph [Str "The",Space,Str "Art",Space,Str "of",Space,Str "Computer",Space,Str "Programming,",Space,Str "Vol.",Space,Str "1:",Space,Str "Fundamental",Space,Str "Algorithms"],Str ".",Space,Str "Third.",Space,Str "Reading,",Space,Str "Mass.:",Space,Str "Addison-Wesley."]]
+ ,Div ("ref-nebel2012entwurf",["csl-entry"],[])
+  [Para [Str "Nebel,",Space,Str "Markus.",Space,Str "2012.",Space,Emph [Str "Entwurf",Space,Str "Und",Space,Str "Analyse",Space,Str "von",Space,Str "Algorithmen:",Space,Str "Markus",Space,Str "Nebel"],Str ".",Space,Str "Studienb",Span ("",[],[]) [Str "\252"],Str "cher",Space,Str "Informatik.",Space,Str "Wiesbaden:",Space,Str "Vieweg",Space,Str "&",Space,Str "Teubner.",Space,Link ("",[],[]) [Str "http://d-nb.info/1018322566/04"] ("http://d-nb.info/1018322566/04",""),Str "."]]
+ ,Div ("ref-ottmann2012",["csl-entry"],[])
+  [Para [Str "Ottmann,",Space,Str "Thomas,",Space,Str "and",Space,Str "Peter",Space,Str "Widmayer.",Space,Str "2012.",Space,Emph [Str "Algorithmen",Space,Str "Und",Space,Str "Datenstrukturen,",Space,Str "5.",Space,Str "Auflage."],Str "",Space,Str "Spektrum",Space,Str "Akademischer",Space,Str "Verlag."]]
  ,Div ("ref-yanofsky2010",["csl-entry"],[])
   [Para [Str "Yanofsky,",Space,Str "Noson",Space,Str "S.",Space,Str "2010.",Space,Span ("",[],[]) [Str "\8220",Span ("",["nocase"],[]) [Str "Towards",Space,Str "a",Space,Str "Definition",Space,Str "of",Space,Str "an",Space,Str "Algorithm"],Str ".",Str "\8221"],Space,Emph [Str "Journal",Space,Str "of",Space,Str "Logic",Space,Str "and",Space,Str "Computation"],Space,Str "21",Space,Str "(2):",Space,Str "253\8211\&86.",Space,Str "doi:",Link ("",[],[]) [Str "10.1093/logcom/exq016"] ("https://doi.org/10.1093/logcom/exq016",""),Str "."]]]]
