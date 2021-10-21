@@ -1,0 +1,369 @@
+/**
+ * White theme for reveal.js. This is the opposite of the 'black' theme.
+ *
+ * By Hakim El Hattab, http://hakim.se
+ */
+
+
+@import url(../lib/font/source-sans-pro/source-sans-pro.css);
+section.has-dark-background, section.has-dark-background h1, section.has-dark-background h2, section.has-dark-background h3, section.has-dark-background h4, section.has-dark-background h5, section.has-dark-background h6 {
+  color: #fff; }
+
+
+/*********************************************
+ * GLOBAL STYLES
+ *********************************************/
+
+body {
+  background: #ffffff;
+  background-color: #ffffff;
+}
+
+
+/*::selection {
+  color: #fff;
+  background: #98bdef;
+  text-shadow: none; }
+
+/* do not require section to be immediate child of .slides, since
+* this will not be the case for PDF export! */
+/*.reveal .slides > section, .reveal .slides > section > section {*/
+.reveal .slides section {
+  line-height: 1.3;
+  font-weight: inherit;
+  padding: 0; /* MARIO: prevent 20px at top/bottom by reveal.css */
+  min-height: 100%; /* MARIO: slides should be full height for footer to be positioned correctly */
+}
+
+.reveal .references {
+    text-align: left;
+    font-size: 0.5em;
+    overflow: visible;
+}
+
+.reveal .references div {
+	margin-bottom: 0.5em;
+}
+
+.reveal .references p {
+	margin: 0 auto;
+}
+
+.reveal p {
+  padding-left: 30px;
+}
+
+.reveal div.box.columns {
+  padding-left: 30px;
+}
+
+.reveal div.box.columns.definition {
+  background-color: #ddd;
+  padding-left: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.reveal div.box.columns.answer {
+  border-color: #2CA02C;
+  background-color: #B4E5A1;
+  padding-left: 30px;
+  padding-top: 10px;
+}
+
+.reveal .w10 { margin-left: auto; margin-right: auto; width:10%; }
+.reveal .w20 { margin-left: auto; margin-right: auto; width:20%; }
+.reveal .w25 { margin-left: auto; margin-right: auto; width:25%; }
+.reveal .w30 { margin-left: auto; margin-right: auto; width:30%; }
+.reveal .w40 { margin-left: auto; margin-right: auto; width:40%; }
+.reveal .w50 { margin-left: auto; margin-right: auto; width:50%; }
+.reveal .w60 { margin-left: auto; margin-right: auto; width:60%; }
+.reveal .w70 { margin-left: auto; margin-right: auto; width:70%; }
+.reveal .w80 { margin-left: auto; margin-right: auto; width:80%; }
+.reveal .w90 { margin-left: auto; margin-right: auto; width:90%; }
+
+.reveal .col10 { float:left; width:10%; }
+.reveal .col20 { float:left; width:20%; }
+.reveal .col25 { float:left; width:25%; }
+.reveal .col30 { float:left; width:30%; }
+.reveal .col40 { float:left; width:40%; }
+.reveal .col50 { float:left; width:50%; }
+.reveal .col60 { float:left; width:60%; }
+.reveal .col70 { float:left; width:70%; }
+.reveal .col80 { float:left; width:80%; }
+.reveal .col90 { float:left; width:90%; }
+
+
+/*********************************************
+ * HEADERS
+ *********************************************/
+.reveal h6 {
+  margin: 0 0 20px 0;
+  font-weight: bold;
+  line-height: 1.2;
+  letter-spacing: normal;
+  text-shadow: none;
+  word-wrap: break-word;
+  text-align: left;
+}
+
+.reveal h1 {
+    margin: 20px 0 40px 0;
+    text-align: center;
+}
+
+.reveal h2 {
+    margin: 0px 0 20px 0;
+}
+
+/* Ensure certain elements are never larger than the slide itself */
+.reveal img,
+.reveal video {
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    max-width: 95%;
+    /*max-height: 95vh;*/
+    vertical-align: middle;
+}
+.reveal iframe {
+    border: 1px solid lightgray;
+    outline: none;
+    overflow: hidden;
+    max-width:  100%;
+    max-height: 100%;
+    vertical-align: middle;
+}
+
+.reveal ol,
+.reveal dl,
+.reveal ul {
+  display: inline-block;
+  text-align: left;
+  margin-bottom: 1em;
+}
+
+.reveal ol li,
+.reveal dl li,
+.reveal ul li {
+    margin-bottom: 0.5em;
+    margin-left: 40px;
+}
+
+.reveal ol {
+  list-style-type: decimal; }
+
+.reveal ul {
+	position: relative;
+	list-style-image: url("../data/bullet_dark.png");
+}
+
+.reveal ul ul {
+	position: relative;
+	list-style-image: url("../data/bullet_light.png");
+}
+
+.reveal ol ul {
+	position: relative;
+	list-style: none;
+	margin-left: 0;
+	padding-left: 0.5em;
+}
+
+.reveal ol ol {
+    list-style-type: lower-roman;
+}
+
+.reveal ul ul ul,
+.reveal ul ul ol,
+.reveal ul ol ul,
+.reveal ul ol ol,
+.reveal ol ul ul,
+.reveal ol ul ol,
+.reveal ol ol ul,
+.reveal ol ol ol {
+    font-size: 0.9em;
+}
+
+.reveal ul ul,
+.reveal ul ol,
+.reveal ol ol,
+.reveal ol ul {
+    display:     block;
+    margin-top:  0.3em;
+    font-size:   0.8em;
+    margin-left: 10px;
+}
+
+/*********************************************
+ * NAVIGATION CONTROLS
+ *********************************************/
+.reveal .controls {
+  color: #98DF8A; }
+
+
+/*********************************************
+ * MARIO: TITLE SLIDE
+ *********************************************/
+
+.reveal .title {
+    margin-left:  40px;
+    margin-top: 240px;
+    padding:     40px;
+    font-weight: bold;
+    font-style:  normal;
+    font-size:   1.5em;
+    text-align:  left;
+}
+
+.reveal .subtitle {
+    margin-left:      80px;
+    font-style:  italic;
+    font-size:   1.3em;
+}
+/*
+.reveal .teaser img {
+    margin:      50px 0 0 0;
+    height:      300px;
+    width:       auto;
+    object-fit:  contain;
+}
+*/
+.reveal .author {
+    margin-left:      80px;
+    font-size:   1.0em;
+}
+/*
+.reveal .affiliation {
+    margin:      10px 0 0 0;
+    font-weight: normal;
+    font-style:  normal;
+    font-size:   0.8em;
+    text-align:  center;
+}*/
+
+
+/*********************************************
+ * MARIO: SECTIONS
+ *********************************************/
+
+.reveal .section h1 {
+    /* green-on-white */
+    color: #FFFFFF;
+
+    /* large top margin -> vertical centering */
+    margin:      250px auto;
+    padding:      50px;
+
+    /* large bold font */
+    font-weight: bold;
+    font-style:  normal;
+    font-size:   1.5em;
+}
+
+
+/*********************************************
+ * MARIO: image sequence, shown one after the other
+ *********************************************/
+
+/*.fragment.sequence:not(.current-fragment) {
+    display: none;
+}*
+
+
+/*********************************************
+ * MARIO: COMMENT BUBBLES
+ *********************************************/
+
+/*.reveal .bubble {
+    display: inline-block;
+    font-size: 0.7em;
+    color: #ffffff;
+    background-color: #2a9ddf;
+    padding: 10px;
+    margin: auto;
+    border-radius:5px;
+    box-shadow: 0px 0px 30px 0px rgba(0,0,0,0.35);
+}
+
+.reveal .comment {
+    color: #ffffff;
+    background-color: #2a9ddf;
+    position:absolute;
+    padding:10px;
+    border-radius:5px;
+    font-size: 0.5em;
+    box-shadow: 0px 0px 30px 0px rgba(0,0,0,0.35);
+}
+
+.reveal .comment-left {
+    color: #ffffff;
+    background-color: #2a9ddf;
+    position:absolute;
+    padding:5px;
+    font-size: 80%;
+    border-radius:20px 20px 0px 20px;
+    box-shadow: 0px 0px 30px 0px rgba(0,0,0,0.35);
+}
+
+.reveal .comment-right {
+    color: #ffffff;
+    background-color: #2a9ddf;
+    position:absolute;
+    padding:5px;
+    font-size: 80%;
+    border-radius:20px 20px 20px 0px;
+    box-shadow: 0px 0px 30px 0px rgba(0,0,0,0.35);
+}
+
+.reveal .comment-big {
+    color: #ffffff;
+    background-color: #2a9ddf;
+    padding:10px;
+    border-radius:5px;
+    box-shadow: 0px 0px 30px 0px rgba(0,0,0,0.35);
+}
+*/
+
+/*********************************************
+ * MARIO: FOOTER COMMENTS
+ * either use footer tag or class
+ *********************************************/
+
+.reveal footer, 
+.reveal .footer {
+    position:   absolute;
+    display:    block;
+    text-align: center;
+	margin:     0px;
+    padding:    0px;
+    font-size:  0.5em;
+    width:      auto;
+    height:     auto;
+    left:       100px;
+    right:      100px;
+    bottom:     0px;
+}
+
+.reveal footer p,
+.reveal .footer p {
+	margin:  0px;
+    padding: 0px;
+}
+
+
+/*********************************************
+ * MARIO: margin: auto
+ *********************************************/
+
+.reveal .automargin {
+    margin: 10px auto;
+}
+
+.reveal .neg80 {
+    margin-top: -80px;
+}
+
+.reveal .neg60 {
+    margin-top: -60px;
+}

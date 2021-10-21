@@ -1,0 +1,9 @@
+[HorizontalRule
+,Header 1 ("testpage",[],[]) [Str "Testpage"]
+,Div ("",["sageCell","stretch","print"],[])
+ [CodeBlock ("",["python"],[]) "from math import exp,pi,cos,sin\nimport matplotlib.pyplot as plt\nimport numpy as np\nx0=1; t0=0; tf=25; x=x0; t=t0;\nh = pi/16\nX=[]\nT=[]\nwhile t < tf:\n    X.append(x)\n    T.append(t)\n    x = x + h*(-x*cos(t));\n    t = t+h\nplt.plot(T,X,'b*--')\nT1=np.linspace(t0,tf,200);\nplt.plot(T1,[exp(-sin(t)) for t in T1],'r-')\nplt.title('h = %f' % (h))\nplt.legend(('Numerical solution','Exact solution'),loc='upper left')\nplt.show()"]
+,HorizontalRule
+,Header 1 ("example-for-pca-python-environment",[],[("style","overflow: scroll;")]) [Str "Example",Space,Str "for",Space,Str "PCA:",Space,Str "Python",Space,Str "Environment"]
+,Div ("",["box","columns"],[])
+ [Header 2 ("initialize-and-load-python-environment.",[],[]) [Str "Initialize",Space,Str "and",Space,Str "load",Space,Str "python",Space,Str "environment."]
+ ,CodeBlock ("",["python"],[("data-executable","true"),("data-language","python")]) "%matplotlib inline\nimport numpy as np\nimport matplotlib.pyplot as plt\n\na_list = []\nfor i in range(2,20):\n    a = np.random.randint(2, size=(i,i))\n    for j in range(0,i):\n        a[j,j] = 1\n    set_promi = np.random.randint(i)\n    a[set_promi,:] = 0\n    a[:,set_promi] = 1\n    a_list.append(a)\n\ncomp_list = []\nfor a in a_list:\n    promi = -1\n    comparison_count = 0\n    for i in range(0, a.shape[0]):\n        promi_found = True\n        for j in range(0, a.shape[0]):\n            if a[i,j]==1 and i!=j:\n                promi_found = False\n            if a[j,i]==0:\n                promi_found = False\n            comparison_count += 2\n        if promi_found:\n            promi = i\n    comp_list.append(comparison_count)\n    \nplt.plot(comp_list)"]]
