@@ -638,8 +638,6 @@
  [Para [LineBreak]
  ,RawBlock (Format "html") "<img class=\"decker\" data-src=\"../data/algorithmen/pseudocode-quicksort.png\" alt=\"pseudocode-quicksort.png\" style=\"width:400px;\">"]
 ,HorizontalRule
-,Header 1 ("references",["biblio"],[]) [Str "References"]
-,HorizontalRule
 ,Header 1 ("interaktive-vorlesungsfolien-im-webbrowser",[],[]) [Str "Interaktive",Space,Str "Vorlesungsfolien",Space,Str "im",Space,Str "Webbrowser"]
 ,Para [Str "Einsatz",Space,Str "von",Space,Emph [Str "decker"],Str ":"]
 ,BulletList
@@ -722,17 +720,19 @@
      ,Cell ("",[],[]) AlignDefault (RowSpan 1) (ColSpan 1)
       [Plain [Str "\128557"]]]])]
    (TableFoot ("",[],[])
-   [])]
- ,Div ("refs",["references","csl-bib-body","hanging-indent"],[])
-  [Div ("ref-cormen2009",["csl-entry"],[])
-   [Para [Str "Cormen,",Space,Str "Thomas",Space,Str "H.,",Space,Str "Charles",Space,Str "E.",Space,Str "Leiserson,",Space,Str "Ronald",Space,Str "L.",Space,Str "Rivest,",Space,Str "and",Space,Str "Clifford",Space,Str "Stein.",Space,Str "2009.",Space,Emph [Str "Introduction",Space,Str "to",Space,Str "Algorithms,",Space,Str "3rd",Space,Str "Edition"],Str ".",Space,Span ("",[],[]) [Str "MIT"],Space,Str "Press.",Space,Link ("",[],[]) [Str "http://mitpress.mit.edu/books/introduction-algorithms"] ("http://mitpress.mit.edu/books/introduction-algorithms",""),Str "."]]
-  ,Div ("ref-katoen2020",["csl-entry"],[])
-   [Para [Str "Katoen,",Space,Str "Joost-Pieter.",Space,Str "2020.",Space,Span ("",[],[]) [Str "\8220",Str "Datenstrukturen",Space,Str "Und",Space,Str "Algorithmen",Str ".",Str "\8221"],Space,Str "Lecture",Space,Str "Notes,",Space,Str "RWTH",Space,Str "Aachen."]]
-  ,Div ("ref-knuth97",["csl-entry"],[])
-   [Para [Str "Knuth,",Space,Str "Donald",Space,Str "E.",Space,Str "1997.",Space,Emph [Str "The",Space,Str "Art",Space,Str "of",Space,Str "Computer",Space,Str "Programming,",Space,Str "Vol.",Space,Str "1:",Space,Str "Fundamental",Space,Str "Algorithms"],Str ".",Space,Str "Third.",Space,Str "Reading,",Space,Str "Mass.:",Space,Str "Addison-Wesley."]]
-  ,Div ("ref-nebel2012entwurf",["csl-entry"],[])
-   [Para [Str "Nebel,",Space,Str "Markus.",Space,Str "2012.",Space,Emph [Str "Entwurf",Space,Str "Und",Space,Str "Analyse",Space,Str "von",Space,Str "Algorithmen:",Space,Str "Markus",Space,Str "Nebel"],Str ".",Space,Str "Studienb",Span ("",[],[]) [Str "\252"],Str "cher",Space,Str "Informatik.",Space,Str "Wiesbaden:",Space,Str "Vieweg",Space,Str "&",Space,Str "Teubner.",Space,Link ("",[],[]) [Str "http://d-nb.info/1018322566/04"] ("http://d-nb.info/1018322566/04",""),Str "."]]
-  ,Div ("ref-ottmann2012",["csl-entry"],[])
-   [Para [Str "Ottmann,",Space,Str "Thomas,",Space,Str "and",Space,Str "Peter",Space,Str "Widmayer.",Space,Str "2012.",Space,Emph [Str "Algorithmen",Space,Str "Und",Space,Str "Datenstrukturen,",Space,Str "5.",Space,Str "Auflage."],Str "",Space,Str "Spektrum",Space,Str "Akademischer",Space,Str "Verlag."]]
-  ,Div ("ref-yanofsky2010",["csl-entry"],[])
-   [Para [Str "Yanofsky,",Space,Str "Noson",Space,Str "S.",Space,Str "2010.",Space,Span ("",[],[]) [Str "\8220",Span ("",["nocase"],[]) [Str "Towards",Space,Str "a",Space,Str "Definition",Space,Str "of",Space,Str "an",Space,Str "Algorithm"],Str ".",Str "\8221"],Space,Emph [Str "Journal",Space,Str "of",Space,Str "Logic",Space,Str "and",Space,Str "Computation"],Space,Str "21",Space,Str "(2):",Space,Str "253\8211\&86.",Space,Str "doi:",Link ("",[],[]) [Str "10.1093/logcom/exq016"] ("https://doi.org/10.1093/logcom/exq016",""),Str "."]]]]]
+   [])]]
+,HorizontalRule
+,Header 1 ("references",["unnumbered","biblio"],[]) [Str "References"]
+,Div ("refs",["references","csl-bib-body","hanging-indent"],[])
+ [Div ("ref-cormen2009",["csl-entry"],[])
+  [Para [Str "Cormen,",Space,Str "Thomas",Space,Str "H.,",Space,Str "Charles",Space,Str "E.",Space,Str "Leiserson,",Space,Str "Ronald",Space,Str "L.",Space,Str "Rivest,",Space,Str "and",Space,Str "Clifford",Space,Str "Stein.",Space,Str "2009.",Space,Emph [Str "Introduction",Space,Str "to",Space,Str "Algorithms,",Space,Str "3rd",Space,Str "Edition"],Str ".",Space,Span ("",[],[]) [Str "MIT"],Space,Str "Press.",Space,Link ("",[],[]) [Str "http://mitpress.mit.edu/books/introduction-algorithms"] ("http://mitpress.mit.edu/books/introduction-algorithms",""),Str "."]]
+ ,Div ("ref-katoen2020",["csl-entry"],[])
+  [Para [Str "Katoen,",Space,Str "Joost-Pieter.",Space,Str "2020.",Space,Span ("",[],[]) [Str "\8220",Str "Datenstrukturen",Space,Str "Und",Space,Str "Algorithmen",Str ".",Str "\8221"],Space,Str "Lecture",Space,Str "Notes,",Space,Str "RWTH",Space,Str "Aachen."]]
+ ,Div ("ref-knuth97",["csl-entry"],[])
+  [Para [Str "Knuth,",Space,Str "Donald",Space,Str "E.",Space,Str "1997.",Space,Emph [Str "The",Space,Str "Art",Space,Str "of",Space,Str "Computer",Space,Str "Programming,",Space,Str "Vol.",Space,Str "1:",Space,Str "Fundamental",Space,Str "Algorithms"],Str ".",Space,Str "Third.",Space,Str "Reading,",Space,Str "Mass.:",Space,Str "Addison-Wesley."]]
+ ,Div ("ref-nebel2012entwurf",["csl-entry"],[])
+  [Para [Str "Nebel,",Space,Str "Markus.",Space,Str "2012.",Space,Emph [Str "Entwurf",Space,Str "Und",Space,Str "Analyse",Space,Str "von",Space,Str "Algorithmen:",Space,Str "Markus",Space,Str "Nebel"],Str ".",Space,Str "Studienb",Span ("",[],[]) [Str "\252"],Str "cher",Space,Str "Informatik.",Space,Str "Wiesbaden:",Space,Str "Vieweg",Space,Str "&",Space,Str "Teubner.",Space,Link ("",[],[]) [Str "http://d-nb.info/1018322566/04"] ("http://d-nb.info/1018322566/04",""),Str "."]]
+ ,Div ("ref-ottmann2012",["csl-entry"],[])
+  [Para [Str "Ottmann,",Space,Str "Thomas,",Space,Str "and",Space,Str "Peter",Space,Str "Widmayer.",Space,Str "2012.",Space,Emph [Str "Algorithmen",Space,Str "Und",Space,Str "Datenstrukturen,",Space,Str "5.",Space,Str "Auflage."],Str "",Space,Str "Spektrum",Space,Str "Akademischer",Space,Str "Verlag."]]
+ ,Div ("ref-yanofsky2010",["csl-entry"],[])
+  [Para [Str "Yanofsky,",Space,Str "Noson",Space,Str "S.",Space,Str "2010.",Space,Span ("",[],[]) [Str "\8220",Span ("",["nocase"],[]) [Str "Towards",Space,Str "a",Space,Str "Definition",Space,Str "of",Space,Str "an",Space,Str "Algorithm"],Str ".",Str "\8221"],Space,Emph [Str "Journal",Space,Str "of",Space,Str "Logic",Space,Str "and",Space,Str "Computation"],Space,Str "21",Space,Str "(2):",Space,Str "253\8211\&86.",Space,Str "doi:",Link ("",[],[]) [Str "10.1093/logcom/exq016"] ("https://doi.org/10.1093/logcom/exq016",""),Str "."]]]]
