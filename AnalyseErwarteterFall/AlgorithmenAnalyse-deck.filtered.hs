@@ -64,7 +64,7 @@
  [Header 2 ("section-2",["bottom","footer"],[]) []
  ,Para [Cite [Citation {citationId = "nebel2012entwurf", citationPrefix = [], citationSuffix = [], citationMode = NormalCitation, citationNoteNum = 3, citationHash = 0}] [Str "(Nebel",Space,Str "2012)"]]]
 ,HorizontalRule
-,Header 1 ("beispiel-lineare-suche",[],[("layout","columns")]) [Str "Beispiel:",Space,Str "Lineare",Space,Str "Suche"]
+,Header 1 ("durchg\228ngiges-beispiel-suche",[],[("layout","columns")]) [Str "Durchg\228ngiges",Space,Str "Beispiel:",Space,Str "Suche"]
 ,Div ("",["single-column-row"],[])
  [Div ("",["box","columns","top"],[])
   [Header 2 ("section-3",["top"],[]) []
@@ -87,7 +87,7 @@
   [Header 2 ("section-7",["bottom"],[]) []
   ,Para [Strong [Str "Ausgabe:"],Space,Str "Antwort,",Space,Str "ob",Space,Str "oder",Space,Str "wo",Space,Math InlineMath "K",Space,Str "in",Space,Math InlineMath "E",Space,Str "enthalten",Space,Str "ist."]]]
 ,HorizontalRule
-,Header 1 ("beispiel-lineare-suche-1",[],[]) [Str "Beispiel:",Space,Str "Lineare",Space,Str "Suche"]
+,Header 1 ("beispiel-lineare-suche",[],[]) [Str "Beispiel:",Space,Str "Lineare",Space,Str "Suche"]
 ,Para [Strong [Str "Eingabe:"],Space,Str "Das",Space,Str "zu",Space,Str "suchende",Space,Str "Element",Space,Math InlineMath "K",Space,Str "und",Space,Str "ein",Space,Str "Input-Array",Space,Math InlineMath "E",Space,Str "mit",Space,Math InlineMath "n > 0",Space,Str "Eintr\228gen."]
 ,Para [Math DisplayMath "K = 4, E=[8, 5, 2, 7, 1, 4, 3, 6]"]
 ,Div ("",["box","columns","fragment"],[])
@@ -182,7 +182,7 @@
   ,Para [Math InlineMath "D_n =",Space,Str "Menge",Space,Str "aller",Space,Str "Eingaben",Space,Str "der",Space,Str "La\776nge",Space,Math InlineMath "n"]
   ,Para [Math InlineMath "t(I) =",Space,Str "fu\776r",Space,Str "Eingabe",Space,Math InlineMath "I",Space,Str "beno\776tigte",Space,Str "Anzahl",Space,Str "elementarer",Space,Str "Operationen"]]
  ,Div ("",["box","columns","fragment"],[])
-  [Header 2 ("beispiel-lineare-suche-2",[],[]) [Str "Beispiel",Space,Str "lineare",Space,Str "Suche"]
+  [Header 2 ("beispiel-lineare-suche-1",[],[]) [Str "Beispiel",Space,Str "lineare",Space,Str "Suche"]
   ,Header 3 ("elementare-operation-vergleich-einer-zahl-k-mit-dem-element-eindex",[],[]) [Str "Elementare",Space,Str "Operation:",Space,Str "Vergleich",Space,Str "einer",Space,Str "Zahl",Space,Math InlineMath "K",Space,Str "mit",Space,Str "dem",Space,Str "Element",Space,Math InlineMath "E[index]"]]]
 ,Div ("",["multi-column-row","multi-column-row-3"],[])
  [Div ("",["grow-1","column","column-1"],[])
@@ -638,17 +638,101 @@
  [Para [LineBreak]
  ,RawBlock (Format "html") "<img class=\"decker\" data-src=\"../data/algorithmen/pseudocode-quicksort.png\" alt=\"pseudocode-quicksort.png\" style=\"width:400px;\">"]
 ,HorizontalRule
-,Header 1 ("references",["unnumbered","biblio"],[]) [Str "References"]
-,Div ("refs",["references","csl-bib-body","hanging-indent"],[])
- [Div ("ref-cormen2009",["csl-entry"],[])
-  [Para [Str "Cormen,",Space,Str "Thomas",Space,Str "H.,",Space,Str "Charles",Space,Str "E.",Space,Str "Leiserson,",Space,Str "Ronald",Space,Str "L.",Space,Str "Rivest,",Space,Str "and",Space,Str "Clifford",Space,Str "Stein.",Space,Str "2009.",Space,Emph [Str "Introduction",Space,Str "to",Space,Str "Algorithms,",Space,Str "3rd",Space,Str "Edition"],Str ".",Space,Span ("",[],[]) [Str "MIT"],Space,Str "Press.",Space,Link ("",[],[]) [Str "http://mitpress.mit.edu/books/introduction-algorithms"] ("http://mitpress.mit.edu/books/introduction-algorithms",""),Str "."]]
- ,Div ("ref-katoen2020",["csl-entry"],[])
-  [Para [Str "Katoen,",Space,Str "Joost-Pieter.",Space,Str "2020.",Space,Span ("",[],[]) [Str "\8220",Str "Datenstrukturen",Space,Str "Und",Space,Str "Algorithmen",Str ".",Str "\8221"],Space,Str "Lecture",Space,Str "Notes,",Space,Str "RWTH",Space,Str "Aachen."]]
- ,Div ("ref-knuth97",["csl-entry"],[])
-  [Para [Str "Knuth,",Space,Str "Donald",Space,Str "E.",Space,Str "1997.",Space,Emph [Str "The",Space,Str "Art",Space,Str "of",Space,Str "Computer",Space,Str "Programming,",Space,Str "Vol.",Space,Str "1:",Space,Str "Fundamental",Space,Str "Algorithms"],Str ".",Space,Str "Third.",Space,Str "Reading,",Space,Str "Mass.:",Space,Str "Addison-Wesley."]]
- ,Div ("ref-nebel2012entwurf",["csl-entry"],[])
-  [Para [Str "Nebel,",Space,Str "Markus.",Space,Str "2012.",Space,Emph [Str "Entwurf",Space,Str "Und",Space,Str "Analyse",Space,Str "von",Space,Str "Algorithmen:",Space,Str "Markus",Space,Str "Nebel"],Str ".",Space,Str "Studienb",Span ("",[],[]) [Str "\252"],Str "cher",Space,Str "Informatik.",Space,Str "Wiesbaden:",Space,Str "Vieweg",Space,Str "&",Space,Str "Teubner.",Space,Link ("",[],[]) [Str "http://d-nb.info/1018322566/04"] ("http://d-nb.info/1018322566/04",""),Str "."]]
- ,Div ("ref-ottmann2012",["csl-entry"],[])
-  [Para [Str "Ottmann,",Space,Str "Thomas,",Space,Str "and",Space,Str "Peter",Space,Str "Widmayer.",Space,Str "2012.",Space,Emph [Str "Algorithmen",Space,Str "Und",Space,Str "Datenstrukturen,",Space,Str "5.",Space,Str "Auflage."],Str "",Space,Str "Spektrum",Space,Str "Akademischer",Space,Str "Verlag."]]
- ,Div ("ref-yanofsky2010",["csl-entry"],[])
-  [Para [Str "Yanofsky,",Space,Str "Noson",Space,Str "S.",Space,Str "2010.",Space,Span ("",[],[]) [Str "\8220",Span ("",["nocase"],[]) [Str "Towards",Space,Str "a",Space,Str "Definition",Space,Str "of",Space,Str "an",Space,Str "Algorithm"],Str ".",Str "\8221"],Space,Emph [Str "Journal",Space,Str "of",Space,Str "Logic",Space,Str "and",Space,Str "Computation"],Space,Str "21",Space,Str "(2):",Space,Str "253\8211\&86.",Space,Str "doi:",Link ("",[],[]) [Str "10.1093/logcom/exq016"] ("https://doi.org/10.1093/logcom/exq016",""),Str "."]]]]
+,Header 1 ("references",["biblio"],[]) [Str "References"]
+,HorizontalRule
+,Header 1 ("interaktive-vorlesungsfolien-im-webbrowser",[],[]) [Str "Interaktive",Space,Str "Vorlesungsfolien",Space,Str "im",Space,Str "Webbrowser"]
+,Para [Str "Einsatz",Space,Str "von",Space,Emph [Str "decker"],Str ":"]
+,BulletList
+ [[Plain [Str "Pr\228sentationen",Space,Str "werden",Space,Str "in",Space,Quoted SingleQuote [Str "Markdown"],Space,Str "geschrieben",Space,Str "und"]]
+ ,[Plain [Str "umgewandelt",Space,Str "in",Space,Str "HTML",Space,Str "basierte",Space,Str "Pr\228sentationen",Space,Str "(auf",Space,Str "reveal.js",Space,Str "aufbauend)."]]
+ ,[Plain [Str "Dies",Space,Str "erlaubt",Space,Str "Einbindung",Space,Str "von",Space,Str "interaktiven,",Space,Str "multimedialen",Space,Str "Inhalten."]]]
+,Div ("",["box","columns"],[])
+ [Header 2 ("\252berblick",[],[]) [Str "\220berblick"]
+ ,Div ("",[],[("align","center")])
+  [Table ("",[],[]) (Caption Nothing
+   [])
+   [(AlignDefault,ColWidthDefault)
+   ,(AlignCenter,ColWidthDefault)
+   ,(AlignCenter,ColWidthDefault)
+   ,(AlignCenter,ColWidthDefault)]
+   (TableHead ("",[],[])
+   [Row ("",[],[])
+    [Cell ("",[],[]) AlignDefault (RowSpan 1) (ColSpan 1)
+     []
+    ,Cell ("",[],[]) AlignDefault (RowSpan 1) (ColSpan 1)
+     [Plain [Str "Powerpoint"]]
+    ,Cell ("",[],[]) AlignDefault (RowSpan 1) (ColSpan 1)
+     [Plain [Str "LaTeX-Beamer"]]
+    ,Cell ("",[],[]) AlignDefault (RowSpan 1) (ColSpan 1)
+     [Plain [Str "HTML-Folien"]]]])
+   [(TableBody ("",[],[]) (RowHeadColumns 0)
+    []
+    [Row ("",[],[])
+     [Cell ("",[],[]) AlignDefault (RowSpan 1) (ColSpan 1)
+      [Plain [Str "plattformunabh\228ngig"]]
+     ,Cell ("",[],[]) AlignDefault (RowSpan 1) (ColSpan 1)
+      [Plain [Str "\10060"]]
+     ,Cell ("",[],[]) AlignDefault (RowSpan 1) (ColSpan 1)
+      [Plain [Str "\9989"]]
+     ,Cell ("",[],[]) AlignDefault (RowSpan 1) (ColSpan 1)
+      [Plain [Str "\9989"]]]
+    ,Row ("",[],[])
+     [Cell ("",[],[]) AlignDefault (RowSpan 1) (ColSpan 1)
+      [Plain [Str "Mathe-Formelsatz"]]
+     ,Cell ("",[],[]) AlignDefault (RowSpan 1) (ColSpan 1)
+      [Plain [Str "\10060"]]
+     ,Cell ("",[],[]) AlignDefault (RowSpan 1) (ColSpan 1)
+      [Plain [Str "\9989"]]
+     ,Cell ("",[],[]) AlignDefault (RowSpan 1) (ColSpan 1)
+      [Plain [Str "\9989"]]]
+    ,Row ("",[],[])
+     [Cell ("",[],[]) AlignDefault (RowSpan 1) (ColSpan 1)
+      [Plain [Str "Einbinden",Space,Str "von",Space,Str "Videos"]]
+     ,Cell ("",[],[]) AlignDefault (RowSpan 1) (ColSpan 1)
+      [Plain [Str "\9989"]]
+     ,Cell ("",[],[]) AlignDefault (RowSpan 1) (ColSpan 1)
+      [Plain [Str "\10060"]]
+     ,Cell ("",[],[]) AlignDefault (RowSpan 1) (ColSpan 1)
+      [Plain [Str "\9989"]]]
+    ,Row ("",[],[])
+     [Cell ("",[],[]) AlignDefault (RowSpan 1) (ColSpan 1)
+      [Plain [Str "interaktiv"]]
+     ,Cell ("",[],[]) AlignDefault (RowSpan 1) (ColSpan 1)
+      [Plain [Str "\10060"]]
+     ,Cell ("",[],[]) AlignDefault (RowSpan 1) (ColSpan 1)
+      [Plain [Str "\10060"]]
+     ,Cell ("",[],[]) AlignDefault (RowSpan 1) (ColSpan 1)
+      [Plain [Str "\9989"]]]
+    ,Row ("",[],[])
+     [Cell ("",[],[]) AlignDefault (RowSpan 1) (ColSpan 1)
+      [Plain [Str "erweiterbar"]]
+     ,Cell ("",[],[]) AlignDefault (RowSpan 1) (ColSpan 1)
+      [Plain [Str "\10060"]]
+     ,Cell ("",[],[]) AlignDefault (RowSpan 1) (ColSpan 1)
+      [Plain [Str "\10060"]]
+     ,Cell ("",[],[]) AlignDefault (RowSpan 1) (ColSpan 1)
+      [Plain [Str "\9989"]]]
+    ,Row ("",[],[])
+     [Cell ("",[],[]) AlignDefault (RowSpan 1) (ColSpan 1)
+      [Plain [Str "Aufwand"]]
+     ,Cell ("",[],[]) AlignDefault (RowSpan 1) (ColSpan 1)
+      [Plain [Str "\128522"]]
+     ,Cell ("",[],[]) AlignDefault (RowSpan 1) (ColSpan 1)
+      [Plain [Str "\128546"]]
+     ,Cell ("",[],[]) AlignDefault (RowSpan 1) (ColSpan 1)
+      [Plain [Str "\128557"]]]])]
+   (TableFoot ("",[],[])
+   [])]
+ ,Div ("refs",["references","csl-bib-body","hanging-indent"],[])
+  [Div ("ref-cormen2009",["csl-entry"],[])
+   [Para [Str "Cormen,",Space,Str "Thomas",Space,Str "H.,",Space,Str "Charles",Space,Str "E.",Space,Str "Leiserson,",Space,Str "Ronald",Space,Str "L.",Space,Str "Rivest,",Space,Str "and",Space,Str "Clifford",Space,Str "Stein.",Space,Str "2009.",Space,Emph [Str "Introduction",Space,Str "to",Space,Str "Algorithms,",Space,Str "3rd",Space,Str "Edition"],Str ".",Space,Span ("",[],[]) [Str "MIT"],Space,Str "Press.",Space,Link ("",[],[]) [Str "http://mitpress.mit.edu/books/introduction-algorithms"] ("http://mitpress.mit.edu/books/introduction-algorithms",""),Str "."]]
+  ,Div ("ref-katoen2020",["csl-entry"],[])
+   [Para [Str "Katoen,",Space,Str "Joost-Pieter.",Space,Str "2020.",Space,Span ("",[],[]) [Str "\8220",Str "Datenstrukturen",Space,Str "Und",Space,Str "Algorithmen",Str ".",Str "\8221"],Space,Str "Lecture",Space,Str "Notes,",Space,Str "RWTH",Space,Str "Aachen."]]
+  ,Div ("ref-knuth97",["csl-entry"],[])
+   [Para [Str "Knuth,",Space,Str "Donald",Space,Str "E.",Space,Str "1997.",Space,Emph [Str "The",Space,Str "Art",Space,Str "of",Space,Str "Computer",Space,Str "Programming,",Space,Str "Vol.",Space,Str "1:",Space,Str "Fundamental",Space,Str "Algorithms"],Str ".",Space,Str "Third.",Space,Str "Reading,",Space,Str "Mass.:",Space,Str "Addison-Wesley."]]
+  ,Div ("ref-nebel2012entwurf",["csl-entry"],[])
+   [Para [Str "Nebel,",Space,Str "Markus.",Space,Str "2012.",Space,Emph [Str "Entwurf",Space,Str "Und",Space,Str "Analyse",Space,Str "von",Space,Str "Algorithmen:",Space,Str "Markus",Space,Str "Nebel"],Str ".",Space,Str "Studienb",Span ("",[],[]) [Str "\252"],Str "cher",Space,Str "Informatik.",Space,Str "Wiesbaden:",Space,Str "Vieweg",Space,Str "&",Space,Str "Teubner.",Space,Link ("",[],[]) [Str "http://d-nb.info/1018322566/04"] ("http://d-nb.info/1018322566/04",""),Str "."]]
+  ,Div ("ref-ottmann2012",["csl-entry"],[])
+   [Para [Str "Ottmann,",Space,Str "Thomas,",Space,Str "and",Space,Str "Peter",Space,Str "Widmayer.",Space,Str "2012.",Space,Emph [Str "Algorithmen",Space,Str "Und",Space,Str "Datenstrukturen,",Space,Str "5.",Space,Str "Auflage."],Str "",Space,Str "Spektrum",Space,Str "Akademischer",Space,Str "Verlag."]]
+  ,Div ("ref-yanofsky2010",["csl-entry"],[])
+   [Para [Str "Yanofsky,",Space,Str "Noson",Space,Str "S.",Space,Str "2010.",Space,Span ("",[],[]) [Str "\8220",Span ("",["nocase"],[]) [Str "Towards",Space,Str "a",Space,Str "Definition",Space,Str "of",Space,Str "an",Space,Str "Algorithm"],Str ".",Str "\8221"],Space,Emph [Str "Journal",Space,Str "of",Space,Str "Logic",Space,Str "and",Space,Str "Computation"],Space,Str "21",Space,Str "(2):",Space,Str "253\8211\&86.",Space,Str "doi:",Link ("",[],[]) [Str "10.1093/logcom/exq016"] ("https://doi.org/10.1093/logcom/exq016",""),Str "."]]]]]
