@@ -1,0 +1,1986 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Prof. Dr. Malte Schilling">
+  <title>Deep Reinforcement Learning: Introduction</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+  <!-- Default values for CSS variables can live here. They can be overridden by
+  meta data values. -->
+  <link rel="stylesheet" href="../support/css/variables.css">
+
+  <!-- Transfer meta data values from keys `palette.colors` and `css-variables`
+  into a style sheet. Default values can come from `variables.css`. -->
+  <style class="css-declarations">
+    @media (prefers-color-scheme: light) {
+      :root {
+                  --shade7: #1d1f21;
+                  --shade6: #282a2e;
+                  --shade5: #4d4d4c;
+                  --shade4: #969896;
+                  --shade3: #8e908c;
+                  --shade2: #d6d6d6;
+                  --shade1: #e0e0e0;
+                  --shade0: #ffffff;
+                  --base0F-fg: #825449;
+                  --base0F-ffg: #513733;
+                  --base0F-bg: #ceb9b5;
+                  --base0F-bbg: #f0ebea;
+                  --base0F: #a3685a;
+                  --base0E-fg: #6e4887;
+                  --base0E-ffg: #453155;
+                  --base0E-bg: #c4b5d1;
+                  --base0E-bbg: #edeaf1;
+                  --base0E: #8959a8;
+                  --base0D-fg: #257eb3;
+                  --base0D-ffg: #204f6f;
+                  --base0D-bg: #acccec;
+                  --base0D-bbg: #e8f0f9;
+                  --base0D: #2a9ddf;
+                  --base0C-fg: #347b80;
+                  --base0C-ffg: #264d51;
+                  --base0C-bg: #afcacd;
+                  --base0C-bbg: #e8eff0;
+                  --base0C: #3e999f;
+                  --base0B-fg: #6a931c;
+                  --base0B-ffg: #435c20;
+                  --base0B-bg: #c2d8ab;
+                  --base0B-bbg: #edf3e7;
+                  --base0B: #84b819;
+                  --base0A-fg: #bb9212;
+                  --base0A-ffg: #745b1d;
+                  --base0A-bg: #f3d8aa;
+                  --base0A-bbg: #fbf3e7;
+                  --base0A: #eab700;
+                  --base09-fg: #c46c20;
+                  --base09-ffg: #794521;
+                  --base09-bg: #f9c3ab;
+                  --base09-bbg: #fdede7;
+                  --base09: #f5871f;
+                  --base08-fg: #a02526;
+                  --base08-ffg: #632123;
+                  --base08-bg: #e0acac;
+                  --base08-bbg: #f5e8e8;
+                  --base08: #c82829;
+                  --base07: #1d1f21;
+                  --base06: #282a2e;
+                  --base05: #4d4d4c;
+                  --base04: #969896;
+                  --base03: #8e908c;
+                  --base02: #d6d6d6;
+                  --base01: #e0e0e0;
+                  --base00: #ffffff;
+                  --accent7-fg: #825449;
+                  --accent7-ffg: #513733;
+                  --accent7-bg: #ceb9b5;
+                  --accent7-bbg: #f0ebea;
+                  --accent7: #a3685a;
+                  --accent6-fg: #6e4887;
+                  --accent6-ffg: #453155;
+                  --accent6-bg: #c4b5d1;
+                  --accent6-bbg: #edeaf1;
+                  --accent6: #8959a8;
+                  --accent5-fg: #257eb3;
+                  --accent5-ffg: #204f6f;
+                  --accent5-bg: #acccec;
+                  --accent5-bbg: #e8f0f9;
+                  --accent5: #2a9ddf;
+                  --accent4-fg: #347b80;
+                  --accent4-ffg: #264d51;
+                  --accent4-bg: #afcacd;
+                  --accent4-bbg: #e8eff0;
+                  --accent4: #3e999f;
+                  --accent3-fg: #6a931c;
+                  --accent3-ffg: #435c20;
+                  --accent3-bg: #c2d8ab;
+                  --accent3-bbg: #edf3e7;
+                  --accent3: #84b819;
+                  --accent2-fg: #bb9212;
+                  --accent2-ffg: #745b1d;
+                  --accent2-bg: #f3d8aa;
+                  --accent2-bbg: #fbf3e7;
+                  --accent2: #eab700;
+                  --accent1-fg: #c46c20;
+                  --accent1-ffg: #794521;
+                  --accent1-bg: #f9c3ab;
+                  --accent1-bbg: #fdede7;
+                  --accent1: #f5871f;
+                  --accent0-fg: #a02526;
+                  --accent0-ffg: #632123;
+                  --accent0-bg: #e0acac;
+                  --accent0-bbg: #f5e8e8;
+                  --accent0: #c82829;
+              }
+
+      :root.dark {
+                  --shade7: #ffffff;
+                  --shade6: #e0e0e0;
+                  --shade5: #c5c8c6;
+                  --shade4: #b4b7b4;
+                  --shade3: #969896;
+                  --shade2: #373b41;
+                  --shade1: #282a2e;
+                  --shade0: #1d1f21;
+                  --base0F-fg: #ceb9b5;
+                  --base0F-ffg: #f0ebea;
+                  --base0F-bg: #825449;
+                  --base0F-bbg: #513733;
+                  --base0F: #a3685a;
+                  --base0E-fg: #d5c8da;
+                  --base0E-ffg: #f2eff3;
+                  --base0E-bg: #8e7796;
+                  --base0E-bbg: #594b5e;
+                  --base0E: #b294bb;
+                  --base0D-fg: #c1cedb;
+                  --base0D-ffg: #edf0f4;
+                  --base0D-bg: #678298;
+                  --base0D-bbg: #42515f;
+                  --base0D: #81a2be;
+                  --base0C-fg: #c4dbd8;
+                  --base0C-ffg: #edf4f3;
+                  --base0C-bg: #6e9893;
+                  --base0C-bbg: #465f5c;
+                  --base0C: #8abeb7;
+                  --base0B-fg: #bfd0ac;
+                  --base0B-ffg: #ecf1e8;
+                  --base0B-bg: #648627;
+                  --base0B-bbg: #405423;
+                  --base0B: #7da72a;
+                  --base0A-fg: #f6dfbc;
+                  --base0A-ffg: #fcf5ec;
+                  --base0A-bg: #c09f5e;
+                  --base0A-bbg: #77633d;
+                  --base0A: #f0c674;
+                  --base09-fg: #ecc8b6;
+                  --base09-ffg: #f9eeea;
+                  --base09-bg: #b2764d;
+                  --base09-bbg: #6e4a35;
+                  --base09: #de935f;
+                  --base08-fg: #e2b8b8;
+                  --base08-ffg: #f6eaea;
+                  --base08-bg: #a35253;
+                  --base08-bbg: #653637;
+                  --base08: #cc6666;
+                  --base07: #ffffff;
+                  --base06: #e0e0e0;
+                  --base05: #c5c8c6;
+                  --base04: #b4b7b4;
+                  --base03: #969896;
+                  --base02: #373b41;
+                  --base01: #282a2e;
+                  --base00: #1d1f21;
+                  --accent7-fg: #ceb9b5;
+                  --accent7-ffg: #f0ebea;
+                  --accent7-bg: #825449;
+                  --accent7-bbg: #513733;
+                  --accent7: #a3685a;
+                  --accent6-fg: #d5c8da;
+                  --accent6-ffg: #f2eff3;
+                  --accent6-bg: #8e7796;
+                  --accent6-bbg: #594b5e;
+                  --accent6: #b294bb;
+                  --accent5-fg: #c1cedb;
+                  --accent5-ffg: #edf0f4;
+                  --accent5-bg: #678298;
+                  --accent5-bbg: #42515f;
+                  --accent5: #81a2be;
+                  --accent4-fg: #c4dbd8;
+                  --accent4-ffg: #edf4f3;
+                  --accent4-bg: #6e9893;
+                  --accent4-bbg: #465f5c;
+                  --accent4: #8abeb7;
+                  --accent3-fg: #bfd0ac;
+                  --accent3-ffg: #ecf1e8;
+                  --accent3-bg: #648627;
+                  --accent3-bbg: #405423;
+                  --accent3: #7da72a;
+                  --accent2-fg: #f6dfbc;
+                  --accent2-ffg: #fcf5ec;
+                  --accent2-bg: #c09f5e;
+                  --accent2-bbg: #77633d;
+                  --accent2: #f0c674;
+                  --accent1-fg: #ecc8b6;
+                  --accent1-ffg: #f9eeea;
+                  --accent1-bg: #b2764d;
+                  --accent1-bbg: #6e4a35;
+                  --accent1: #de935f;
+                  --accent0-fg: #e2b8b8;
+                  --accent0-ffg: #f6eaea;
+                  --accent0-bg: #a35253;
+                  --accent0-bbg: #653637;
+                  --accent0: #cc6666;
+              }
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+                  --shade7: #ffffff;
+                  --shade6: #e0e0e0;
+                  --shade5: #c5c8c6;
+                  --shade4: #b4b7b4;
+                  --shade3: #969896;
+                  --shade2: #373b41;
+                  --shade1: #282a2e;
+                  --shade0: #1d1f21;
+                  --base0F-fg: #ceb9b5;
+                  --base0F-ffg: #f0ebea;
+                  --base0F-bg: #825449;
+                  --base0F-bbg: #513733;
+                  --base0F: #a3685a;
+                  --base0E-fg: #d5c8da;
+                  --base0E-ffg: #f2eff3;
+                  --base0E-bg: #8e7796;
+                  --base0E-bbg: #594b5e;
+                  --base0E: #b294bb;
+                  --base0D-fg: #c1cedb;
+                  --base0D-ffg: #edf0f4;
+                  --base0D-bg: #678298;
+                  --base0D-bbg: #42515f;
+                  --base0D: #81a2be;
+                  --base0C-fg: #c4dbd8;
+                  --base0C-ffg: #edf4f3;
+                  --base0C-bg: #6e9893;
+                  --base0C-bbg: #465f5c;
+                  --base0C: #8abeb7;
+                  --base0B-fg: #bfd0ac;
+                  --base0B-ffg: #ecf1e8;
+                  --base0B-bg: #648627;
+                  --base0B-bbg: #405423;
+                  --base0B: #7da72a;
+                  --base0A-fg: #f6dfbc;
+                  --base0A-ffg: #fcf5ec;
+                  --base0A-bg: #c09f5e;
+                  --base0A-bbg: #77633d;
+                  --base0A: #f0c674;
+                  --base09-fg: #ecc8b6;
+                  --base09-ffg: #f9eeea;
+                  --base09-bg: #b2764d;
+                  --base09-bbg: #6e4a35;
+                  --base09: #de935f;
+                  --base08-fg: #e2b8b8;
+                  --base08-ffg: #f6eaea;
+                  --base08-bg: #a35253;
+                  --base08-bbg: #653637;
+                  --base08: #cc6666;
+                  --base07: #ffffff;
+                  --base06: #e0e0e0;
+                  --base05: #c5c8c6;
+                  --base04: #b4b7b4;
+                  --base03: #969896;
+                  --base02: #373b41;
+                  --base01: #282a2e;
+                  --base00: #1d1f21;
+                  --accent7-fg: #ceb9b5;
+                  --accent7-ffg: #f0ebea;
+                  --accent7-bg: #825449;
+                  --accent7-bbg: #513733;
+                  --accent7: #a3685a;
+                  --accent6-fg: #d5c8da;
+                  --accent6-ffg: #f2eff3;
+                  --accent6-bg: #8e7796;
+                  --accent6-bbg: #594b5e;
+                  --accent6: #b294bb;
+                  --accent5-fg: #c1cedb;
+                  --accent5-ffg: #edf0f4;
+                  --accent5-bg: #678298;
+                  --accent5-bbg: #42515f;
+                  --accent5: #81a2be;
+                  --accent4-fg: #c4dbd8;
+                  --accent4-ffg: #edf4f3;
+                  --accent4-bg: #6e9893;
+                  --accent4-bbg: #465f5c;
+                  --accent4: #8abeb7;
+                  --accent3-fg: #bfd0ac;
+                  --accent3-ffg: #ecf1e8;
+                  --accent3-bg: #648627;
+                  --accent3-bbg: #405423;
+                  --accent3: #7da72a;
+                  --accent2-fg: #f6dfbc;
+                  --accent2-ffg: #fcf5ec;
+                  --accent2-bg: #c09f5e;
+                  --accent2-bbg: #77633d;
+                  --accent2: #f0c674;
+                  --accent1-fg: #ecc8b6;
+                  --accent1-ffg: #f9eeea;
+                  --accent1-bg: #b2764d;
+                  --accent1-bbg: #6e4a35;
+                  --accent1: #de935f;
+                  --accent0-fg: #e2b8b8;
+                  --accent0-ffg: #f6eaea;
+                  --accent0-bg: #a35253;
+                  --accent0-bbg: #653637;
+                  --accent0: #cc6666;
+              }
+
+      :root.light {
+                  --shade7: #1d1f21;
+                  --shade6: #282a2e;
+                  --shade5: #4d4d4c;
+                  --shade4: #969896;
+                  --shade3: #8e908c;
+                  --shade2: #d6d6d6;
+                  --shade1: #e0e0e0;
+                  --shade0: #ffffff;
+                  --base0F-fg: #825449;
+                  --base0F-ffg: #513733;
+                  --base0F-bg: #ceb9b5;
+                  --base0F-bbg: #f0ebea;
+                  --base0F: #a3685a;
+                  --base0E-fg: #6e4887;
+                  --base0E-ffg: #453155;
+                  --base0E-bg: #c4b5d1;
+                  --base0E-bbg: #edeaf1;
+                  --base0E: #8959a8;
+                  --base0D-fg: #257eb3;
+                  --base0D-ffg: #204f6f;
+                  --base0D-bg: #acccec;
+                  --base0D-bbg: #e8f0f9;
+                  --base0D: #2a9ddf;
+                  --base0C-fg: #347b80;
+                  --base0C-ffg: #264d51;
+                  --base0C-bg: #afcacd;
+                  --base0C-bbg: #e8eff0;
+                  --base0C: #3e999f;
+                  --base0B-fg: #6a931c;
+                  --base0B-ffg: #435c20;
+                  --base0B-bg: #c2d8ab;
+                  --base0B-bbg: #edf3e7;
+                  --base0B: #84b819;
+                  --base0A-fg: #bb9212;
+                  --base0A-ffg: #745b1d;
+                  --base0A-bg: #f3d8aa;
+                  --base0A-bbg: #fbf3e7;
+                  --base0A: #eab700;
+                  --base09-fg: #c46c20;
+                  --base09-ffg: #794521;
+                  --base09-bg: #f9c3ab;
+                  --base09-bbg: #fdede7;
+                  --base09: #f5871f;
+                  --base08-fg: #a02526;
+                  --base08-ffg: #632123;
+                  --base08-bg: #e0acac;
+                  --base08-bbg: #f5e8e8;
+                  --base08: #c82829;
+                  --base07: #1d1f21;
+                  --base06: #282a2e;
+                  --base05: #4d4d4c;
+                  --base04: #969896;
+                  --base03: #8e908c;
+                  --base02: #d6d6d6;
+                  --base01: #e0e0e0;
+                  --base00: #ffffff;
+                  --accent7-fg: #825449;
+                  --accent7-ffg: #513733;
+                  --accent7-bg: #ceb9b5;
+                  --accent7-bbg: #f0ebea;
+                  --accent7: #a3685a;
+                  --accent6-fg: #6e4887;
+                  --accent6-ffg: #453155;
+                  --accent6-bg: #c4b5d1;
+                  --accent6-bbg: #edeaf1;
+                  --accent6: #8959a8;
+                  --accent5-fg: #257eb3;
+                  --accent5-ffg: #204f6f;
+                  --accent5-bg: #acccec;
+                  --accent5-bbg: #e8f0f9;
+                  --accent5: #2a9ddf;
+                  --accent4-fg: #347b80;
+                  --accent4-ffg: #264d51;
+                  --accent4-bg: #afcacd;
+                  --accent4-bbg: #e8eff0;
+                  --accent4: #3e999f;
+                  --accent3-fg: #6a931c;
+                  --accent3-ffg: #435c20;
+                  --accent3-bg: #c2d8ab;
+                  --accent3-bbg: #edf3e7;
+                  --accent3: #84b819;
+                  --accent2-fg: #bb9212;
+                  --accent2-ffg: #745b1d;
+                  --accent2-bg: #f3d8aa;
+                  --accent2-bbg: #fbf3e7;
+                  --accent2: #eab700;
+                  --accent1-fg: #c46c20;
+                  --accent1-ffg: #794521;
+                  --accent1-bg: #f9c3ab;
+                  --accent1-bbg: #fdede7;
+                  --accent1: #f5871f;
+                  --accent0-fg: #a02526;
+                  --accent0-ffg: #632123;
+                  --accent0-bg: #e0acac;
+                  --accent0-bbg: #f5e8e8;
+                  --accent0: #c82829;
+              }
+    }
+    :root {
+          }
+  </style>
+
+  <link rel="stylesheet" href="../support/vendor/reveal/dist/reset.css">
+  <link rel="stylesheet" href="../support/vendor/reveal/dist/reveal.css">
+  <link rel="stylesheet" href="../support/components/components.css">
+  <link rel="stylesheet" href="../support/plugins/decker/ui-anchors.css">
+  <link rel="stylesheet" href="../support/plugins/whiteboard/whiteboard.css">
+  <link rel="stylesheet" href="../support/plugins/menu/menu.css">
+  <link rel="stylesheet" href="../support/plugins/feedback/feedback.css">
+  <link rel="stylesheet" href="../support/plugins/explain/explain.css">
+    <link rel="stylesheet" href="../support/plugins/live-captioning/live-captioning.css">
+    <link rel="stylesheet" href="../support/vendor/videojs/video-js.min.css">
+  <link rel="stylesheet" href="../support/vendor/css/xcode.css">
+  <link rel="stylesheet" href="../support/flyingFocus/flying-focus.css">
+  <link rel="stylesheet" href="../support/plugins/quiz-wue/quiz-wue.css">
+  <link rel="stylesheet" href="../support/css/deck.css">
+  <link rel="stylesheet" href="../support/css/msms-deck.css">
+  
+</head>
+
+<body >
+  <div class="reveal">
+    <div class="slides">
+
+      <section id="title-slide">
+
+         <div class="background-on-accent">
+                     <h1>Deep Reinforcement Learning</h1>
+                              <h2>Introduction</h2>
+                  </div>
+
+         
+         
+                  <div class="author"> Prof. Dr. Malte Schilling </div>
+         
+                  <div class="affiliation"> Autonomous Intelligent
+Systems Group </div>
+         
+         
+         <img class="logo affiliation-logo light-only" src="./../support/assets/ms-logo-light.svg">
+         <img class="logo affiliation-logo dark-only" src="./../support/assets/ms-logo-dark.svg">
+
+               </section>
+
+
+<section id="overview-today" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Overview today</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<ol style="list-style-type: decimal">
+<li>Lecture information.</li>
+<li>Overview Machine Learning – towards Reinforcement Learning.</li>
+<li>Topics of the Lecture.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="general-information" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>General Information</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>The Module consists of</p>
+<div class="incremental">
+<ul class="incremental">
+<li class="fragment">a lecture,</li>
+<li class="fragment">exercises,
+<ul class="incremental">
+<li class="fragment">explanation of solution (50 % of problems)</li>
+</ul></li>
+<li class="fragment">and an exam
+<ul class="incremental">
+<li class="fragment">brief oral exam</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="the-lecture" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>The Lecture</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="incremental">
+<ul class="incremental">
+<li class="fragment">Takes place on Tuesday, 10:15 AM to 11:45 AM, in M5.</li>
+<li class="fragment">Presupposes preliminary knowledge in mathematics (linear algebra, probabilities, (multi-dimensional) differentiation).</li>
+<li class="fragment">Slides for the lecture will be made available (as html repository and PDF.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="exercises" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Exercises</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="incremental">
+<ul class="incremental">
+<li class="fragment">Exercise slot is Friday morning, 10:15 AM to 11:45, M5.</li>
+<li class="fragment">Solutions (for programming exercises in python) should be submitted by small teams of two or three persons. Everybody has to be able to present the solution during meetings.</li>
+<li class="fragment">There will be a new exercise sheet every two weeks. Discussion and presentation of the solution will be during the exercise slot as well every second week.</li>
+<li class="fragment">For the weeks in between: will be additional time for introduction of concepts, discussion, questions …</li>
+<li class="fragment">First exercise slot: 21.10.2021, brief introduction to python.</li>
+<li class="fragment">Honor code: Do collaborate and discuss together, but write up and code independently. Do not show anyone else your writeup or code or post it online (unless specified).</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="reading-list" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Reading List</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="incremental">
+<ul class="incremental">
+<li class="fragment">On Machine Learning and Artificial Intelligence in general:
+<ul class="incremental">
+<li class="fragment"><span class="citation">(<a href="#ref-bishop2006" role="doc-biblioref">Bishop 2006</a>)</span></li>
+<li class="fragment">Stanford Course on AI, CS-221 <span class="citation">(<a href="#ref-cs221_2018" role="doc-biblioref">Liang 2018</a>)</span></li>
+</ul></li>
+<li class="fragment">On Deep Neural Networks:
+<ul class="incremental">
+<li class="fragment">Deep Neural Networks book <span class="citation">(<a href="#ref-goodfellow2016" role="doc-biblioref">Goodfellow, Bengio, und Courville 2016</a>)</span>, <a href="http://www.deeplearningbook.org/">online available</a>.</li>
+</ul></li>
+<li class="fragment">On (Deep) Reinforcement Learning:
+<ul class="incremental">
+<li class="fragment">Sutton and Barto, book <span class="citation">(<a href="#ref-sutton2018" role="doc-biblioref">Sutton und Barto 2018</a>)</span>, <a href="http://incompleteideas.net/book/bookdraft2017nov5.pdf">also online available</a>.</li>
+<li class="fragment">D. Silver <a href="http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html">online course</a> on Deep Reinforcement learning at UCL.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="machine-learning" class="section slide level1" data-background-color="#6A931C">
+<div class="decker">
+<div class="alignment">
+<h1>Machine Learning</h1>
+</div>
+</div>
+</section>
+<section id="machine-learning-is" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Machine Learning is …</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="grid-layout" style="grid-template-columns: 50fr 50fr;">
+<div class="media">
+<figure class="fragment image" style="height:auto;width:auto;">
+<img src="../data/01/google_ml_cartoon/panel_12.png" style="height:540px;width:auto;" alt="../data/01/google_ml_cartoon/panel_12.png" />
+</figure>
+</div>
+<div class="r-stack">
+<p><span class="media"><span class="figure fragment image" style="height:auto;width:auto;"><img src="../data/01/google_ml_cartoon/panel_13.png" style="height:540px;width:auto;" alt="../data/01/google_ml_cartoon/panel_13.png" /></span></span> <span class="media"><span class="figure fragment image" style="height:auto;width:auto;"><img src="../data/01/google_ml_cartoon/panel_14.png" style="height:540px;width:auto;" alt="../data/01/google_ml_cartoon/panel_14.png" /></span></span></p>
+</div>
+</div>
+</div>
+<div id="section" class="footer box block">
+<h2 class="footer"></h2>
+<p>Images from <span class="citation">(<a href="#ref-ml_cartoon_2019" role="doc-biblioref"><span>„Machine Learning - an online comic from google AI“</span> 2019</a>)</span>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="artificial-intelligence" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Artificial Intelligence</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="grid-layout" style="grid-template-columns: 50fr 50fr;">
+<blockquote>
+<p>Artificial Intelligence is the new electricity.(Andrew Ng)</p>
+</blockquote>
+<div class="media">
+<figure class="fragment image" style="height:auto;width:auto;">
+<img src="../data/01/google_ml_cartoon/panel_16.png" style="height:540px;width:auto;" alt="../data/01/google_ml_cartoon/panel_16.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="artificial-intelligence-1" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Artificial Intelligence</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="incremental">
+<ul class="incremental">
+<li class="fragment">Understanding human intelligence has been a research question for long times.</li>
+<li class="fragment">Artificial intelligence has turned towards how machines could become intelligent.</li>
+<li class="fragment">Initially, approaches focussed on specific mechanism and logic descriptions. This allowed to solve –for human– difficult problems based on formal methods and application of rules.</li>
+<li class="fragment">It became obvious that the true challenge for Artificial Intelligence are problems which are easy to perform, but hard to formalize.</li>
+</ul>
+</div>
+</div>
+<div id="section-1" class="definition box block fragment">
+<h2 class="definition"></h2>
+<p>AI is “the science and engineering of making intelligent machines, especially intelligent computer programs. It is related to the similar task of using computers to understand human intelligence, but AI does not have to confine itself to methods that are biologically observable … (McCarthy, 1956)</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="two-broad-influences-in-ai" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Two broad influences in AI</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<ul>
+<li>logic based – focus on higher, symbolic level and manipulation of these</li>
+<li>learning – from experience</li>
+</ul>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/01/nvidia_deep_learning_timeline.png" aria-label="from nvidia" title="from nvidia" style="height:480px;width:auto;" alt="../data/01/nvidia_deep_learning_timeline.png" />
+<figcaption>
+from nvidia
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="a-spectrum-of-intelligence" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>A spectrum of intelligence</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div id="svg" class="media">
+<figure class="image">
+<img src="../data/01/intelligence_spectrum.svg" alt="../data/01/intelligence_spectrum.svg" />
+</figure>
+</div>
+<p>Spectrum of different “levels” of intelligence – for Machine Learning (following <span class="citation">(<a href="#ref-cs221_2018" role="doc-biblioref">Liang 2018</a>)</span>).</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="promise-of-learning" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Promise of Learning</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="incremental">
+<ul class="incremental">
+<li class="fragment">Many seemingly simple tasks are hard to describe in a formal way.</li>
+<li class="fragment">Nonetheless, humans are quite good to solve such problems and manage such tasks.</li>
+<li class="fragment">Crucial is the ability to learn which is a characteristic and prerequisite for intelligent behavior.</li>
+<li class="fragment">Machine Learning in general aims at learning how to solve a task through training instead of relying on a formal description.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="learning-from-demonstration" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Learning from demonstration</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<iframe width="1120" height="630" src="https://www.youtube.com/embed/HSyAGMGikLk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+<div class="tiny">
+<p>Toyota Research Institute built a household robot that users can train using a virtual reality interface. The robot learns a new behavior based on a single instance of VR guidance. Then it responds to voice commands to carry out the behavior in a variety of real-world environments (<a href="https://arxiv.org/pdf/1910.00127.pdf">paper</a> accepted at ICRA 2020).</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="learning-is-the-answer-to-a-number-of-important-questions" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Learning is the answer to a number of important questions:</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="incremental">
+<ul class="incremental">
+<li class="fragment">How to enhance limited knowledge and skills?</li>
+<li class="fragment">How to improve performance on a task?</li>
+<li class="fragment">How to avoid prestructuring everything by hand?</li>
+<li class="fragment">How to cope with novelty and change?</li>
+<li class="fragment">How to get around in a world that can only partially be known?</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="simple-example-learning-from-experience" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Simple example: Learning from experience</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="grid-layout" style="grid-template-columns: 50fr 50fr;">
+<div class="media">
+<figure class="fragment image" style="height:auto;width:auto;">
+<img src="../data/01/google_ml_cartoon/panel_32.png" style="height:540px;width:auto;" alt="../data/01/google_ml_cartoon/panel_32.png" />
+</figure>
+</div>
+<div class="media">
+<figure class="fragment image" style="height:auto;width:auto;">
+<img src="../data/01/google_ml_cartoon/panel_33.png" style="height:540px;width:auto;" alt="../data/01/google_ml_cartoon/panel_33.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="regression-as-learning" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Regression as Learning</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="grid-layout" style="grid-template-columns: 50fr 50fr;">
+<div class="media">
+<figure class="fragment image" style="height:auto;width:auto;">
+<img src="../data/01/google_ml_cartoon/panel_34.png" style="height:540px;width:auto;" alt="../data/01/google_ml_cartoon/panel_34.png" />
+</figure>
+</div>
+<div class="media">
+<figure class="fragment image" style="height:auto;width:auto;">
+<img src="../data/01/google_ml_cartoon/panel_35.png" style="height:540px;width:auto;" alt="../data/01/google_ml_cartoon/panel_35.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="regression-for-function-approximation" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Regression for Function Approximation</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="grid-layout" style="grid-template-columns: 50fr 50fr;">
+<div class="media">
+<figure class="fragment image" style="height:auto;width:auto;">
+<img src="../data/01/google_ml_cartoon/panel_52.png" style="height:540px;width:auto;" alt="../data/01/google_ml_cartoon/panel_52.png" />
+</figure>
+</div>
+<div class="media">
+<figure class="fragment image" style="height:auto;width:auto;">
+<img src="../data/01/google_ml_cartoon/panel_53.png" style="height:540px;width:auto;" alt="../data/01/google_ml_cartoon/panel_53.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="task-how-to-automatically-learn-a-regression-line" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Task: How to automatically learn a regression line?</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Short break – discussion, solve in small groups.</p>
+<div class="grid-layout" style="grid-template-columns: 30fr 70fr;">
+<div class="media">
+<figure class="image" style="height:auto;width:300px;">
+<img src="../data/Discussion.png" style="height:auto;width:100%;" alt="../data/Discussion.png" />
+</figure>
+</div>
+<p>Question: Can you explain how to fit such a simple linear model towards a set of given data points? Either describe an (or multiple) approaches in your own words at first. Or, if possible, try to formalize the process.</p>
+</div>
+<ul>
+<li>How can we fit a regression line to a set of data points?</li>
+<li>Do you know other possible Machine Learning methods that we could use for this task?</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="regression-example" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Regression Example</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Set of data points, develop how to fit regression line.</p>
+<p>Methods of optimization:</p>
+<ul>
+<li>solve using pseudo-inverse</li>
+<li>gradient descent</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="different-forms-of-learning" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Different forms of Learning</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="grid-layout" style="grid-template-columns: 50fr 50fr;">
+<div class="media">
+<figure class="fragment image" style="height:auto;width:auto;">
+<img src="../data/01/google_ml_cartoon/panel_63.png" style="height:540px;width:auto;" alt="../data/01/google_ml_cartoon/panel_63.png" />
+</figure>
+</div>
+<div class="media">
+<figure class="fragment image" style="height:auto;width:auto;">
+<img src="../data/01/google_ml_cartoon/panel_64.png" style="height:540px;width:auto;" alt="../data/01/google_ml_cartoon/panel_64.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="types-of-learning" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Types of Learning</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/01/learning_forms_6.png" aria-label="Distinction of different types of learning" title="Distinction of different types of learning" style="height:580px;width:auto;" alt="../data/01/learning_forms_6.png" />
+<figcaption>
+Distinction of different types of learning
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="supervised-learning" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Supervised Learning</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="grid-layout" style="grid-template-columns: 50fr 50fr;">
+<div class="media">
+<figure class="fragment image" style="height:auto;width:auto;">
+<img src="../data/01/google_ml_cartoon/panel_65.png" style="height:460px;width:auto;" alt="../data/01/google_ml_cartoon/panel_65.png" />
+</figure>
+</div>
+<div class="media">
+<figure class="fragment image" style="height:auto;width:auto;">
+<img src="../data/01/google_ml_cartoon/panel_66.png" style="height:460px;width:auto;" alt="../data/01/google_ml_cartoon/panel_66.png" />
+</figure>
+</div>
+</div>
+</div>
+<div id="section-2" class="definition box block fragment">
+<h2 class="definition"></h2>
+<p>Supervised learning algorithms experience a dataset containing features, but each example is also associated with a label or target <span class="citation">(<a href="#ref-goodfellow2016" role="doc-biblioref">Goodfellow, Bengio, und Courville 2016</a>)</span>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="regression-and-classification" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Regression and Classification</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/01/google_ml_cartoon/panel_49_animation.gif" style="height:580px;width:auto;" alt="../data/01/google_ml_cartoon/panel_49_animation.gif" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="google-translate" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Google Translate</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="grid-layout" style="grid-template-columns: 50fr 50fr;">
+<p>Google Translate allows you to explore unfamiliar lands and communicate in different languages.<br />
+<br />
+<br />
+Instant camera translation allows you to see the world in your language by just pointing your camera lens at the foreign text <span class="citation">(<a href="#ref-translate_2019" role="doc-biblioref">Gu 2019</a>)</span>.</p>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="https://storage.googleapis.com/gweb-uniblog-publish-prod/original_images/optics.gif" aria-label="Google translate on a mobile phone." title="Google translate on a mobile phone." style="height:600px;width:auto;" alt="/gweb-uniblog-publish-prod/original_images/optics.gif" />
+<figcaption>
+Google translate on a mobile phone.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="classification-approaches" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Classification: Approaches</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/01/google_ml_cartoon/panel_28.png" style="height:540px;width:auto;" alt="../data/01/google_ml_cartoon/panel_28.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="classification---promise-of-deep-neural-networks" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Classification - Promise of Deep Neural Networks</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="grid-layout" style="grid-template-columns: 50fr 50fr;">
+<ul>
+<li><p>Deep Learning deals with high dimensional input data and tries to learn multiple layers of representation.</p></li>
+<li><p>The goal is to transform input into gradually higher levels of representation that represent more and more abstract functions of the raw input.</p></li>
+<li><p>In Deep Learning all those levels are learnt. As an advantage, features are represented in a distributed fashion and can be shared.</p></li>
+</ul>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/01/deep_nn_layers.png" aria-label="Overview of feature hierarchy in deep neural networks (Goodfellow, Bengio, und Courville 2016)." title="Overview of feature hierarchy in deep neural networks (Goodfellow, Bengio, und Courville 2016)." style="height:480px;width:auto;" alt="../data/01/deep_nn_layers.png" />
+<figcaption>
+Overview of feature hierarchy in deep neural networks <span class="citation">(<a href="#ref-goodfellow2016" role="doc-biblioref">Goodfellow, Bengio, und Courville 2016</a>)</span>.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="unsupervised" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Unsupervised Learning</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="grid-layout" style="grid-template-columns: 50fr 50fr;">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/01/google_ml_cartoon/panel_67.png" style="height:420px;width:auto;" alt="../data/01/google_ml_cartoon/panel_67.png" />
+</figure>
+</div>
+<div class="media">
+<figure class="fragment image" style="height:auto;width:auto;">
+<img src="../data/01/google_ml_cartoon/panel_68.png" style="height:420px;width:auto;" alt="../data/01/google_ml_cartoon/panel_68.png" />
+</figure>
+</div>
+</div>
+</div>
+<div id="section-3" class="definition box block fragment">
+<h2 class="definition"></h2>
+<p>Unsupervised learning algorithms experience a dataset containing many features, then learn useful properties of the structure of this dataset. In the context of deep learning, we usually want to learn the entire probability distribution that generated a dataset <span class="citation">(<a href="#ref-goodfellow2016" role="doc-biblioref">Goodfellow, Bengio, und Courville 2016</a>)</span>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="clustering" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Clustering</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>What methods known?</p>
+<aside class="notes">
+<p>k-Nearest Neighbors = non=parametric<br />
+k-Means = parametric</p>
+<p>SVM Gaussian Mixture Models</p>
+</aside>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="overview-common-ml-algorithms" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Overview common ML algorithms</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="https://miro.medium.com/max/1600/1%2adYgEs2roROf3j2ANzkDHMA.png" aria-label="How to decide which machine learning algorithm to choose for a problem („Choosing the right estimator“ 2018)." title="How to decide which machine learning algorithm to choose for a problem („Choosing the right estimator“ 2018)." style="height:600px;width:auto;" alt="/max/1600/1*dYgEs2roROf3j2ANzkDHMA.png" />
+<figcaption>
+How to decide which machine learning algorithm to choose for a problem <span class="citation">(<a href="#ref-cheatsheet2018" role="doc-biblioref"><span>„Choosing the right estimator“</span> 2018</a>)</span>.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-generative-adversarial-networks" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Example: Generative Adversarial Networks</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="grid-layout" style="grid-template-columns: 50fr 50fr;">
+<div class="media">
+<figure class="image" style="height:auto;width:400px;">
+<img src="https://miro.medium.com/max/1400/1%2agtOQJjxhiO71j9_hoOiMJQ.png" aria-label="GAN architecture" title="GAN architecture" style="height:auto;width:100%;" alt="/max/1400/1*gtOQJjxhiO71j9_hoOiMJQ.png" />
+<figcaption>
+GAN architecture
+</figcaption>
+</figure>
+</div>
+<div class="media">
+<figure class="image" style="height:auto;width:480px;">
+<img src="https://miro.medium.com/max/1400/1%2atUhgr3m54Qc80GU2BkaOiQ.gif" aria-label="ProGAN progressive training" title="ProGAN progressive training" style="height:auto;width:100%;" alt="/max/1400/1*tUhgr3m54Qc80GU2BkaOiQ.gif" />
+<figcaption>
+ProGAN progressive training
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div id="section-4" class="footer box block">
+<h2 class="footer"></h2>
+<p>Introduction to ProGAN <span class="citation">(<a href="#ref-wolf2018progan" role="doc-biblioref">Wolf 2018</a>)</span>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-this-person-does-not-exist" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Example: This person does not exist</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="iframe" style="width:800px;height:auto;">
+<iframe style="width:100%;height:600px;" allow="fullscreen" data-src="https://thispersondoesnotexist.com/index.html">
+
+</iframe>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-generative-models-diffusion" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Example: Generative Models – Diffusion</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/01/stable-diffusion-text-to-image.png" style="height:300px;width:auto;" alt="../data/01/stable-diffusion-text-to-image.png" />
+</figure>
+</div>
+<div class="media">
+<figure class="fragment image" style="height:auto;width:640px;">
+<img src="../data/01/diffusion_figure.png" style="height:auto;width:100%;" alt="../data/01/diffusion_figure.png" />
+</figure>
+</div>
+<div class="media">
+<figure class="fragment image" style="height:auto;width:640px;">
+<img src="../data/01/diffusion_figure_known.png" style="height:auto;width:100%;" alt="../data/01/diffusion_figure_known.png" />
+</figure>
+</div>
+</div>
+<div id="section-5" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-alammar2022diffusion" role="doc-biblioref">Alammar 2022</a>)</span> and <span class="citation">(<a href="#ref-ho2020diffusion" role="doc-biblioref">Ho, Jain, und Abbeel 2020</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-generative-models-diffusion-2" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Example: Generative Models – Diffusion 2</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="r-stack">
+<p><span class="media"><span class="figure fragment image" style="height:auto;width:auto;"><img src="../data/01/stable-diffusion-diffusion-process.png" style="height:480px;width:auto;" alt="../data/01/stable-diffusion-diffusion-process.png" /></span></span> <span class="media"><span class="figure fragment image" style="height:auto;width:auto;"><img src="../data/01/stable-diffusion-latent-space-pixel-space.png" style="height:480px;width:auto;" alt="../data/01/stable-diffusion-latent-space-pixel-space.png" /></span></span> <span class="media"><span class="figure fragment image" style="height:auto;width:auto;"><img src="../data/01/stable-diffusion-denoising-steps-latents.png" style="height:480px;width:auto;" alt="../data/01/stable-diffusion-denoising-steps-latents.png" /></span></span></p>
+</div>
+</div>
+<div id="section-6" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-alammar2022diffusion" role="doc-biblioref">Alammar 2022</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-generative-models-diffusion-3" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Example: Generative Models – Diffusion 3</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="grid-layout" style="grid-template-columns: 50fr 50fr;">
+<div class="controls autoplay muted media">
+<figure class="image" style="height:auto;width:auto;">
+<video src="../data/01/diffusion-steps-all-loop.webm" aria-label="Diffusion Process conditioned on text" title="Diffusion Process conditioned on text" style="height:400px;width:auto;" controls=""><a href="../data/01/diffusion-steps-all-loop.webm">../data/01/diffusion-steps-all-loop.webm</a></video>
+<figcaption>
+Diffusion Process conditioned on text
+</figcaption>
+</figure>
+</div>
+<div class="media">
+<figure class="fragment image" style="height:auto;width:auto;">
+<img src="../data/01/dalle2-astronaut.jpg" style="height:480px;width:auto;" alt="../data/01/dalle2-astronaut.jpg" />
+</figure>
+</div>
+</div>
+</div>
+<div id="section-7" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-alammar2022diffusion" role="doc-biblioref">Alammar 2022</a>)</span> and <span class="citation">(<a href="#ref-dalle2_2022" role="doc-biblioref"><span>„Dall-E 2“</span> 2022</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-outpainting-with-dall-e-2" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Example: Outpainting with Dall-E 2</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="video" style="height:auto;width:auto;">
+<video aria-label="Diffusion Process conditioned on text" title="Diffusion Process conditioned on text" controls="1" muted="1" allow="autoplay" data-autoplay="1" style="height:640px;width:auto;" data-src="https://cdn.openai.com/outpainting/draft-20220829b/girl-with-a-pearl-earring-bts-cropped.mp4">
+
+</video>
+<figcaption>
+Diffusion Process conditioned on text
+</figcaption>
+</figure>
+</div>
+</div>
+<div id="section-8" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-dalle2_2022" role="doc-biblioref"><span>„Dall-E 2“</span> 2022</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="reinforcement-learning" class="section slide level1" data-background-color="#6A931C">
+<div class="decker">
+<div class="alignment">
+<h1>Reinforcement Learning</h1>
+</div>
+</div>
+</section>
+<section id="reinforcement" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Reinforcement Learning</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="grid-layout" style="grid-template-columns: 50fr 50fr;">
+<div class="media">
+<figure class="fragment image" style="height:auto;width:auto;">
+<img src="../data/01/google_ml_cartoon/panel_69.png" style="height:440px;width:auto;" alt="../data/01/google_ml_cartoon/panel_69.png" />
+</figure>
+</div>
+<div class="media">
+<figure class="fragment image" style="height:auto;width:auto;">
+<img src="../data/01/google_ml_cartoon/panel_70.png" style="height:440px;width:auto;" alt="../data/01/google_ml_cartoon/panel_70.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="what-is-reinforcement-learning-rl" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>What is Reinforcement Learning (RL)?</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="goal-of-rl" class="left box block">
+<h2 class="left">Goal of RL</h2>
+<p>Actively learn a good strategy for an agent from interaction with the environment.</p>
+</div>
+</div><div class="area right">
+<div id="section-9" class="right box block">
+<h2 class="right"></h2>
+<div class="media">
+<figure class="image" style="height:auto;width:600px;">
+<img src="../data/01/weng_RL_illustration.png" style="height:auto;width:100%;" alt="../data/01/weng_RL_illustration.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="layout row columns">
+<div class="area ">
+<div id="reinforcement-learning-1" class="definition bottom box block">
+<h2 class="definition bottom">Reinforcement Learning</h2>
+<p><em>Reinforcement learning is learning what to do—how to map situations to actions—so as to maximize a numerical reward signal. The learner is not told which actions to take, but instead must discover which actions yield the most reward by trying them</em> <span class="citation">(<a href="#ref-sutton2018" role="doc-biblioref">Sutton und Barto 2018</a>)</span>.</p>
+</div>
+<div id="section-10" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-weng2018rl" role="doc-biblioref">Weng 2018</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="section-11" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1></h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="stream" style="width:auto;height:auto;">
+<iframe style="width:auto;height:800px;aspect-ratio:16/9;" allow="fullscreen" src="https://www.youtube.com/embed/0JL04JJjocc?cc_load_policy=0&amp;controls=1&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;showinfo=0">
+
+</iframe>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="video---learning-flying-stanford-helicopter" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Video - Learning Flying Stanford Helicopter</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p><a href="https://www.youtube.com/embed/0JL04JJjocc">Video https://www.youtube.com/embed/0JL04JJjocc</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="the-reward-hypothesis" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>The reward hypothesis</h1>
+<div class="layout">
+<div class="area">
+<div id="reward-hypothesis-def." class="definition box block">
+<h2 class="definition">Reward Hypothesis (Def.)</h2>
+<p>All goals can be represented as maximization of a scalar reward (an expected cumulative reward).</p>
+</div>
+<div id="section-12" class="box block">
+<h2></h2>
+<p>All useful knowledge may be encoded as predictions about rewards, e.g., in the form of a value function.</p>
+</div>
+<div id="section-13" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-sutton2018" role="doc-biblioref">Sutton und Barto 2018</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="pole-balancing" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Pole balancing</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Training data consists of sequences of situations, actions and an associated reward.</p>
+<ul>
+<li>The task is to learn an (optimal) control strategy that maximizes the reward.</li>
+<li>There is no teacher — only a reward measure.</li>
+<li>There is a tradeoff between exploration and exploitation.</li>
+</ul>
+<div class="media">
+<figure class="image">
+<img src="../data/01/pole-balancing.png" aria-label="Classical example: A robot that learns to balance a pole." title="Classical example: A robot that learns to balance a pole." alt="../data/01/pole-balancing.png" />
+<figcaption>
+Classical example: A robot that learns to balance a pole.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="section-14" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1></h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="stream" style="width:auto;height:auto;">
+<iframe style="width:auto;height:800px;aspect-ratio:16/9;" allow="fullscreen" src="https://www.youtube.com/embed/x4O8pojMF0w?cc_load_policy=0&amp;controls=1&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;showinfo=0">
+
+</iframe>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="video-external-website---solving-rubiks-cube-with-a-robot-hand" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Video, External Website - Solving Rubik’s Cube with a Robot Hand</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p><a href="https://www.youtube.com/embed/x4O8pojMF0w">Video https://www.youtube.com/embed/x4O8pojMF0w</a></p>
+<p><br />
+</p>
+<p><a href="https://openai.com/blog/solving-rubiks-cube/">Blog entry: https://openai.com/blog/solving-rubiks-cube/</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-solving-a-rubiks-cube-with-a-robot-hand" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Example: Solving a Rubik’s Cube with a Robot Hand</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="grid-layout" style="grid-template-columns: 40fr 60fr;">
+<p>Application of Deep Reinforcement Learning (and many advanced tricks) to learn how to solve a Rubik’s Cube with a robotic hand.</p>
+<p>One important ingredient: training in simulation – but allow for enough variation to enforce adaptivity <em>(automatic domain randomization)</em>.</p>
+<div class="media">
+<figure class="image" style="height:auto;width:720px;">
+<img src="../data/01/rubik_dr_randomization.jpg" style="height:auto;width:100%;" alt="../data/01/rubik_dr_randomization.jpg" />
+</figure>
+</div>
+</div>
+</div>
+<div id="section-15" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-openai2019solving" role="doc-biblioref">OpenAI u. a. 2019</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="applying-different-perturbations" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Applying different Perturbations</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div align="center">
+<iframe width="1120" height="630" src="https://openai.com/blog/solving-rubiks-cube/#perturbations" frameborder="0">
+</iframe>
+</div>
+</div>
+<div id="section-16" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-openai2019solving" role="doc-biblioref">OpenAI u. a. 2019</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="remarks-on-state-of-the-art-for-drl-in-robotics" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Remarks on State-of-the-Art for DRL in Robotics</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="caveats" class="left box block">
+<h2 class="left">Caveats</h2>
+<ul>
+<li>in testing: robot dropped cube 8 out of 10 trials</li>
+<li>it required 10.000 years of simulated training</li>
+<li>dexterity is very specific to cube</li>
+<li>can adapt to very specific disturbances</li>
+</ul>
+</div>
+</div><div class="area right">
+<div id="section-17" class="right box block">
+<h2 class="right"></h2>
+<div align="center">
+<iframe width="640" height="390" src="https://openai.com/blog/solving-rubiks-cube/#chart-adr" frameborder="0">
+</iframe>
+</div>
+</div>
+</div>
+</div>
+<div class="layout row columns">
+<div class="area ">
+<div id="section-18" class="bottom box block">
+<h2 class="bottom"></h2>
+<p>None-the-less, this is a remarkable demonstration, but shows how much has to be done to reach human-like capabilities.</p>
+</div>
+<div id="section-19" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-openai2019solving" role="doc-biblioref">OpenAI u. a. 2019</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="my-own-research" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>My own research</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="grid-layout" style="grid-template-columns: 60fr 40fr;">
+<ul>
+<li>Interest in understanding and modelling autonomous intelligent systems.</li>
+<li>Understanding how agents can perform intelligently in an environment – meaning: interacting with an environment and dealing with unstructured environments. Towards interacting with other agents in the same space and cooperating with these.</li>
+<li>Locomotion and Manipulation as two prime examples for dealing with an unpredictable environment in an adaptive way.</li>
+</ul>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/01/cowalski.jpg" aria-label="Cowalski" title="Cowalski" style="height:500px;width:auto;" alt="../data/01/cowalski.jpg" />
+<figcaption>
+Cowalski
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="my-own-research-2" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>My own research 2</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="video" style="height:auto;width:auto;">
+<video controls="1" muted="1" allow="autoplay" data-autoplay="1" style="height:540px;width:auto;" data-src="../data/01/S1_Experiment1_CompareArchitectures_online.mp4">
+
+</video>
+</figure>
+</div>
+</div>
+<div id="section-20" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-schilling2022" role="doc-biblioref">Schilling u. a. 2022</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="sota-in-drl-for-locomotion" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>SOTA in DRL for Locomotion</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="stream" style="width:auto;height:auto;">
+<iframe style="width:auto;height:640px;aspect-ratio:16/9;" allow="fullscreen" src="https://www.youtube.com/embed/9j2a1oAHDL8?cc_load_policy=0&amp;controls=2&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;showinfo=0&amp;start=0">
+
+</iframe>
+</figure>
+</div>
+</div>
+<div id="section-21" class="footer box block">
+<h2 class="footer"></h2>
+<p>Robotic Systems Lab, ETH Zürich, <span class="citation">(<a href="#ref-miki2022locomotion" role="doc-biblioref">Miki u. a. 2022</a>)</span>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-learning-hide-and-seek" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Example: Learning Hide-and-seek</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<iframe width="1120" height="630" src="https://www.youtube.com/embed/kopoLzvh5jY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+</div>
+<div id="section-22" class="footer box block">
+<h2 class="footer"></h2>
+<p>from <span class="citation">(<a href="#ref-openai2019hideandseek" role="doc-biblioref">Baker u. a. 2019</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="categorization-of-reinforcement-learning-agents" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Categorization of Reinforcement Learning Agents</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="section-23" class="left box block">
+<h2 class="left"></h2>
+<ul>
+<li>Value Based
+<ul>
+<li>No Policy (Implicit)</li>
+<li>Value Function</li>
+</ul></li>
+<li>Policy Based
+<ul>
+<li>Policy</li>
+<li>No Value Function</li>
+</ul></li>
+<li>Actor Critic
+<ul>
+<li>Policy</li>
+<li>Value Function</li>
+</ul></li>
+</ul>
+</div>
+</div><div class="area right">
+<div id="section-24" class="right box block">
+<h2 class="right"></h2>
+<div class="media">
+<figure class="image" style="height:auto;width:640px;">
+<img src="../data/01/silver_RL_categorization.svg" style="height:auto;width:100%;" alt="../data/01/silver_RL_categorization.svg" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="layout row columns">
+<div class="area ">
+<div id="section-25" class="bottom footer box block">
+<h2 class="bottom footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="overview-lecture" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Overview Lecture</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<table>
+<thead>
+<tr class="header">
+<th>DATE</th>
+<th>LECTURE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>11.10.2022</td>
+<td>Introduction</td>
+</tr>
+<tr class="even">
+<td>18.10.2022</td>
+<td>Formalization of agent and MDP</td>
+</tr>
+<tr class="odd">
+<td>25.10.2022</td>
+<td>Dynamic Programming</td>
+</tr>
+<tr class="even">
+<td>8.11.2022</td>
+<td>Model-free Prediction</td>
+</tr>
+<tr class="odd">
+<td>15.11.2022</td>
+<td>Model-free Control</td>
+</tr>
+<tr class="even">
+<td>22.11.2022</td>
+<td>Function Approximation (and RL)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="overview-course-2-tentative" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Overview course 2 – tentative!</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<table>
+<thead>
+<tr class="header">
+<th>DATE</th>
+<th>LECTURE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>29.11.2022</td>
+<td>Recap Deep Neural Networks</td>
+</tr>
+<tr class="even">
+<td>6.12.2022</td>
+<td>Value Function Approximation</td>
+</tr>
+<tr class="odd">
+<td>13.12.2022</td>
+<td>Deep RL, DQN</td>
+</tr>
+<tr class="even">
+<td>20.12.2022</td>
+<td>Policy Gradient Methods</td>
+</tr>
+<tr class="odd">
+<td>10.1.2023</td>
+<td>Actor-Critic Methods</td>
+</tr>
+<tr class="even">
+<td>17.1.2023</td>
+<td>Model-based RL</td>
+</tr>
+<tr class="odd">
+<td>24.1.2023</td>
+<td>Recap</td>
+</tr>
+<tr class="even">
+<td>31.1.2023</td>
+<td>Exam?</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="explore-or-exploit-information-for-decision-making" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Explore or Exploit Information for Decision Making</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:800px;">
+<img src="../data/01/ucb_ai_exploration_vs_exploitation.png" style="height:auto;width:100%;" alt="../data/01/ucb_ai_exploration_vs_exploitation.png" />
+</figure>
+</div>
+<p>Decision Making: sticking to a good past experience might make you miss out on even better options, but at least you can be confident to get something good.</p>
+</div>
+<div id="section-26" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-kleinCS188" role="doc-biblioref">Klein und Abbeel 2014</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="references" class="unnumbered biblio slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>References</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-alammar2022diffusion" class="csl-entry">
+Alammar, Jay. 2022. <span>„The Illustrated Stable Diffusion“</span>. <a href="http://jalammar.github.io/illustrated-stable-diffusion/">http://jalammar.github.io/illustrated-stable-diffusion/</a>.
+</div>
+<div id="ref-openai2019hideandseek" class="csl-entry">
+Baker, Bowen, Ingmar Kanitscheider, Todor Markov, Yi Wu, Glenn Powell, Bob McGrew, und Igor Mordatch. 2019. <span>„Choosing the right estimator“</span>. <a href="https://openai.com/blog/emergent-tool-use/">https://openai.com/blog/emergent-tool-use/</a>.
+</div>
+<div id="ref-bishop2006" class="csl-entry">
+Bishop, Christopher M. 2006. <em>Pattern Recognition and Machine Learning</em>. Springer.
+</div>
+<div id="ref-cheatsheet2018" class="csl-entry">
+<span>„Choosing the right estimator“</span>. 2018. <a href="https://scikit-learn.org/stable/tutorial/machine_learning_map/index.html">https://scikit-learn.org/stable/tutorial/machine_learning_map/index.html</a>.
+</div>
+<div id="ref-dalle2_2022" class="csl-entry">
+<span>„Dall-E 2“</span>. 2022. <a href="https://openai.com/dall-e-2/">https://openai.com/dall-e-2/</a>.
+</div>
+<div id="ref-goodfellow2016" class="csl-entry">
+Goodfellow, Ian, Yoshua Bengio, und Aaron Courville. 2016. <em>Deep Learning</em>. MIT Press.
+</div>
+<div id="ref-translate_2019" class="csl-entry">
+Gu, Xinxing. 2019. <span>„Google Translate’s instant camera translation gets an upgrade“</span>. <a href="https://www.blog.google/products/translate/google-translates-instant-camera-translation-gets-upgrade/">https://www.blog.google/products/translate/google-translates-instant-camera-translation-gets-upgrade/</a>.
+</div>
+<div id="ref-ho2020diffusion" class="csl-entry">
+Ho, Jonathan, Ajay Jain, und Pieter Abbeel. 2020. <span>„Denoising Diffusion Probabilistic Models“</span>. arXiv. doi:<a href="https://doi.org/10.48550/ARXIV.2006.11239">10.48550/ARXIV.2006.11239</a>.
+</div>
+<div id="ref-kleinCS188" class="csl-entry">
+Klein, Dan, und Pieter Abbeel. 2014. <span>„UC Berkeley CS188 Intro to AI“</span>. http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html.
+</div>
+<div id="ref-cs221_2018" class="csl-entry">
+Liang, Percy. 2018. <span>„Artificial Intelligence: Principles and Techniques“</span>. Course CS221, Stanford University, Lecture Notes.
+</div>
+<div id="ref-ml_cartoon_2019" class="csl-entry">
+<span>„Machine Learning - an online comic from google AI“</span>. 2019. <a href="https://cloud.google.com/products/ai/ml-comic-1/">https://cloud.google.com/products/ai/ml-comic-1/</a>.
+</div>
+<div id="ref-miki2022locomotion" class="csl-entry">
+Miki, Takahiro, Joonho Lee, Jemin Hwangbo, Lorenz Wellhausen, Vladlen Koltun, und Marco Hutter. 2022. <span>„Learning robust perceptive locomotion for quadrupedal robots in the wild“</span>. <em>Science Robotics</em> 7 (62): eabk2822. doi:<a href="https://doi.org/10.1126/scirobotics.abk2822">10.1126/scirobotics.abk2822</a>.
+</div>
+<div id="ref-openai2019solving" class="csl-entry">
+OpenAI, Ilge Akkaya, Marcin Andrychowicz, Maciek Chociej, Mateusz Litwin, Bob McGrew, Arthur Petron, u. a. 2019. <span>„Solving Rubik’s Cube with a Robot Hand“</span>. <a href="https://arxiv.org/abs/1910.07113">https://arxiv.org/abs/1910.07113</a>.
+</div>
+<div id="ref-schilling2022" class="csl-entry">
+Schilling, Malte, Andrew Melnik, Frank W. Ohl, Helge J. Ritter, und Barbara Hammer. 2022. <span>„Decentralized control and local information for robust and adaptive decentralized Deep Reinforcement Learning“</span>. <em>Neural Networks</em> 144: 699–725. doi:<a href="https://doi.org/10.1016/j.neunet.2021.09.017">https://doi.org/10.1016/j.neunet.2021.09.017</a>.
+</div>
+<div id="ref-silver2015" class="csl-entry">
+Silver, David. 2015. <span>„UCL Course on RL UCL Course on RL UCL Course on Reinforcement Learning“</span>. http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html.
+</div>
+<div id="ref-sutton2018" class="csl-entry">
+Sutton, Richard S., und Andrew G. Barto. 2018. <em>Reinforcement Learning: An Introduction</em>. Second. The MIT Press.
+</div>
+<div id="ref-weng2018rl" class="csl-entry">
+Weng, Lilian. 2018. <span>„A (Long) Peek into Reinforcement Learning“</span>. <a href="https://lilianweng.github.io/lil-log/2018/02/19/a-long-peek-into-reinforcement-learning.html">https://lilianweng.github.io/lil-log/2018/02/19/a-long-peek-into-reinforcement-learning.html</a>.
+</div>
+<div id="ref-wolf2018progan" class="csl-entry">
+Wolf, Sarah. 2018. <span>„ProGAN: How NVIDIA Generated Images of Unprecedented Quality“</span>. <a href="https://towardsdatascience.com/progan-how-nvidia-generated-images-of-unprecedented-quality-51c98ec2cbd2">https://towardsdatascience.com/progan-how-nvidia-generated-images-of-unprecedented-quality-51c98ec2cbd2</a>.
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<code class="force-highlight-styles markdown"
+style="display:none;"></code>
+
+    </div>
+  </div>
+
+  <script type="module">
+    /* Store JSON encoded Pandoc meta data in a global variable. */
+    import initializeDecker from "./../support/js/decker.js";
+    initializeDecker("cd2b2bf95.json");
+  </script>
+
+  <script src="../support/vendor/videojs/video.min.js"></script>
+  <script type="module" src="../support/components/custom-dialog.js"></script>
+
+  <script type="module">
+    // import Reveal and all plugins
+    import Reveal from './../support/vendor/reveal/dist/reveal.esm.js';
+    import deckerPlugin from './../support/plugins/decker/decker.js';
+    import uiAnchorsPlugin from './../support/plugins/decker/ui-anchors.js'
+    import mathPlugin from './../support/plugins/math/math.js';
+    import whiteboardPlugin from './../support/plugins/whiteboard/whiteboard.js';
+    import sagePlugin from './../support/plugins/sage/sage.js';
+    import searchPlugin from './../support/plugins/search/search.js';
+    import zoomPlugin from './../support/plugins/zoom/zoom.js';
+    import printPlugin from './../support/plugins/print/print.js';
+    import jinglesPlugin from './../support/plugins/jingles/jingles.js';
+    import quizPlugin from './../support/plugins/quiz/quiz.js';
+    import quizWuePlugin from './../support/plugins/quiz-wue/quiz-wue.js';
+    import explainPlugin from './../support/plugins/explain/explain.js';
+    import chartsPlugin from './../support/plugins/charts/charts.js';
+    import menuPlugin from './../support/plugins/menu/menu.js';
+    import feedbackPlugin from './../support/plugins/feedback/feedback.js';
+    import highlightPlugin from './../support/vendor/reveal/plugin/highlight/highlight.esm.js';
+    import notesPlugin from './../support/vendor/reveal/plugin/notes/notes.esm.js';
+        import captionPlugin from './../support/plugins/live-captioning/live-captioning.js';
+        import a11yPlugin from './../support/plugins/a11y/a11y.js';
+
+    let revealConfig = {
+      // reveal configuration (see https://revealjs.com/config/)
+      ...Decker.meta.reveal,
+
+      // plugin configuration
+      math: { mathjax: String.raw`../support/vendor/mathjax/`, ...Decker.meta.math },
+      chart: Decker.meta.chart,
+      menu: Decker.meta.menu,
+      explain: Decker.meta.explain,
+      feedback: Decker.meta.feedback || Decker.meta["decker-engine"],
+      jingles: Decker.meta.jingles,
+
+      // list of plugins
+      plugins: [
+        deckerPlugin,
+        uiAnchorsPlugin,
+        sagePlugin,
+        mathPlugin,
+        chartsPlugin,
+        whiteboardPlugin,
+        searchPlugin,
+        zoomPlugin,
+        printPlugin,
+        jinglesPlugin,
+        quizPlugin,
+        quizWuePlugin,
+        explainPlugin,
+        menuPlugin,
+        feedbackPlugin,
+        highlightPlugin,
+        notesPlugin,
+                captionPlugin,
+                a11yPlugin,
+      ]
+    };
+
+    Reveal.initialize(revealConfig);
+  </script>
+
+</body>
+<script src="../support/js/inert-polyfill.min.js"></script>
+<!-- script src="../support/js/inert.min.js"></script -->
+<!-- Use the other implementation if things break under Firefox -->
+</html>

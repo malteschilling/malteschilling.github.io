@@ -1,70 +1,104 @@
-"use strict";
+// reference to Reveal object
+let Reveal;
 
-let RevealJingle = (function () {
+let config;
+let jingleLayout = null;
+let jingles = [];
 
-  const config = Reveal.getConfig().jingles || {};
-  let jingleLayout = null;
-  let jingles = [];
+function createJingle(filename, style, volume) {
+  console.log(
+    "  add jingle " + filename + " with volume " + (volume ? volume : "1.0")
+  );
 
+  const defaultStyle =
+    "display:none; position:absolute; left:0; right:0; top:0; bottom:0; width:100%; height:100%; margin:auto; object-fit:contain; pointer-events:none;";
 
-  function createJingle(filename, style, volume) {
-    console.log("  add jingle " + filename + " with volume " + (volume?volume:"1.0"));
+  let vid = document.createElement("video");
+  vid.style = style ? defaultStyle + style : defaultStyle;
+  if (volume) vid.volume = volume;
+  vid.src = filename;
+  vid.onplay = () => {
+    jingleLayout.style.display = "flex";
+    vid.style.display = "block";
+  };
+  vid.onended = () => {
+    jingleLayout.style.display = vid.style.display = "none";
+  };
+  jingleLayout.appendChild(vid);
 
-    const defaultStyle = "display:none; position:absolute; left:0; right:0; top:0; bottom:0; margin:auto; object-fit:contain; pointer-events:none;"
+  return vid;
+}
 
-    let vid = document.createElement("video");
-    vid.style = style ? defaultStyle+style : defaultStyle;
-    if (volume) vid.volume = volume;
-    vid.src = filename;
-    vid.onplay = () => { jingleLayout.style.display = "flex"; vid.style.display = "block"; }
-    vid.onended = () => { jingleLayout.style.display = vid.style.display = "none"; }
-    jingleLayout.appendChild(vid);
+function setupJingles() {
+  // setup container
+  const reveal = Reveal.getRevealElement();
+  jingleLayout = document.createElement("div");
+  jingleLayout.style =
+    "display:none; flex-flow: column nowrap; justify-content:center; position:fixed; left:0; right:0; top:0; bottom:0; margin:0; z-index:40; background:none; pointer-events:none;";
+  reveal.appendChild(jingleLayout);
 
-    return vid;
+  // setup video element per jingle
+  for (let i = 0; i < config.length; i++) {
+    jingles.push(createJingle(config[i].vid, config[i].css, config[i].vol));
   }
+}
 
-  function setupJingles() {
-    // setup container
-    const reveal = document.querySelector(".reveal");
-    jingleLayout = document.createElement("div");
-    jingleLayout.style = "display:none; flex-flow: column nowrap; justify-content:center; position:fixed; left:0; right:0; top:0; bottom:0; margin:0; z-index:40; background:none; pointer-events:none;";
-    reveal.appendChild(jingleLayout);
-
-    // setup video element per jingle
-    for (let i=0; i<config.length; i++) {
-      jingles.push( createJingle(config[i].vid, config[i].css, config[i].vol) );
-    }
-  }
-
-  function playJingle(i) {
+function playJingle(i) {
+  for (let j = 0; j < jingles.length; j++) if (j != i) jingles[j].pause();
+  if (i < jingles.length) {
+    jingles[i].currentTime = 0;
     jingles[i].play();
   }
+}
 
-  function setupKeyBindings() {
-    const N = Math.min(9, jingles.length);
-    for (let i = 0; i < N; i++) {
-      Reveal.addKeyBinding(
-        {
-          keyCode: 49 + i,
-          key: String.fromCharCode(49 + i),
-          description: "Play jingle " + (i+1),
-        },
-        () => {
-          playJingle(i);
-        }
-      );
-    }
-  }
+function setupKeyBindings() {
+  window.addEventListener("keydown", function (evt) {
+    if (evt.shiftKey && evt.ctrlKey && evt.altKey) {
+      switch (evt.code) {
+        case "Digit1":
+          playJingle(0);
+          evt.preventDefault();
+          evt.stopPropagation();
+          break;
 
-  return {
-    init: function () {
-      console.log("initialize jingles plugin");
-      if (config.length) {
-        setupJingles();
-        setupKeyBindings();
+        case "Digit2":
+          playJingle(1);
+          evt.preventDefault();
+          evt.stopPropagation();
+          break;
+
+        case "Digit3":
+          playJingle(2);
+          evt.preventDefault();
+          evt.stopPropagation();
+          break;
+
+        case "Digit4":
+          playJingle(3);
+          evt.preventDefault();
+          evt.stopPropagation();
+          break;
+
+        case "Digit5":
+          playJingle(4);
+          evt.preventDefault();
+          evt.stopPropagation();
+          break;
       }
-    },
-  };
-})();
+    }
+  });
+}
 
-Reveal.registerPlugin("jingle", RevealJingle);
+const Plugin = {
+  id: "jingles",
+  init: (deck) => {
+    Reveal = deck;
+    config = Reveal.getConfig().jingles || {};
+    if (config.length) {
+      setupJingles();
+      setupKeyBindings();
+    }
+  },
+};
+
+export default Plugin;
