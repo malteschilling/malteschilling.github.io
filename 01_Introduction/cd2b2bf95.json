@@ -649,7 +649,7 @@
         "./data",
         "./demos"
     ],
-    "subtitle": "Introduction",
+    "subtitle": "1 - Introduction",
     "supportPath": "../support",
     "template": {
         "favicon": "../support/icons/favicon.ico"
