@@ -435,7 +435,7 @@ Process</title>
   <link rel="stylesheet" href="../support/plugins/quiz-wue/quiz-wue.css">
   <link rel="stylesheet" href="../support/css/deck.css">
   <link rel="stylesheet" href="../support/css/msms-deck.css">
-  
+
 </head>
 
 <body >
@@ -449,14 +449,14 @@ Process</title>
                               <h2>3 - Markov Decision Process</h2>
                   </div>
 
-         
-         
-                  <div class="author"> Prof. Dr. Malte Schilling </div>
-         
+
+
+                  <div class="author"> Prof. Dr. Malte Schilling</div>
+
                   <div class="affiliation"> Autonomous Intelligent
 Systems Group </div>
-         
-         
+
+
          <img class="logo affiliation-logo light-only" src="./../support/assets/ms-logo-light.svg">
          <img class="logo affiliation-logo dark-only" src="./../support/assets/ms-logo-dark.svg">
 
@@ -817,7 +817,7 @@ Systems Group </div>
 <li>discounted reward from this point forward for the next reached state – which is estimated by the state-value function: <span class="math inline">\( v(S_{t+1})\)</span></li>
 </ul>
 <p><span class="math display">\[
-\begin{eqnarray*} 
+\begin{eqnarray*}
 V(s) &amp;=&amp; \mathbb{E}[G_t \vert S_t = s] \\
 &amp;=&amp; \fragment{\mathbb{E} [R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \dots \vert S_t = s] }\\
 &amp;=&amp; \fragment{\mathbb{E} [R_{t+1} + \gamma (R_{t+2} + \gamma R_{t+3} + \dots) \vert S_t = s] }\\
@@ -1311,7 +1311,7 @@ v_{\pi}(s) = \sum_{a \in \mathcal{A}} \pi (a|s) \sum_{r} \sum_{s&#39; \in \mathc
 <p>For <span class="math inline">\(\gamma = 0.9\)</span>:</p>
 <p><span class="math display">\[
 \begin{eqnarray*}
-  v_{\pi_1}(X) &amp;=&amp; \fragment{1 + 0.9 * 0 + (0.9)^2 * 1 + \ldots }\\ 
+  v_{\pi_1}(X) &amp;=&amp; \fragment{1 + 0.9 * 0 + (0.9)^2 * 1 + \ldots }\\
   &amp;=&amp; \fragment{\sum_{k=0}^{\infty} 0.9^{2k} = \frac{1}{1-0.9^2} \approx 5.3 }\\ \\
   v_{\pi_2}(X) &amp;=&amp; \fragment{0 + 0.9 * 2 + (0.9)^2 * 0 + \ldots }\\
   &amp;=&amp; \fragment{\sum_{k=0}^{\infty} (0.9)^{2k+1}*2 = \frac{0.9}{1-0.9^2} * 2 \approx 9.5}
@@ -1531,11 +1531,11 @@ q_{\pi}(s,a) = R^a_s + \gamma \sum_{s&#39; \in \mathcal{S}} p (s&#39;|s,a) v_{\p
 <div id="action-value-function-using-bellman-expectation-1" class="box block">
 <h2>Action-Value Function using Bellman Expectation</h2>
 <p><span class="math display">\[
-q_{\pi}(s,a) = \sum_{r}\sum_{s&#39; \in \mathcal{S}} p (r, s&#39;|s,a) 
+q_{\pi}(s,a) = \sum_{r}\sum_{s&#39; \in \mathcal{S}} p (r, s&#39;|s,a)
 \Big(r + \gamma \sum_{a&#39; \in \mathcal{A}} \pi(a&#39; | s&#39;) q_{\pi}(s&#39;, a&#39;) \Big)
 \]</span></p>
 <p>With reward independent of <span class="math inline">\(s&#39;\)</span>: <span class="math display">\[
-q_{\pi}(s,a) = R^a_s + \gamma \sum_{s&#39; \in \mathcal{S}} p (s&#39;|s,a) 
+q_{\pi}(s,a) = R^a_s + \gamma \sum_{s&#39; \in \mathcal{S}} p (s&#39;|s,a)
 \sum_{a&#39; \in \mathcal{A}} \pi(a&#39; | s&#39;) q_{\pi}(s&#39;, a&#39;)
 \]</span></p>
 </div>
@@ -1849,7 +1849,7 @@ q_{*}(s,a) = R^a_s + \gamma \sum_{s&#39; \in \mathcal{S}} p (s&#39;|s,a) v_{*}(s
 </figure>
 </div>
 <p><span class="math display">\[
-q_{*}(s,a) = R^a_s + \gamma \sum_{s&#39; \in \mathcal{S}} p (s&#39;|s,a) 
+q_{*}(s,a) = R^a_s + \gamma \sum_{s&#39; \in \mathcal{S}} p (s&#39;|s,a)
 \max_{a&#39; \in \mathcal{A}} q_{*}(s&#39;, a&#39;)
 \]</span></p>
 </div>
@@ -1910,7 +1910,7 @@ q_{*}(s,a) = R^a_s + \gamma \sum_{s&#39; \in \mathcal{S}} p (s&#39;|s,a)
 <div class="area">
 <div class="box block">
 <p>We can use these equations directly to compute optimal values for following an optimal policy.</p>
-<p><span class="math display">\[\begin{align*} 
+<p><span class="math display">\[\begin{align*}
 V_*(s) &amp;= \max_{a \in \mathcal{A}} Q_*(s,a)\\
 Q_*(s, a) &amp;= R(s, a) + \gamma \sum_{s&#39; \in \mathcal{S}} P_{ss&#39;}^a V_*(s&#39;) \\
 V_*(s) &amp;= \max_{a \in \mathcal{A}} \big( R(s, a) + \gamma \sum_{s&#39; \in \mathcal{S}} P_{ss&#39;}^a V_*(s&#39;) \big) \\
@@ -2042,7 +2042,7 @@ Q_{*}(s, a) = \max_{\pi} Q_{\pi}(s, a)\]</span></p>
 <div class="box block">
 <p>Policy Evaluation is to compute the state-value <span class="math inline">\(V_{\pi}\)</span> for a given policy <span class="math inline">\(\pi\)</span>:</p>
 <p><span class="math display">\[
-V_{t+1}(s) 
+V_{t+1}(s)
 = \mathbb{E}_\pi [r + \gamma V_t(s&#39;) | S_t = s]
 = \sum_a \pi(a \vert s) \sum_{s&#39;, r} P(s&#39;, r \vert s, a) (r + \gamma V_k(s&#39;))
 \]</span></p>
@@ -2071,7 +2071,7 @@ V_{t+1}(s)
 <div class="box block">
 <p>Based on a value functions, Policy Improvement generates a better policy <span class="math inline">\(\pi&#39; \geq \pi\)</span> by acting greedily.</p>
 <p><span class="math display">\[
-Q_\pi(s, a) 
+Q_\pi(s, a)
 = \mathbb{E} [R_{t+1} + \gamma V_\pi(S_{t+1}) \vert S_t=s, A_t=a]
 = \sum_{s&#39;, r} P(s&#39;, r \vert s, a) (r + \gamma V_\pi(s&#39;))
 \]</span></p>
@@ -2146,7 +2146,7 @@ Q_\pi(s, a)
 \begin{document}
 \pagestyle{empty}
 \begin{algorithm}[H]
-\caption{Iterative Policy Evaluation, for estimating $v_\pi$} 
+\caption{Iterative Policy Evaluation, for estimating $v_\pi$}
   \KwInput{$\pi$, the policy to be evaluated; algorithm parameter: a small     threshold $\theta > 0$ determining accuracy of estimation}
   Initialize $V(s)$ for all $s \in \mathcal S^+$, arbitrarily except that   $V(\textrm{terminal}) = 0$. \\
 \While{$\Delta \geq \theta$} {
