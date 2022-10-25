@@ -435,7 +435,7 @@ Process</title>
   <link rel="stylesheet" href="../support/plugins/quiz-wue/quiz-wue.css">
   <link rel="stylesheet" href="../support/css/deck.css">
   <link rel="stylesheet" href="../support/css/msms-deck.css">
-
+  
 </head>
 
 <body >
@@ -449,14 +449,14 @@ Process</title>
                               <h2>3 - Markov Decision Process</h2>
                   </div>
 
-
-
-                  <div class="author"> Prof. Dr. Malte Schilling</div>
-
+         
+         
+                  <div class="author"> Prof. Dr. Malte Schilling </div>
+         
                   <div class="affiliation"> Autonomous Intelligent
 Systems Group </div>
-
-
+         
+         
          <img class="logo affiliation-logo light-only" src="./../support/assets/ms-logo-light.svg">
          <img class="logo affiliation-logo dark-only" src="./../support/assets/ms-logo-dark.svg">
 
@@ -817,7 +817,7 @@ Systems Group </div>
 <li>discounted reward from this point forward for the next reached state – which is estimated by the state-value function: <span class="math inline">\( v(S_{t+1})\)</span></li>
 </ul>
 <p><span class="math display">\[
-\begin{eqnarray*}
+\begin{eqnarray*} 
 V(s) &amp;=&amp; \mathbb{E}[G_t \vert S_t = s] \\
 &amp;=&amp; \fragment{\mathbb{E} [R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \dots \vert S_t = s] }\\
 &amp;=&amp; \fragment{\mathbb{E} [R_{t+1} + \gamma (R_{t+2} + \gamma R_{t+3} + \dots) \vert S_t = s] }\\
@@ -1311,7 +1311,7 @@ v_{\pi}(s) = \sum_{a \in \mathcal{A}} \pi (a|s) \sum_{r} \sum_{s&#39; \in \mathc
 <p>For <span class="math inline">\(\gamma = 0.9\)</span>:</p>
 <p><span class="math display">\[
 \begin{eqnarray*}
-  v_{\pi_1}(X) &amp;=&amp; \fragment{1 + 0.9 * 0 + (0.9)^2 * 1 + \ldots }\\
+  v_{\pi_1}(X) &amp;=&amp; \fragment{1 + 0.9 * 0 + (0.9)^2 * 1 + \ldots }\\ 
   &amp;=&amp; \fragment{\sum_{k=0}^{\infty} 0.9^{2k} = \frac{1}{1-0.9^2} \approx 5.3 }\\ \\
   v_{\pi_2}(X) &amp;=&amp; \fragment{0 + 0.9 * 2 + (0.9)^2 * 0 + \ldots }\\
   &amp;=&amp; \fragment{\sum_{k=0}^{\infty} (0.9)^{2k+1}*2 = \frac{0.9}{1-0.9^2} * 2 \approx 9.5}
@@ -1531,11 +1531,11 @@ q_{\pi}(s,a) = R^a_s + \gamma \sum_{s&#39; \in \mathcal{S}} p (s&#39;|s,a) v_{\p
 <div id="action-value-function-using-bellman-expectation-1" class="box block">
 <h2>Action-Value Function using Bellman Expectation</h2>
 <p><span class="math display">\[
-q_{\pi}(s,a) = \sum_{r}\sum_{s&#39; \in \mathcal{S}} p (r, s&#39;|s,a)
+q_{\pi}(s,a) = \sum_{r}\sum_{s&#39; \in \mathcal{S}} p (r, s&#39;|s,a) 
 \Big(r + \gamma \sum_{a&#39; \in \mathcal{A}} \pi(a&#39; | s&#39;) q_{\pi}(s&#39;, a&#39;) \Big)
 \]</span></p>
 <p>With reward independent of <span class="math inline">\(s&#39;\)</span>: <span class="math display">\[
-q_{\pi}(s,a) = R^a_s + \gamma \sum_{s&#39; \in \mathcal{S}} p (s&#39;|s,a)
+q_{\pi}(s,a) = R^a_s + \gamma \sum_{s&#39; \in \mathcal{S}} p (s&#39;|s,a) 
 \sum_{a&#39; \in \mathcal{A}} \pi(a&#39; | s&#39;) q_{\pi}(s&#39;, a&#39;)
 \]</span></p>
 </div>
@@ -1715,627 +1715,6 @@ v_{\pi}(s) = \sum_{a \in \mathcal{A}} \pi (a|s) q_{\pi}(s,a)
 </div>
 </div>
 </section>
-<section id="optimal-policies" class="section slide level1" data-background-color="#6A931C">
-<div class="decker">
-<div class="alignment">
-<h1>Optimal Policies</h1>
-</div>
-</div>
-</section>
-<section id="optimal-policy" class="slide level1">
-<div class="decker">
-<div class="alignment">
-<h1>Optimal Policy</h1>
-<div class="layout">
-<div class="area">
-<div class="box block">
-<p>There is a partial ordering over policies which means: <span class="math display">\[
-\pi \geq \pi&#39; \text{ if } V_{\pi}(s) \geq V_{\pi&#39;}(s), \forall s
-\]</span></p>
-</div>
-<div id="for-any-markov-decision-process" class="definition box block">
-<h2 class="definition">For any Markov Decision process …</h2>
-<ul>
-<li>There is an optimal policy <span class="math inline">\(\pi_*\)</span> which is better (or equal) than all other policies.</li>
-<li>Every optimal policy achieves the optimal value function and the optimal action-value function.</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="optimal-value-function" class="slide level1">
-<div class="decker">
-<div class="alignment">
-<h1>Optimal Value Function</h1>
-<div class="layout">
-<div class="area">
-<div class="box block">
-<p>The optimal state-value function <span class="math inline">\(V_*(s)\)</span> is the maximum value function over all policies:</p>
-<p><span class="math display">\[
-V_*(s) = \max_{\pi} V_{\pi}(s)
-\]</span></p>
-<p>The optimal action-value function <span class="math inline">\(q_*(s,a)\)</span> is the maximum action-value function over all policies <span class="math display">\[
-Q_*(s,a) = \max_{\pi} Q_{\pi}(s,a)
-\]</span></p>
-<ul>
-<li>The optimal value function specifies the best possible performance in the MDP.</li>
-<li>An MDP is “solved” when we know the optimal value function.</li>
-</ul>
-</div>
-<div id="section-41" class="footer box block">
-<h2 class="footer"></h2>
-<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="bellman-optimality-equation-for-v_" class="slide level1">
-<div class="decker">
-<div class="alignment">
-<h1>Bellman Optimality Equation for <span class="math inline">\(V_{*}\)</span></h1>
-<div class="layout">
-<div class="area">
-<div class="box block">
-<div class="media">
-<figure class="render image rendered" style="height:auto;width:800px;">
-<img src="../.decker/code/code-89bc691f.tex.svg" style="height:auto;width:100%;" alt="code-89bc691f.tex.svg" />
-</figure>
-</div>
-<p><span class="math display">\[
-v_{*}(s) = \max_{a \in \mathcal{A}} q_{*}(s,a)
-\]</span></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="bellman-optimality-equation-for-v_-2" class="slide level1">
-<div class="decker">
-<div class="alignment">
-<h1>Bellman Optimality Equation for <span class="math inline">\(V_{*}\)</span> (2)</h1>
-<div class="layout">
-<div class="area">
-<div class="box block">
-<div class="media">
-<figure class="render image rendered" style="height:auto;width:800px;">
-<img src="../.decker/code/code-bbdd3e74.tex.svg" style="height:auto;width:100%;" alt="code-bbdd3e74.tex.svg" />
-</figure>
-</div>
-<p><span class="math display">\[
-v_{*}(s) = \max_{a \in \mathcal{A}} \Big( R^a_s + \gamma \sum_{s&#39; \in \mathcal{S}} p (s&#39;|s,a) v_{*}(s&#39;) \Big)
-\]</span></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="bellman-expectation-for-q_" class="slide level1">
-<div class="decker">
-<div class="alignment">
-<h1>Bellman Expectation for <span class="math inline">\(Q_{*}\)</span></h1>
-<div class="layout">
-<div class="area">
-<div class="box block">
-<div class="media">
-<figure class="render image rendered" style="height:auto;width:800px;">
-<img src="../.decker/code/code-f3554bbb.tex.svg" style="height:auto;width:100%;" alt="code-f3554bbb.tex.svg" />
-</figure>
-</div>
-<p><span class="math display">\[
-q_{*}(s,a) = R^a_s + \gamma \sum_{s&#39; \in \mathcal{S}} p (s&#39;|s,a) v_{*}(s&#39;)
-\]</span></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="bellman-expectation-for-q_-2" class="slide level1">
-<div class="decker">
-<div class="alignment">
-<h1>Bellman Expectation for <span class="math inline">\(Q_{*}\)</span> (2)</h1>
-<div class="layout">
-<div class="area">
-<div class="box block">
-<div class="media">
-<figure class="render image rendered" style="height:auto;width:800px;">
-<img src="../.decker/code/code-ca812591.tex.svg" style="height:auto;width:100%;" alt="code-ca812591.tex.svg" />
-</figure>
-</div>
-<p><span class="math display">\[
-q_{*}(s,a) = R^a_s + \gamma \sum_{s&#39; \in \mathcal{S}} p (s&#39;|s,a)
-\max_{a&#39; \in \mathcal{A}} q_{*}(s&#39;, a&#39;)
-\]</span></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="example-optimal-value-function" class="slide level1">
-<div class="decker">
-<div class="alignment">
-<h1>Example: Optimal Value Function</h1>
-<div class="layout">
-<div class="area">
-<div class="box block">
-<div class="media">
-<figure class="image" style="height:auto;width:auto;">
-<img src="../data/03/silver_optimalVexample.svg" style="height:540px;width:auto;" alt="../data/03/silver_optimalVexample.svg" />
-</figure>
-</div>
-</div>
-<div id="section-42" class="footer box block">
-<h2 class="footer"></h2>
-<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="example-optimal-action-value-function" class="slide level1">
-<div class="decker">
-<div class="alignment">
-<h1>Example: Optimal Action-Value Function</h1>
-<div class="layout">
-<div class="area">
-<div class="box block">
-<div class="media">
-<figure class="image" style="height:auto;width:auto;">
-<img src="../data/03/silver_optimalQexample.svg" style="height:540px;width:auto;" alt="../data/03/silver_optimalQexample.svg" />
-</figure>
-</div>
-</div>
-<div id="section-43" class="footer box block">
-<h2 class="footer"></h2>
-<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="bellman-optimality-equations" class="slide level1">
-<div class="decker">
-<div class="alignment">
-<h1>Bellman Optimality Equations</h1>
-<div class="layout">
-<div class="area">
-<div class="box block">
-<p>We can use these equations directly to compute optimal values for following an optimal policy.</p>
-<p><span class="math display">\[\begin{align*}
-V_*(s) &amp;= \max_{a \in \mathcal{A}} Q_*(s,a)\\
-Q_*(s, a) &amp;= R(s, a) + \gamma \sum_{s&#39; \in \mathcal{S}} P_{ss&#39;}^a V_*(s&#39;) \\
-V_*(s) &amp;= \max_{a \in \mathcal{A}} \big( R(s, a) + \gamma \sum_{s&#39; \in \mathcal{S}} P_{ss&#39;}^a V_*(s&#39;) \big) \\
-Q_*(s, a) &amp;= R(s, a) + \gamma \sum_{s&#39; \in \mathcal{S}} P_{ss&#39;}^a \max_{a&#39; \in \mathcal{A}} Q_*(s&#39;, a&#39;)
-\end{align*}\]</span></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="example-optimal-policy" class="slide level1">
-<div class="decker">
-<div class="alignment">
-<h1>Example: Optimal Policy</h1>
-<div class="layout">
-<div class="area">
-<div class="box block">
-<div class="media">
-<figure class="image" style="height:auto;width:auto;">
-<img src="../data/03/silver_optimalPolicyexample.svg" style="height:540px;width:auto;" alt="../data/03/silver_optimalPolicyexample.svg" />
-</figure>
-</div>
-</div>
-<div id="section-44" class="footer box block">
-<h2 class="footer"></h2>
-<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="optimal-value-function-and-policy" class="slide level1">
-<div class="decker">
-<div class="alignment">
-<h1>Optimal Value Function and Policy</h1>
-<div class="layout">
-<div class="area">
-<div class="box block">
-<p>The goal in RL is to act optimally – this is possible through learning an optimal value function or directly an optimal policy.</p>
-<p>The optimal value function produces the maximum return:</p>
-<p><span class="math display">\[ V_{*}(s) = \max_{\pi} V_{\pi}(s),
-Q_{*}(s, a) = \max_{\pi} Q_{\pi}(s, a)\]</span></p>
-<p>The optimal policy achieves optimal value functions:</p>
-<p><span class="math display">\[ \pi_{*} = \arg\max_{\pi} V_{\pi}(s),
-\pi_{*} = \arg\max_{\pi} Q_{\pi}(s, a)\]</span></p>
-<p>These are directly related as <span class="math display">\[ V_{\pi_{*}}(s)=V_{*}(s), Q_{\pi_{*}}(s, a) = Q_{*}(s, a)\]</span></p>
-</div>
-<div id="section-45" class="footer box block">
-<h2 class="footer"></h2>
-<p><span class="citation">(<a href="#ref-weng2018rl" role="doc-biblioref">Weng 2018a</a>)</span></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="optimal-solution-for-the-gridworld-example" class="slide level1">
-<div class="decker">
-<div class="alignment">
-<h1>Optimal Solution for the Gridworld Example</h1>
-<div class="layout">
-<div class="area">
-<div class="box block">
-<div class="media">
-<figure class="image" style="height:auto;width:1000px;">
-<img src="../data/02/sutton_3_5_gridworld.svg" style="height:auto;width:100%;" alt="../data/02/sutton_3_5_gridworld.svg" />
-</figure>
-</div>
-<p>Each location is a state. Discount factor is <span class="math inline">\(0.9\)</span>.</p>
-<p>Actions: North, West, South, East</p>
-<p>Reward: <span class="math inline">\(-1\)</span> when trying to move out of the grid, <span class="math inline">\(0\)</span> otherwise</p>
-<p>For state <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>: all actions lead to <span class="math inline">\(A&#39;\)</span> and a reward of <span class="math inline">\(+10\)</span> (respectively <span class="math inline">\(B&#39;, +5\)</span>).</p>
-</div>
-<div id="section-46" class="footer box block">
-<h2 class="footer"></h2>
-<p><span class="citation">(<a href="#ref-sutton2018" role="doc-biblioref">Sutton und Barto 2018</a>)</span></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="dynamic-programming" class="section slide level1" data-background-color="#6A931C">
-<div class="decker">
-<div class="alignment">
-<h1>Dynamic Programming</h1>
-</div>
-</div>
-</section>
-<section id="dynamic-programming-1" class="slide level1">
-<div class="decker">
-<div class="alignment">
-<h1>Dynamic Programming</h1>
-<div class="layout">
-<div class="area">
-<div class="box block">
-<p>Assumes full knowledge of the underlying Markov Decision Process (model is known) – realizes a form of Planning.</p>
-<p>Dynamic Programming is a very general solution method for problems which have two properties:</p>
-<ul>
-<li>Optimal substructure
-<ul>
-<li>Principle of optimality applies</li>
-<li>Optimal solution can be decomposed into subproblems</li>
-</ul></li>
-<li>Overlapping subproblems
-<ul>
-<li>Subproblems recur many times</li>
-<li>Solutions can be cached and reused</li>
-</ul></li>
-</ul>
-</div>
-<div id="section-47" class="footer box block">
-<h2 class="footer"></h2>
-<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="dp-policy-evaluation" class="slide level1">
-<div class="decker">
-<div class="alignment">
-<h1>DP: Policy Evaluation</h1>
-<div class="layout">
-<div class="area">
-<div class="box block">
-<p>Policy Evaluation is to compute the state-value <span class="math inline">\(V_{\pi}\)</span> for a given policy <span class="math inline">\(\pi\)</span>:</p>
-<p><span class="math display">\[
-V_{t+1}(s)
-= \mathbb{E}_\pi [r + \gamma V_t(s&#39;) | S_t = s]
-= \sum_a \pi(a \vert s) \sum_{s&#39;, r} P(s&#39;, r \vert s, a) (r + \gamma V_k(s&#39;))
-\]</span></p>
-<p>It iteratively applies the Bellman expectation backup and converges.</p>
-<div class="media">
-<figure class="image" style="height:auto;width:600px;">
-<img src="../data/03/silver_policyEvaluation.svg" style="height:auto;width:100%;" alt="../data/03/silver_policyEvaluation.svg" />
-</figure>
-</div>
-</div>
-<div id="section-48" class="footer box block">
-<h2 class="footer"></h2>
-<p><span class="citation">(<a href="#ref-weng2018rl" role="doc-biblioref">Weng 2018a</a>)</span></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="dp-policy-improvement" class="slide level1">
-<div class="decker">
-<div class="alignment">
-<h1>DP: Policy Improvement</h1>
-<div class="layout">
-<div class="area">
-<div class="box block">
-<p>Based on a value functions, Policy Improvement generates a better policy <span class="math inline">\(\pi&#39; \geq \pi\)</span> by acting greedily.</p>
-<p><span class="math display">\[
-Q_\pi(s, a)
-= \mathbb{E} [R_{t+1} + \gamma V_\pi(S_{t+1}) \vert S_t=s, A_t=a]
-= \sum_{s&#39;, r} P(s&#39;, r \vert s, a) (r + \gamma V_\pi(s&#39;))
-\]</span></p>
-</div>
-<div id="section-49" class="footer box block">
-<h2 class="footer"></h2>
-<p><span class="citation">(<a href="#ref-weng2018rl" role="doc-biblioref">Weng 2018a</a>)</span></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="dp-policy-iteration" class="slide level1">
-<div class="decker">
-<div class="alignment">
-<h1>DP: Policy Iteration</h1>
-<div class="layout">
-<div class="area">
-<div class="box block">
-<p>Iterative procedure to improve the policy when combining policy evaluation and improvement:</p>
-<p><span class="math display">\[
-\pi_0 \xrightarrow[]{\text{evaluation}} V_{\pi_0} \xrightarrow[]{\text{improve}}
-\pi_1 \xrightarrow[]{\text{evaluation}} V_{\pi_1} \xrightarrow[]{\text{improve}}
-\pi_2 \xrightarrow[]{\text{evaluation}} \dots \xrightarrow[]{\text{improve}}
-\pi_* \xrightarrow[]{\text{evaluation}} V_*
-\]</span></p>
-</div>
-<div id="section-50" class="box block fragment">
-<h2></h2>
-<div class="media">
-<figure class="image" style="height:auto;width:1000px;">
-<img src="../data/03/silver_policyIteration.svg" style="height:auto;width:100%;" alt="../data/03/silver_policyIteration.svg" />
-</figure>
-</div>
-</div>
-<div id="section-51" class="footer box block">
-<h2 class="footer"></h2>
-<p><span class="citation">(<a href="#ref-weng2018rl" role="doc-biblioref">Weng 2018a</a>; <a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="dp-generalized-policy-iteration" class="slide level1">
-<div class="decker">
-<div class="alignment">
-<h1>DP: Generalized Policy Iteration</h1>
-<div class="layout">
-<div class="area">
-<div class="box block">
-<p>The value function is approximated repeatedly to be closer to the true value of the current policy.</p>
-<p>And in the meantime, the policy is improved repeatedly to approach optimality.</p>
-<p>This policy iteration process works and always converges to the optimality.</p>
-</div>
-<div id="section-52" class="footer box block">
-<h2 class="footer"></h2>
-<p><span class="citation">(<a href="#ref-weng2018rl" role="doc-biblioref">Weng 2018a</a>)</span></p>
-<!--
-# Iterative Policy Evaluation
-
-``` {.tex .render width=800px}
-\documentclass{standalone}
-\usepackage[boxruled,lined]{algorithm2e}
-\usepackage{mathtools}
-
-\DeclareMathOperator*{\argmin}{arg\,min}
-\DeclareMathOperator*{\argmax}{arg\,max}
-\SetKwInput{KwInput}{Input}
-\SetKwInput{KwOutput}{Output}
-\begin{document}
-\pagestyle{empty}
-\begin{algorithm}[H]
-\caption{Iterative Policy Evaluation, for estimating $v_\pi$}
-  \KwInput{$\pi$, the policy to be evaluated; algorithm parameter: a small     threshold $\theta > 0$ determining accuracy of estimation}
-  Initialize $V(s)$ for all $s \in \mathcal S^+$, arbitrarily except that   $V(\textrm{terminal}) = 0$. \\
-\While{$\Delta \geq \theta$} {
-  $\Delta \gets 0$ \\
-  \For{$s \in \mathcal S$} {
-    $v \gets V(s)$\\
-    $V(s) \gets \sum_a \pi(a|s) \sum_{s',r} \Pr(s', r| s, a) \left[ r + \gamma       V(s')\right]$ \\
-    $\Delta \gets \max\left(\Delta, |v - V(s)|\right)$ \hspace{35pt} \tcp{Track largest update to state-value function.}
-  }
-}
-\end{algorithm}
-\end{document}
-```
-
-# General Policy Iteration {.columns}
-
-## {.right}
-
-``` {.tex .render width=400px}
-\documentclass{standalone}
-\usepackage{tikz}
-\usepackage{verbatim}
-\usepackage{latexsym}
-\usetikzlibrary{positioning}
-\begin{document}
-\pagestyle{empty}
-  \begin{tikzpicture}
-    \node (pi) at (-1, 0) {$\pi$};
-    \node (v)  at ( 1, 0) {$V$};
-    \path[-stealth, line width=0.5 mm] (pi) edge[bend left = 90] (v);
-    \path[-stealth, line width=0.5 mm] (v)  edge[bend left = 90] (pi);
-    \node at (0, 1.1) {evaluation};
-    \node at (0, 0.55) {$\scriptstyle V \leadsto v_\pi$};
-    \node at (0, -0.4) {$\scriptstyle \pi \leadsto \textrm{\tiny greedy}(V)$};
-    \node at (0, -1.1) {improvement};
-    \node at (0, -1.5) {$\vdots$};
-    \node (pistar) at (-1, -2.2) {$\pi_*$};
-    \node (pistar) at (1, -2.2) {$v_*$};
-    \draw[-stealth, line width=0.5 mm] (-.8, -2.025) -- (.8, -2.025);
-    \draw[stealth-, line width=0.5 mm] (-.8, -2.275) -- (.8, -2.275);
-  \end{tikzpicture}
-\end{document}
-```
-
-## {.left}
-
-We use the term \emph{generalized policy iteration} (GPI) to refer to the general idea of letting policy evaluation and policy improvement processes interact, independent of the granularity and other details of the two processes. Almost all RL learning methods can be described as GPI: i.e. all have identifiable policies and value functions, with the policy always being improved with respect to the value function and the value function always being driven toward the value function for the policy, as suggested in our diagram. If both the evaluation process and improvement process stabilize, then the value function and policy must be optimal: the value function only stabilizes when it is consistent with the current policy, and the policy stabilizes only when it is greedy with respect to the current value function. Thus, both processes stabilize only when a policy has been found that is greedy with respect to its own evaluation function. This implies the Bellman optimality equation holds and thus that the policy and value function are optimal!
-
-# General Policy Iteration {.columns}
-
-## {.right}
-
-``` {.tex .render width=400px}
-\documentclass{standalone}
-\usepackage{tikz}
-\usepackage{verbatim}
-\usepackage{latexsym}
-\usetikzlibrary{positioning}
-\begin{document}
-\pagestyle{empty}
-  \begin{tikzpicture}
-    \node (pi) at (-1, 0) {$\pi$};
-    \node (v)  at ( 1, 0) {$V$};
-    \path[-stealth, line width=0.5 mm] (pi) edge[bend left = 90] (v);
-    \path[-stealth, line width=0.5 mm] (v)  edge[bend left = 90] (pi);
-    \node at (0, 1.1) {evaluation};
-    \node at (0, 0.55) {$\scriptstyle V \leadsto v_\pi$};
-    \node at (0, -0.4) {$\scriptstyle \pi \leadsto \textrm{\tiny greedy}(V)$};
-    \node at (0, -1.1) {improvement};
-    \node at (0, -1.5) {$\vdots$};
-    \node (pistar) at (-1, -2.2) {$\pi_*$};
-    \node (pistar) at (1, -2.2) {$v_*$};
-    \draw[-stealth, line width=0.5 mm] (-.8, -2.025) -- (.8, -2.025);
-    \draw[stealth-, line width=0.5 mm] (-.8, -2.275) -- (.8, -2.275);
-  \end{tikzpicture}
-\end{document}
-```
-
-## {.left}
-
-We use the term \emph{generalized policy iteration} (GPI) to refer to the general idea of letting policy evaluation and policy improvement processes interact, independent of the granularity and other details of the two processes. Almost all RL learning methods can be described as GPI: i.e. all have identifiable policies and value functions, with the policy always being improved with respect to the value function and the value function always being driven toward the value function for the policy, as suggested in our diagram. If both the evaluation process and improvement process stabilize, then the value function and policy must be optimal: the value function only stabilizes when it is consistent with the current policy, and the policy stabilizes only when it is greedy with respect to the current value function. Thus, both processes stabilize only when a policy has been found that is greedy with respect to its own evaluation function. This implies the Bellman optimality equation holds and thus that the policy and value function are optimal!
-
-# General Policy Iteration {.columns}
-
-## {.right}
-
-``` {.tex .render width=400px}
-\documentclass{standalone}
-\usepackage{tikz}
-\usepackage{verbatim}
-\usepackage{latexsym}
-\usetikzlibrary{positioning}
-\begin{document}
-\pagestyle{empty}
-  \begin{tikzpicture}[scale=3/4]
-    \draw[line width=0.3 mm] (-4, 2) -- (0, 0) node[above left = 3mm, rotate = -28] {$v = v_\pi$};  % y = -1/2x
-    \draw[line width=0.3 mm] (-3.5,-1.16666) -- (0, 0) node[below left, rotate=20] {$\pi =       \textrm{greedy}(v)$}; % y= 1/3*x
-    \node at (0.75, 0) {$v_*, \pi_*$};
-    \node[draw,circle,fill,scale=1/4,blue!50] (init) at (-4, 0.25) {};
-    \node[below = 1mm of init] {$\scriptstyle v,\pi$};
-    \node[draw,circle,fill,scale=1/4,blue!50] (one)  at (-3.5, 1.75) {};
-    \node[draw,circle,fill,scale=1/4,blue!50] (two)  at (-3, -1) {};
-    \node[draw,circle,fill,scale=1/4,blue!50] (three)at (-2.5, 1.25) {};
-    \node[draw,circle,fill,scale=1/4,blue!50] (four) at (-2, -2/3) {};
-    \node[draw,circle,fill,scale=1/4,blue!50] (five) at (-1.5, 0.75) {};
-    \node[draw,circle,fill,scale=1/4,blue!50] (six)  at (-1, -1/3) {};
-    \draw[-stealth,blue!50] (init) -- (one);
-    \draw[-stealth,blue!50] (one) -- (two);
-    \draw[-stealth,blue!50] (two) -- (three);
-    \draw[-stealth,blue!50] (three) -- (four);
-    \draw[-stealth,blue!50] (four) --(five);
-    \draw[-stealth,blue!50] (five) -- (six);
-  \end{tikzpicture}
-\end{document}
-```
-
-## {.left}
-
-We can think of the nteraction between the evaluation and improvement processes in GPI in terms of two constraints or goals -- for example as two lines in two-dimensional space as suggested by the diagram. Although the real geometry is much more complicated, the diagram suggests what happens in the real case. Each process drives the value function or policy toward one of the lines representing a solution to one of the two goals. The goals \emph{interact} because the lines are not orthogonal: driving directly toward one goal causes some movement away from the other goal; inevitably, however, the joint process is brought closer to the overall goal of optimality. The arrows in the diagram correspond to the behavior of policy iteration in that each takes the system all the way to achieving one of the two goals completely. In GPI, one could also take smaller, incomplete steps toward each goal. In either case, the two processes together achieve the overall goal of optimality even though neither is attempting to achieve it directly!
-
-#
-
-:::col40
-
-## DP: Policy Iteration
-
-Iterative procedure to improve the policy when combining policy evaluation and improvement.
-
-\
-
-TODO TiKz
-
-![](../data/03/silver_policyIteration.svg){width=600px}
-
-:::
-
-:::col60
-
-![](https://cs.stanford.edu/people/karpathy/reinforcejs/gridworld_dp.html){width="100%" height="700px"}
-
-:::
-
-## {.footer}
-
-[@silver2015;@karpathy_mdp] -->
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="drl-robot-soccer" class="slide level1">
-<div class="decker">
-<div class="alignment">
-<h1>DRL Robot Soccer</h1>
-<div class="layout">
-<div class="area">
-<div class="box block">
-<div class="media">
-<figure class="stream" style="width:auto;height:auto;">
-<iframe style="width:auto;height:720px;aspect-ratio:16/9;" allow="fullscreen" src="https://www.youtube.com/embed/iX6OgG67-ZQ?cc_load_policy=0&amp;controls=1&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;showinfo=0">
-
-</iframe>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="example-robot-playing-soccer-hierarchical-rl" class="slide level1">
-<div class="decker">
-<div class="alignment">
-<h1>Example: Robot Playing Soccer – Hierarchical RL</h1>
-<div class="layout">
-<div class="area">
-<div class="box block">
-<p><a href="https://www.youtube.com/watch?v=iX6OgG67-ZQ">See Video of robots playing soccer</a></p>
-</div>
-<div id="section-53" class="footer box block">
-<h2 class="footer"></h2>
-<p>Details see <span class="citation">(<a href="#ref-huang2022soccer" role="doc-biblioref">Huang u. a. 2022</a>)</span></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
 <section id="references" class="unnumbered biblio slide level1">
 <div class="decker">
 <div class="alignment">
@@ -2346,9 +1725,6 @@ TODO TiKz
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-deepmind2021" class="csl-entry">
 Hasselt, Hado van, und Diana Borsa. 2021. <span>„Reinforcement Learning Lecture Series 2021“</span>. https://www.deepmind.com/learning-resources/reinforcement-learning-lecture-series-2021.
-</div>
-<div id="ref-huang2022soccer" class="csl-entry">
-Huang, Xiaoyu, Zhongyu Li, Yanzhen Xiang, Yiming Ni, Yufeng Chi, Yunhao Li, Lizhi Yang, Xue Bin Peng, und Koushil Sreenath. 2022. <span>„Creating a Dynamic Quadrupedal Robotic Goalkeeper with Reinforcement Learning“</span>. arXiv. doi:<a href="https://doi.org/10.48550/ARXIV.2210.04435">10.48550/ARXIV.2210.04435</a>.
 </div>
 <div id="ref-rl_notes_2019" class="csl-entry">
 Santucci, Andreas. 2019. <span>„Course Notes from RL Specialization, University of Alberta“</span>. https://github.com/asantucci/rl_notes.
@@ -2363,7 +1739,7 @@ Sutton, Richard S., und Andrew G. Barto. 2018. <em>Reinforcement Learning: An In
 Weng, Lilian. 2018a. <span>„A (Long) Peek into Reinforcement Learning“</span>. <a href="https://lilianweng.github.io/lil-log/2018/02/19/a-long-peek-into-reinforcement-learning.html">https://lilianweng.github.io/lil-log/2018/02/19/a-long-peek-into-reinforcement-learning.html</a>.
 </div>
 <div id="ref-weng2018bandit" class="csl-entry">
-———. 2018b. <span>„The Multi-Armed Bandit Problem and Its Solutions“</span>. <a href="https://The Multi-Armed Bandit Problem and Its Solutions">The Multi-Armed Bandit Problem and Its Solutions</a>.
+———. 2018b. <span>„The Multi-Armed Bandit Problem and Its Solutions“</span>. <a href="https://lilianweng.github.io/posts/2018-01-23-multi-armed-bandit/">https://lilianweng.github.io/posts/2018-01-23-multi-armed-bandit/</a>.
 </div>
 </div>
 </div>

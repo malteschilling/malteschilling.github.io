@@ -806,38 +806,13 @@ Distinction of different types of learning
 </div>
 </div>
 </section>
-<section id="multi-armed-bandit-2" class="slide level1">
-<div class="decker">
-<div class="alignment">
-<h1>Multi-Armed Bandit</h1>
-<div class="layout">
-<div class="area">
-<div class="box block">
-<p>A Bernoulli multi-armed bandit can be described as a tuple of <span class="math inline">\(\langle \mathcal{A}, \mathcal{R} \rangle\)</span>, where:</p>
-<ul>
-<li><span class="math inline">\(K\)</span> machines with reward probabilities, <span class="math inline">\({\theta_1,...,\theta_K}\)</span></li>
-<li>for each time step <span class="math inline">\(t\)</span>, take an action <span class="math inline">\(a\)</span> on one slot machine and receive a reward <span class="math inline">\(r\)</span>.</li>
-<li><span class="math inline">\(\mathcal{A}\)</span> is a set of actions (one for each slot machine) – the value of action <span class="math inline">\(a\)</span> is the expected reward <span class="math inline">\(Q(a) = \mathbb{E} [r_t \vert a] = \theta\)</span> (when at time <span class="math inline">\(t\)</span> action <span class="math inline">\(a_t\)</span> is choosing the <span class="math inline">\(i\)</span>-th machine <span class="math inline">\(Q(a_t)=\theta_i\)</span>).</li>
-<li><span class="math inline">\(\mathcal{R}\)</span> is the reward function (a distribution on rewards). For a Bernoulli bandit,we observe a reward in a stochastic fashion (<span class="math inline">\(r_t= \mathcal{R}(a_t)\)</span> may return 1 with probability <span class="math inline">\(Q(a_t)\)</span>).</li>
-</ul>
-<p>This is a simplified version of a Markov decision process (there is no state <span class="math inline">\(\mathcal{S}\)</span>).</p>
-</div>
-<div id="section-8" class="footer box block">
-<h2 class="footer"></h2>
-<p><span class="citation">(<a href="#ref-weng2018bandit" role="doc-biblioref">Weng 2018</a>)</span></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
 <section id="parts-of-decision-making-1" class="columns slide level1">
 <div class="decker">
 <div class="alignment">
 <h1>Parts of Decision Making</h1>
 <div class="layout row columns">
 <div class="area ">
-<div id="section-9" class="top box block">
+<div id="section-8" class="top box block">
 <h2 class="top"></h2>
 <div class="media">
 <figure class="image" style="height:auto;width:auto;">
@@ -879,7 +854,7 @@ Distinction of different types of learning
 <p>The action value for action a is the expected reward</p>
 <p><span class="math display">\[Q_t(a) = \mathbb{E}\Big[ R_t \mid A_{t}=a \Big]\]</span></p>
 </div>
-<div id="section-10" class="box block">
+<div id="section-9" class="box block">
 <h2></h2>
 <p>A simple estimate is the average of the sampled rewards:</p>
 <p><span class="math display">\[\begin{eqnarray*}
@@ -930,7 +905,7 @@ Q_t(a) &amp;=&amp; \frac{\text{sum of rewards when } a \text{ taken prior to } t
 L_T = \mathbb{E} \Big[ \sum_{t=1}^T \big( \theta^{*} - Q(a_t) \big) \Big] = \sum_{t=1}^T \Delta_{A_t}
 \]</span></p>
 </div>
-<div id="section-11" class="footer box block">
+<div id="section-10" class="footer box block">
 <h2 class="footer"></h2>
 <p><span class="citation">(<a href="#ref-weng2018bandit" role="doc-biblioref">Weng 2018</a>)</span></p>
 </div>
@@ -953,7 +928,7 @@ L_T = \mathbb{E} \Big[ \sum_{t=1}^T \big( \theta^{*} - Q(a_t) \big) \Big] = \sum
 </div>
 <p>Random action values <span class="math inline">\(q_*(a), a=1,...,10\)</span> (selected from a normal distribution, zero mean, unit std. dev.).</p>
 </div>
-<div id="section-12" class="footer box block">
+<div id="section-11" class="footer box block">
 <h2 class="footer"></h2>
 <p><span class="citation">(<a href="#ref-sutton2018" role="doc-biblioref">Sutton und Barto 2018</a>)</span></p>
 </div>
@@ -1064,6 +1039,70 @@ plt.show()</code></pre>
 </div>
 </div>
 </section>
+<section id="multi-armed-bandits" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Multi-Armed Bandits</h1>
+<div class="layout row columns">
+<div class="area ">
+<div id="section-12" class="top box block">
+<h2 class="top"></h2>
+<p>Can be realized in different ways and using different forms of distributions.</p>
+</div>
+</div>
+</div>
+<div class="layout row columns">
+<div class="area left">
+<div id="normal-distribution" class="left box block">
+<h2 class="left">Normal Distribution</h2>
+<p>In the simplest case, we assume the reward as following a normal distribution. Such a bandit can be represented through a mean and standard deviation. Rewards are sampled from this distribution.</p>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/02/sutton_2_1_bandit.svg" style="height:240px;width:auto;" alt="../data/02/sutton_2_1_bandit.svg" />
+</figure>
+</div>
+</div>
+</div><div class="area right">
+<div id="bernoulli-distribution" class="right box block">
+<h2 class="right">Bernoulli Distribution</h2>
+<p>In the case of discrete reward events, a Bernoulli Distribution can be used. The probability describes how often a fixed reward is given (otherwise zero would be given as a reward).</p>
+<p>The probability distribution of the expected reward should be described using a beta distribution.</p>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/02/bernoulli-distribution-graph-1634631289.png" style="height:240px;width:auto;" alt="../data/02/bernoulli-distribution-graph-1634631289.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="multi-armed-bernoulli-bandit" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Multi-Armed Bernoulli Bandit</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>A Bernoulli multi-armed bandit can be described as a tuple of <span class="math inline">\(\langle \mathcal{A}, \mathcal{R} \rangle\)</span>, where:</p>
+<ul>
+<li><span class="math inline">\(K\)</span> machines with reward probabilities, <span class="math inline">\({\theta_1,...,\theta_K}\)</span></li>
+<li>for each time step <span class="math inline">\(t\)</span>, take an action <span class="math inline">\(a\)</span> on one slot machine and receive a reward <span class="math inline">\(r\)</span>.</li>
+<li><span class="math inline">\(\mathcal{A}\)</span> is a set of actions (one for each slot machine) – the value of action <span class="math inline">\(a\)</span> is the expected reward <span class="math inline">\(Q(a) = \mathbb{E} [r_t \vert a] = \theta\)</span> (when at time <span class="math inline">\(t\)</span> action <span class="math inline">\(a_t\)</span> is choosing the <span class="math inline">\(i\)</span>-th machine <span class="math inline">\(Q(a_t)=\theta_i\)</span>).</li>
+<li><span class="math inline">\(\mathcal{R}\)</span> is the reward function (a distribution on rewards). For a Bernoulli bandit,we observe a reward in a stochastic fashion (<span class="math inline">\(r_t= \mathcal{R}(a_t)\)</span> may return 1 with probability <span class="math inline">\(Q(a_t)\)</span>).</li>
+</ul>
+<p>This is a simplified version of a Markov decision process (there is no state <span class="math inline">\(\mathcal{S}\)</span>).</p>
+</div>
+<div id="section-13" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-weng2018bandit" role="doc-biblioref">Weng 2018</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
 <section id="the-greedy-policy" class="slide level1">
 <div class="decker">
 <div class="alignment">
@@ -1099,7 +1138,7 @@ plt.show()</code></pre>
 <p><span class="math inline">\(\mathbb{1}\)</span> – binary indicator function for selecting an action</p>
 <p><span class="math inline">\(N_t(a) = \sum_{i=1}^t \mathbb{1}(a_i = a)\)</span> – counting how many times an action was selected</p>
 </div>
-<div id="section-13" class="footer box block">
+<div id="section-14" class="footer box block">
 <h2 class="footer"></h2>
 <p><span class="citation">(<a href="#ref-weng2018bandit" role="doc-biblioref">Weng 2018</a>)</span></p>
 </div>
@@ -1122,7 +1161,7 @@ plt.show()</code></pre>
 </div>
 <p>Note: Incremental implementation to update estimates of value function is efficient.</p>
 </div>
-<div id="section-14" class="footer box block">
+<div id="section-15" class="footer box block">
 <h2 class="footer"></h2>
 <p><span class="citation">(<a href="#ref-sutton2018" role="doc-biblioref">Sutton und Barto 2018</a>)</span></p>
 </div>
@@ -1145,7 +1184,7 @@ plt.show()</code></pre>
 </div>
 <p>Average performance of <span class="math inline">\(\varepsilon\)</span>-greedy method (averaged over 2000 runs) for 10-arm bandit problem.</p>
 </div>
-<div id="section-15" class="footer box block">
+<div id="section-16" class="footer box block">
 <h2 class="footer"></h2>
 <p><span class="citation">(<a href="#ref-sutton2018" role="doc-biblioref">Sutton und Barto 2018</a>)</span></p>
 </div>
@@ -1271,7 +1310,7 @@ plt.show()</code></pre>
 <p>The more uncertain we are about an action-value, the more important it is to explore that action as it could turn out to be the best action.</p>
 <p>One approach: Keep an (over-)optimistic estimate for each action.</p>
 </div>
-<div id="section-16" class="footer box block">
+<div id="section-17" class="footer box block">
 <h2 class="footer"></h2>
 <p><span class="citation">(<a href="#ref-deepmind2021" role="doc-biblioref">Hasselt und Borsa 2021</a>)</span></p>
 </div>
@@ -1296,7 +1335,7 @@ plt.show()</code></pre>
 <p>In UCB algorithm, actions are selected greedily in order to maximize the upper confidence bound: <span class="math display">\[a^{UCB}_t = \arg\max\limits_{a \in \mathcal{A}} \hat{Q}_t(a) + \hat{U}_t(a)
 = \arg\max\limits_{a \in \mathcal{A}} \hat{Q}_t(a) + c \sqrt{\frac{\ln t}{N_t(a)}} \]</span></p>
 </div>
-<div id="section-17" class="footer box block">
+<div id="section-18" class="footer box block">
 <h2 class="footer"></h2>
 <p><span class="citation">(<a href="#ref-weng2018bandit" role="doc-biblioref">Weng 2018</a>)</span></p>
 </div>
@@ -1320,7 +1359,7 @@ plt.show()</code></pre>
 <p>Average performance of UCB (averaged over 2000 runs) for 10-arm bandit problem.</p>
 <p>UCB outperforms <span class="math inline">\(\varepsilon\)</span>-greedy.</p>
 </div>
-<div id="section-18" class="footer box block">
+<div id="section-19" class="footer box block">
 <h2 class="footer"></h2>
 <p><span class="citation">(<a href="#ref-sutton2018" role="doc-biblioref">Sutton und Barto 2018</a>)</span></p>
 </div>
@@ -1343,7 +1382,7 @@ plt.show()</code></pre>
 <li>and on the overall collected regret <span class="math inline">\(L_T = \mathbb{E} \Big[ \sum_{t=1}^T \big( \theta^{*} - Q(a_t) \big) \Big]\)</span>.</li>
 </ul>
 </div>
-<div id="section-19" class="box block fragment">
+<div id="section-20" class="box block fragment">
 <h2></h2>
 <p>Therefore, we should aim for algorithm that avoid large regrets.</p>
 </div>
@@ -1394,11 +1433,11 @@ plt.show()</code></pre>
 \lim\limits_{t\rightarrow \infty}L_t \geq \log t \sum\limits_{a | \Delta_a&gt; 0} \frac{\Delta_a}{KL(\mathcal{R}_a||\mathcal{R}_{a*})}
 \]</span></p>
 </div>
-<div id="section-20" class="box block">
+<div id="section-21" class="box block">
 <h2></h2>
 <p>With <span class="math inline">\(KL(\mathcal{R}_a||\mathcal{R}_{a*}) \propto \Delta_a^2\)</span> – note: Hard problems have similar-looking arms with different means. <a href="https://www.countbayesie.com/blog/2017/5/9/kullback-leibler-divergence-explained">See here for explanation on Kullback-Leibler Divergence</a>.</p>
 </div>
-<div id="section-21" class="footer box block">
+<div id="section-22" class="footer box block">
 <h2 class="footer"></h2>
 <p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
 </div>
@@ -1449,7 +1488,7 @@ H_{t+1}(a) &amp;=&amp; H_{t}(a) - \alpha (R_t - \bar{R}_t) \pi_t(a) &amp; \text{
 </div>
 <p>Shown are variations of the <span class="math inline">\(\alpha\)</span> parameter and the importance of including the mean reward in the update for unbiasing (for brown curve this baseline is removed and the added bias of <span class="math inline">\(+4\)</span> affects learning).</p>
 </div>
-<div id="section-22" class="footer box block">
+<div id="section-23" class="footer box block">
 <h2 class="footer"></h2>
 <p>Following <span class="citation">(<a href="#ref-sutton2018" role="doc-biblioref">Sutton und Barto 2018</a>)</span>.</p>
 </div>
@@ -1471,7 +1510,7 @@ H_{t+1}(a) &amp;=&amp; H_{t}(a) - \alpha (R_t - \bar{R}_t) \pi_t(a) &amp; \text{
 <li>Thompson Sampling – formulate action selection as a probabilistic process itself (selecting an action with a probability that estimates it is optimal)</li>
 </ul>
 </div>
-<div id="section-23" class="footer box block">
+<div id="section-24" class="footer box block">
 <h2 class="footer"></h2>
 <p>For further explanation see <span class="citation">(<a href="#ref-sutton2018" role="doc-biblioref">Sutton und Barto 2018</a>)</span> or <span class="citation">(<a href="#ref-weng2018bandit" role="doc-biblioref">Weng 2018</a>)</span>.</p>
 </div>
@@ -1507,7 +1546,7 @@ Silver, David. 2015. <span>„UCL Course on RL UCL Course on RL UCL Course on Re
 Sutton, Richard S., und Andrew G. Barto. 2018. <em>Reinforcement Learning: An Introduction</em>. Second. The MIT Press.
 </div>
 <div id="ref-weng2018bandit" class="csl-entry">
-Weng, Lilian. 2018. <span>„The Multi-Armed Bandit Problem and Its Solutions“</span>. <a href="https://The Multi-Armed Bandit Problem and Its Solutions">The Multi-Armed Bandit Problem and Its Solutions</a>.
+Weng, Lilian. 2018. <span>„The Multi-Armed Bandit Problem and Its Solutions“</span>. <a href="https://lilianweng.github.io/posts/2018-01-23-multi-armed-bandit/">https://lilianweng.github.io/posts/2018-01-23-multi-armed-bandit/</a>.
 </div>
 </div>
 </div>
