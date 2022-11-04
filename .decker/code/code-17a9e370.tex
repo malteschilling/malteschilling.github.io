@@ -1,0 +1,25 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{verbatim}
+\begin{document}
+\pagestyle{empty}
+\begin{tikzpicture}
+
+  % The graphic
+  \node[draw,circle,scale=1/2] (s) at (0,0) {};
+  \node[above=1mm] {$s$};
+  \foreach \x in {-2, 0, 2} {
+      \node[draw,circle,fill,scale=1/4] (b\x) at (\x, -1) {};
+      \node[draw,circle,scale=1/2] (l\x) at (\x-.5,-2) {};
+      \node[draw,circle,scale=1/2] (r\x) at (\x+.5,-2) {};
+      \draw[-stealth] (s) -- (b\x);
+      \draw[-stealth] (b\x) -- (l\x);
+      \draw[-stealth] (b\x) -- (r\x);
+  }
+  % \node at (0.2, -0.5) {$\pi$};
+  \node at (1.2, -0.75) {$a$};
+  % \node[below = 2mm of b1] {$p$};
+  %\node[below right = 1mm] {$r$};
+  \node at (1.6, -1.95) {$s'$};
+\end{tikzpicture}
+\end{document}

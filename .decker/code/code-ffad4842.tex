@@ -1,0 +1,16 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{verbatim}
+\usetikzlibrary{positioning}
+\begin{document}
+\pagestyle{empty}
+  \begin{tikzpicture}
+    \node[draw,circle, fill, scale=0.4] (s) at (0,0) {};
+    \node at (-1.4, 0) {$q_{\pi}(s,a) \leftarrow s, a$};
+    \foreach \x in {-1, 1} {
+      \node[draw,circle,scale=0.6] (b\x) at (\x, -1) {};
+      \draw[-stealth] (s) -- (b\x);
+    }
+    \node at (-2, -1) {$v_{\pi}(s')\leftarrow s'$};
+  \end{tikzpicture}
+\end{document}

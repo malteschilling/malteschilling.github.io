@@ -1,0 +1,17 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{verbatim}
+\usetikzlibrary{positioning}
+\begin{document}
+\pagestyle{empty}
+  \begin{tikzpicture}
+    \node (pi) at (-1, 0) {$\pi$};
+    \node (v)  at ( 1, 0) {$V$};
+    \path[->] (pi) edge[bend left = 90] (v);
+    \path[->] (v)  edge[bend left = 90] (pi);
+    \node at (0, 1) {\tiny evaluation};
+    \node at (0, 0.55) {$\scriptstyle V \leadsto v_\pi$};
+    \node at (0, -0.4) {$\scriptstyle \pi \leadsto \textrm{greedy}(V)$};
+
+  \end{tikzpicture}
+\end{document}

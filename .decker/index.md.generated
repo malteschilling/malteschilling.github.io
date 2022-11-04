@@ -1,0 +1,67 @@
+
+---
+title: Generated Index
+subtitle: /Users/mschilling/develop/slides/VL_DRL
+---
+``` {.javascript .run}
+import("./" + Decker.meta.supportPath + "/fuzzySearch/search.js")
+    .then((module) => {
+      anchor.classList.add("search");
+      anchor.innerHTML = `
+        <p>
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input class="search" placeholder="In Folien suchen" type="text">
+        </p>
+        <table class="search">
+        <thead><tr><th>Wort</th><th>Foliensatz</th><th>Folie</th><th>Treffer</th></tr></thead>
+        <tbody></tbody>
+        </table>
+      `;
+      module.default(anchor, 0.6);
+    });
+```
+# Slide decks
+
+## public/01_Introduction:
+-    [01-introduction-deck.html <i class='fab fa-html5'></i>](01_Introduction/01-introduction-deck.html)
+
+## public/02_Multi-Armed_Bandits:
+-    [02-bandit-deck.html <i class='fab fa-html5'></i>](02_Multi-Armed_Bandits/02-bandit-deck.html)
+
+## public/02_test:
+-    [02-bandit-deck.html <i class='fab fa-html5'></i>](02_test/02-bandit-deck.html)
+
+## public/03_mdp:
+-    [03-mdp-deck.html <i class='fab fa-html5'></i>](03_mdp/03-mdp-deck.html)
+
+## public/04_dp:
+-    [03-Backup-deck.html <i class='fab fa-html5'></i>](04_dp/03-Backup-deck.html)
+-    [03-DP-deck.html <i class='fab fa-html5'></i>](04_dp/03-DP-deck.html)
+-    [04-dynamic_programming-deck.html <i class='fab fa-html5'></i>](04_dp/04-dynamic_programming-deck.html)
+-    [04-test-deck.html <i class='fab fa-html5'></i>](04_dp/04-test-deck.html)
+
+# Handouts
+
+## public/01_Introduction:
+-    [01-introduction-handout.html <i class='fab fa-html5'></i>](01_Introduction/01-introduction-handout.html)
+
+## public/02_Multi-Armed_Bandits:
+-    [02-bandit-handout.html <i class='fab fa-html5'></i>](02_Multi-Armed_Bandits/02-bandit-handout.html)
+
+## public/02_test:
+-    [02-bandit-handout.html <i class='fab fa-html5'></i>](02_test/02-bandit-handout.html)
+
+## public/03_mdp:
+-    [03-mdp-handout.html <i class='fab fa-html5'></i>](03_mdp/03-mdp-handout.html)
+
+## public/04_dp:
+-    [03-Backup-handout.html <i class='fab fa-html5'></i>](04_dp/03-Backup-handout.html)
+-    [03-DP-handout.html <i class='fab fa-html5'></i>](04_dp/03-DP-handout.html)
+-    [04-dynamic_programming-handout.html <i class='fab fa-html5'></i>](04_dp/04-dynamic_programming-handout.html)
+-    [04-test-handout.html <i class='fab fa-html5'></i>](04_dp/04-test-handout.html)
+
+# Supporting Documents
+
+# Questions
+
+        
