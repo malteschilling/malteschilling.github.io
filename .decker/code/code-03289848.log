@@ -1,0 +1,128 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2022.1.19)  23 OCT 2022 20:14
+entering extended mode
+ %&-line parsing enabled.
+**public/.decker/code/code-03289848.tex
+(./public/.decker/code/code-03289848.tex
+LaTeX2e <2020-10-01> patch level 4
+L3 programming layer <2021-02-18> (/usr/local/texlive/2021/texmf-dist/tex/latex
+/standalone/standalone.cls
+Document Class: standalone 2018/03/26 v1.3a Class to compile TeX sub-files stan
+dalone
+(/usr/local/texlive/2021/texmf-dist/tex/latex/tools/shellesc.sty
+Package: shellesc 2019/11/08 v1.0c unified shell escape interface for LaTeX
+
+Package shellesc Warning: Shell escape disabled on input line 73.
+
+) (/usr/local/texlive/2021/texmf-dist/tex/generic/iftex/ifluatex.sty
+Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
+(/usr/local/texlive/2021/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2020/03/06 v1.0d TeX engine tests
+)) (/usr/local/texlive/2021/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+Package: xkeyval 2020/11/20 v2.8 package option processing (HA)
+(/usr/local/texlive/2021/texmf-dist/tex/generic/xkeyval/xkeyval.tex (/usr/local
+/texlive/2021/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+\XKV@toks=\toks15
+\XKV@tempa@toks=\toks16
+(/usr/local/texlive/2021/texmf-dist/tex/generic/xkeyval/keyval.tex))
+\XKV@depth=\count179
+File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
+))
+\sa@internal=\count180
+\c@sapage=\count181
+(/usr/local/texlive/2021/texmf-dist/tex/latex/standalone/standalone.cfg
+File: standalone.cfg 2018/03/26 v1.3a Default configuration file for 'standalon
+e' class
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2020/04/10 v1.4m Standard LaTeX document class
+(/usr/local/texlive/2021/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2020/04/10 v1.4m Standard LaTeX file (size option)
+)
+\c@part=\count182
+\c@section=\count183
+\c@subsection=\count184
+\c@subsubsection=\count185
+\c@paragraph=\count186
+\c@subparagraph=\count187
+\c@figure=\count188
+\c@table=\count189
+\abovecaptionskip=\skip47
+\belowcaptionskip=\skip48
+\bibindent=\dimen138
+)
+\sa@box=\box47
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/algorithm2e/algorithm2e.sty
+Package: algorithm2e 2017/07/18 v5.2 algorithms environments
+\c@AlgoLine=\count190
+(/usr/local/texlive/2021/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+)
+\algocf@hangindent=\skip49
+(/usr/local/texlive/2021/texmf-dist/tex/latex/ifoddpage/ifoddpage.sty
+Package: ifoddpage 2016/04/23 v1.1 Conditionals for odd/even page detection
+\c@checkoddpage=\count191
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/tools/xspace.sty
+Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/relsize/relsize.sty
+Package: relsize 2013/03/29 ver 4.1
+)
+\skiptotal=\skip50
+\skiplinenumber=\skip51
+\skiprule=\skip52
+\skiphlne=\skip53
+\skiptext=\skip54
+\skiplength=\skip55
+\algomargin=\skip56
+\skipalgocfslide=\skip57
+\algowidth=\dimen139
+\inoutsize=\dimen140
+\inoutindent=\dimen141
+\interspacetitleruled=\dimen142
+\interspacealgoruled=\dimen143
+\interspacetitleboxruled=\dimen144
+\algocf@ruledwidth=\skip58
+\algocf@inoutbox=\box48
+\algocf@inputbox=\box49
+\AlCapSkip=\skip59
+\AlCapHSkip=\skip60
+\algoskipindent=\skip61
+\algocf@nlbox=\box50
+\algocf@hangingbox=\box51
+\algocf@untilbox=\box52
+\algocf@skipuntil=\skip62
+\algocf@capbox=\box53
+\algocf@lcaptionbox=\skip63
+\algoheightruledefault=\skip64
+\algoheightrule=\skip65
+\algotitleheightruledefault=\skip66
+\algotitleheightrule=\skip67
+\c@algocfline=\count192
+\c@algocfproc=\count193
+\c@algocf=\count194
+\algocf@algoframe=\box54
+\algocf@algobox=\box55
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/tools/verbatim.sty
+Package: verbatim 2020-07-07 v1.5u LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks17
+\verbatim@line=\toks18
+\verbatim@in@stream=\read2
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/base/latexsym.sty
+Package: latexsym 1998/08/17 v2.2e Standard LaTeX package (lasy symbols)
+\symlasy=\mathgroup4
+LaTeX Font Info:    Overwriting symbol font `lasy' in version `bold'
+(Font)                  U/lasy/m/n --> U/lasy/b/n on input line 52.
+)
+! Undefined control sequence.
+<recently read> \usetikzlibrary 
+                                
+l.5 \usetikzlibrary
+                   {positioning} 
+Here is how much of TeX's memory you used:
+ 1813 strings out of 478994
+ 29023 string characters out of 5858184
+ 321020 words of memory out of 5000000
+ 19337 multiletter control sequences out of 15000+600000
+ 403430 words of font info for 27 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 68i,0n,74p,334b,36s stack positions out of 5000i,500n,10000p,200000b,80000s
+
+!  ==> Fatal error occurred, no output PDF file produced!
