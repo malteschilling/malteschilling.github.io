@@ -434,7 +434,7 @@
   <link rel="stylesheet" href="../support/plugins/quiz-wue/quiz-wue.css">
   <link rel="stylesheet" href="../support/css/deck.css">
   <link rel="stylesheet" href="../support/css/msms-deck.css">
-  
+
 </head>
 
 <body >
@@ -448,14 +448,14 @@
                               <h2>4 - Dynamic Programming</h2>
                   </div>
 
-         
-         
+
+
                   <div class="author"> Prof. Dr. Malte Schilling </div>
-         
+
                   <div class="affiliation"> Autonomous Intelligent
 Systems Group </div>
-         
-         
+
+
          <img class="logo affiliation-logo light-only" src="./../support/assets/ms-logo-light.svg">
          <img class="logo affiliation-logo dark-only" src="./../support/assets/ms-logo-dark.svg">
 
@@ -563,18 +563,18 @@ Systems Group </div>
 <div class="box block">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:640px;">
-<img src="../.decker/code/code-ea9fe2e0.tex.svg" style="height:auto;width:100%;" alt="code-ea9fe2e0.tex.svg" />
+<img src="../decker/code/code-ea9fe2e0.tex.svg" style="height:auto;width:100%;" alt="code-ea9fe2e0.tex.svg" />
 </figure>
 </div>
 </div>
 <div id="action-value-function-using-bellman-expectation" class="box block">
 <h2>Action-Value Function using Bellman Expectation</h2>
 <p><span class="math display">\[
-q_{\pi}(s,a) = \sum_{r}\sum_{s&#39; \in \mathcal{S}} p (r, s&#39;|s,a) 
+q_{\pi}(s,a) = \sum_{r}\sum_{s&#39; \in \mathcal{S}} p (r, s&#39;|s,a)
 \Big(r + \gamma \sum_{a&#39; \in \mathcal{A}} \pi(a&#39; | s&#39;) q_{\pi}(s&#39;, a&#39;) \Big)
 \]</span></p>
 <p>With reward independent of <span class="math inline">\(s&#39;\)</span>: <span class="math display">\[
-q_{\pi}(s,a) = R^a_s + \gamma \sum_{s&#39; \in \mathcal{S}} p (s&#39;|s,a) 
+q_{\pi}(s,a) = R^a_s + \gamma \sum_{s&#39; \in \mathcal{S}} p (s&#39;|s,a)
 \sum_{a&#39; \in \mathcal{A}} \pi(a&#39; | s&#39;) q_{\pi}(s&#39;, a&#39;)
 \]</span></p>
 </div>
@@ -592,7 +592,7 @@ q_{\pi}(s,a) = R^a_s + \gamma \sum_{s&#39; \in \mathcal{S}} p (s&#39;|s,a)
 <div class="box block">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:640px;">
-<img src="../.decker/code/code-71fac017.tex.svg" style="height:auto;width:100%;" alt="code-71fac017.tex.svg" />
+<img src="../decker/code/code-71fac017.tex.svg" style="height:auto;width:100%;" alt="code-71fac017.tex.svg" />
 </figure>
 </div>
 </div>
@@ -677,7 +677,7 @@ v_{\pi}(s) = \sum_{a \in \mathcal{A}} \pi (a|s) \sum_{r} \sum_{s&#39; \in \mathc
 <p><span class="math display">\[
 \begin{eqnarray*}
   v_{\pi_1}(X) &amp;=&amp; {\sum_{k=0}^{\infty} 0.9^{2k} = \frac{1}{1-0.9^2} \approx 5.3 }\\ \\
-  v_{\pi_2}(X) 
+  v_{\pi_2}(X)
   &amp;=&amp; {\sum_{k=0}^{\infty} (0.9)^{2k+1}*2 = \frac{0.9}{1-0.9^2} * 2 \approx 9.5}
 \end{eqnarray*}
 \]</span></p>
@@ -690,7 +690,7 @@ v_{\pi}(s) = \sum_{a \in \mathcal{A}} \pi (a|s) \sum_{r} \sum_{s&#39; \in \mathc
 <h2 class="right"></h2>
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:auto;">
-<img src="../.decker/code/code-ecd89391.tex.svg" style="height:480px;width:auto;" alt="code-ecd89391.tex.svg" />
+<img src="../decker/code/code-ecd89391.tex.svg" style="height:480px;width:auto;" alt="code-ecd89391.tex.svg" />
 </figure>
 </div>
 </div>
@@ -817,7 +817,7 @@ q_*(s,a) = \max_{\pi} q_{\pi}(s,a)
 <div class="box block">
 <p>We can find an optimal policy by directly acting greedy on the optimal action-state value function <span class="math inline">\(q_*(s,a)\)</span>:</p>
 <p><span class="math display">\[
-\pi_*(s,a) = 
+\pi_*(s,a) =
   \begin{cases}
       1, &amp; \text{if}\ a=\arg\max\limits_{a \in \mathcal{A}} q_* (s,a) \\
       0, &amp; \text{otherwise}
@@ -875,7 +875,7 @@ q_*(s,a) = \max_{\pi} q_{\pi}(s,a)
 <p><span class="math display">\[ v_{\pi}(s)= \sum_{a \in \mathcal{A}} \pi (a|s) \Big( R^a_s + \gamma \sum_{s&#39; \in \mathcal{S}} p (s&#39;|s,a) v_{\pi}(s&#39;) \Big)
 \]</span></p>
 <p><span class="math display">\[
-q_{\pi}(s,a) = R^a_s + \gamma \sum_{s&#39; \in \mathcal{S}} p (s&#39;|s,a) 
+q_{\pi}(s,a) = R^a_s + \gamma \sum_{s&#39; \in \mathcal{S}} p (s&#39;|s,a)
 \sum_{a&#39; \in \mathcal{A}} \pi(a&#39; | s&#39;) q_{\pi}(s&#39;, a&#39;)
 \]</span></p>
 </div>
@@ -893,7 +893,7 @@ q_{\pi}(s,a) = R^a_s + \gamma \sum_{s&#39; \in \mathcal{S}} p (s&#39;|s,a)
 <div class="box block">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:800px;">
-<img src="../.decker/code/code-89bc691f.tex.svg" style="height:auto;width:100%;" alt="code-89bc691f.tex.svg" />
+<img src="../decker/code/code-89bc691f.tex.svg" style="height:auto;width:100%;" alt="code-89bc691f.tex.svg" />
 </figure>
 </div>
 <p><span class="math display">\[
@@ -914,7 +914,7 @@ v_{*}(s) = \max_{a \in \mathcal{A}} q_{*}(s,a)
 <div class="box block">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:800px;">
-<img src="../.decker/code/code-bbdd3e74.tex.svg" style="height:auto;width:100%;" alt="code-bbdd3e74.tex.svg" />
+<img src="../decker/code/code-bbdd3e74.tex.svg" style="height:auto;width:100%;" alt="code-bbdd3e74.tex.svg" />
 </figure>
 </div>
 <p><span class="math display">\[
@@ -935,7 +935,7 @@ v_{*}(s) = \max_{a \in \mathcal{A}} \Big( R^a_s + \gamma \sum_{s&#39; \in \mathc
 <div class="box block">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:800px;">
-<img src="../.decker/code/code-f3554bbb.tex.svg" style="height:auto;width:100%;" alt="code-f3554bbb.tex.svg" />
+<img src="../decker/code/code-f3554bbb.tex.svg" style="height:auto;width:100%;" alt="code-f3554bbb.tex.svg" />
 </figure>
 </div>
 <p><span class="math display">\[
@@ -956,11 +956,11 @@ q_{*}(s,a) = R^a_s + \gamma \sum_{s&#39; \in \mathcal{S}} p (s&#39;|s,a) v_{*}(s
 <div class="box block">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:800px;">
-<img src="../.decker/code/code-ca812591.tex.svg" style="height:auto;width:100%;" alt="code-ca812591.tex.svg" />
+<img src="../decker/code/code-ca812591.tex.svg" style="height:auto;width:100%;" alt="code-ca812591.tex.svg" />
 </figure>
 </div>
 <p><span class="math display">\[
-q_{*}(s,a) = R^a_s + \gamma \sum_{s&#39; \in \mathcal{S}} p (s&#39;|s,a) 
+q_{*}(s,a) = R^a_s + \gamma \sum_{s&#39; \in \mathcal{S}} p (s&#39;|s,a)
 \max_{a&#39; \in \mathcal{A}} q_{*}(s&#39;, a&#39;)
 \]</span></p>
 </div>
@@ -1026,7 +1026,7 @@ q_{*}(s, a) = \max_{\pi} q_{\pi}(s, a)\]</span></p>
 
 We can use these equations directly to compute optimal values for following an optimal policy.
 
-\begin{align*} 
+\begin{align*}
 v_*(s) &= \max_{a \in \mathcal{A}} q_*(s,a)\\
 q_*(s, a) &= R_s^a + \gamma \sum_{s' \in \mathcal{S}} p(s' | s,a) v_*(s') \\
 v_*(s) &= \max_{a \in \mathcal{A}} \big( R_s^a + \gamma \sum_{s' \in \mathcal{S}} p(s' | s,a) v_*(s') \big) \\
@@ -1187,7 +1187,7 @@ F_n = F_{n-1} + F_{n-2}, F_0 = 0, F_1 = 1
 <div class="box block">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:auto;">
-<img src="../.decker/code/code-4c4cf418.tex.svg" style="height:480px;width:auto;" alt="code-4c4cf418.tex.svg" />
+<img src="../decker/code/code-4c4cf418.tex.svg" style="height:480px;width:auto;" alt="code-4c4cf418.tex.svg" />
 </figure>
 </div>
 <p>DP uses the various Bellman equations along with <strong>full</strong> knowledge of the joint probability to work out value functions and optimal policies.</p>
@@ -1210,7 +1210,7 @@ F_n = F_{n-1} + F_{n-2}, F_0 = 0, F_1 = 1
 <p><span class="math display">\[ v_* (s)= \max_{a \in \mathcal{A}} \Big( R^a_s + \gamma \sum_{s&#39; \in \mathcal{S}} p (s&#39;|s,a) v_{*}(s&#39;) \Big)
 \]</span></p>
 <p><span class="math display">\[
-q_{*}(s,a) = R^a_s + \gamma \sum_{s&#39; \in \mathcal{S}} p (s&#39;|s,a) 
+q_{*}(s,a) = R^a_s + \gamma \sum_{s&#39; \in \mathcal{S}} p (s&#39;|s,a)
 \max_{a&#39; \in \mathcal{A}} q_{*}(s&#39;, a&#39;)
 \]</span></p>
 </div>
@@ -1230,7 +1230,7 @@ q_{*}(s,a) = R^a_s + \gamma \sum_{s&#39; \in \mathcal{S}} p (s&#39;|s,a)
 <p>Policy Evaluation is to compute the state-value <span class="math inline">\(v_{\pi}\)</span> for a given policy <span class="math inline">\(\pi\)</span>:</p>
 <p><span class="math display">\[
 \begin{eqnarray*}
-v_{k+1}(s) 
+v_{k+1}(s)
 &amp;=&amp; \mathbb{E}_\pi [r + \gamma v_k(s&#39;) | S= s] \\
 &amp;=&amp; \sum_a \pi(a \vert s) \sum_{s&#39;, r} p(s&#39;, r \vert s, a) (r + \gamma v_k(s&#39;))
 \end{eqnarray*}
@@ -1268,7 +1268,7 @@ v_{k+1}(s)
 <h2></h2>
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:auto;">
-<img src="../.decker/code/code-4f26c330.tex.svg" style="height:360px;width:auto;" alt="code-4f26c330.tex.svg" />
+<img src="../decker/code/code-4f26c330.tex.svg" style="height:360px;width:auto;" alt="code-4f26c330.tex.svg" />
 </figure>
 </div>
 <!--# Optimal Solution for the Gridworld Example
@@ -1312,7 +1312,7 @@ For state $A$ and $B$: all actions lead to $A'$ and a reward of $+10$ (respectiv
 <div class="col70">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:800px;">
-<img src="../.decker/code/code-b153d627.tex.svg" style="height:auto;width:100%;" alt="code-b153d627.tex.svg" />
+<img src="../decker/code/code-b153d627.tex.svg" style="height:auto;width:100%;" alt="code-b153d627.tex.svg" />
 </figure>
 </div>
 </div>
@@ -1335,7 +1335,7 @@ For state $A$ and $B$: all actions lead to $A'$ and a reward of $+10$ (respectiv
 <div class="box block">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:1000px;">
-<img src="../.decker/code/code-00a9e80e.tex.svg" style="height:auto;width:100%;" alt="code-00a9e80e.tex.svg" />
+<img src="../decker/code/code-00a9e80e.tex.svg" style="height:auto;width:100%;" alt="code-00a9e80e.tex.svg" />
 </figure>
 </div>
 </div>
@@ -1353,7 +1353,7 @@ For state $A$ and $B$: all actions lead to $A'$ and a reward of $+10$ (respectiv
 <div class="box block">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:1000px;">
-<img src="../.decker/code/code-00653d55.tex.svg" style="height:auto;width:100%;" alt="code-00653d55.tex.svg" />
+<img src="../decker/code/code-00653d55.tex.svg" style="height:auto;width:100%;" alt="code-00653d55.tex.svg" />
 </figure>
 </div>
 </div>
@@ -1371,7 +1371,7 @@ For state $A$ and $B$: all actions lead to $A'$ and a reward of $+10$ (respectiv
 <div class="box block">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:1000px;">
-<img src="../.decker/code/code-d4a562d5.tex.svg" style="height:auto;width:100%;" alt="code-d4a562d5.tex.svg" />
+<img src="../decker/code/code-d4a562d5.tex.svg" style="height:auto;width:100%;" alt="code-d4a562d5.tex.svg" />
 </figure>
 </div>
 </div>
@@ -1389,7 +1389,7 @@ For state $A$ and $B$: all actions lead to $A'$ and a reward of $+10$ (respectiv
 <div class="box block">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:1000px;">
-<img src="../.decker/code/code-c931bfd8.tex.svg" style="height:auto;width:100%;" alt="code-c931bfd8.tex.svg" />
+<img src="../decker/code/code-c931bfd8.tex.svg" style="height:auto;width:100%;" alt="code-c931bfd8.tex.svg" />
 </figure>
 </div>
 </div>
@@ -1407,7 +1407,7 @@ For state $A$ and $B$: all actions lead to $A'$ and a reward of $+10$ (respectiv
 <div class="box block">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:1000px;">
-<img src="../.decker/code/code-da845315.tex.svg" style="height:auto;width:100%;" alt="code-da845315.tex.svg" />
+<img src="../decker/code/code-da845315.tex.svg" style="height:auto;width:100%;" alt="code-da845315.tex.svg" />
 </figure>
 </div>
 </div>
@@ -1425,7 +1425,7 @@ For state $A$ and $B$: all actions lead to $A'$ and a reward of $+10$ (respectiv
 <div class="box block">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:1000px;">
-<img src="../.decker/code/code-a857476f.tex.svg" style="height:auto;width:100%;" alt="code-a857476f.tex.svg" />
+<img src="../decker/code/code-a857476f.tex.svg" style="height:auto;width:100%;" alt="code-a857476f.tex.svg" />
 </figure>
 </div>
 </div>
@@ -1560,7 +1560,7 @@ This is the Bellman optimality equation -- and, therefore, $v_{\pi'}$ must be $v
 <div class="box block">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:1200px;">
-<img src="../.decker/code/code-2c8f8dd4.tex.svg" style="height:auto;width:100%;" alt="code-2c8f8dd4.tex.svg" />
+<img src="../decker/code/code-2c8f8dd4.tex.svg" style="height:auto;width:100%;" alt="code-2c8f8dd4.tex.svg" />
 </figure>
 </div>
 <p><strong>Policy evaluation:</strong><span class="math inline">\(\overset{\textrm{E}}{\longrightarrow}\)</span></p>
@@ -1597,7 +1597,7 @@ This is the Bellman optimality equation -- and, therefore, $v_{\pi'}$ must be $v
 <div class="box block">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:auto;">
-<img src="../.decker/code/code-ad3f3b85.tex.svg" style="height:540px;width:auto;" alt="code-ad3f3b85.tex.svg" />
+<img src="../decker/code/code-ad3f3b85.tex.svg" style="height:540px;width:auto;" alt="code-ad3f3b85.tex.svg" />
 </figure>
 </div>
 </div>
@@ -1616,7 +1616,7 @@ This is the Bellman optimality equation -- and, therefore, $v_{\pi'}$ must be $v
 <div class="col60">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:700px;">
-<img src="../.decker/code/code-440540e9.tex.svg" style="height:auto;width:100%;" alt="code-440540e9.tex.svg" />
+<img src="../decker/code/code-440540e9.tex.svg" style="height:auto;width:100%;" alt="code-440540e9.tex.svg" />
 </figure>
 </div>
 <p><strong>Policy evaluation</strong> = Estimate <span class="math inline">\(v_{\pi}\)</span></p>
@@ -1625,7 +1625,7 @@ This is the Bellman optimality equation -- and, therefore, $v_{\pi'}$ must be $v
 <div class="col40">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:400px;">
-<img src="../.decker/code/code-c885d170.tex.svg" style="height:auto;width:100%;" alt="code-c885d170.tex.svg" />
+<img src="../decker/code/code-c885d170.tex.svg" style="height:auto;width:100%;" alt="code-c885d170.tex.svg" />
 </figure>
 </div>
 </div>
@@ -1736,7 +1736,7 @@ This is the Bellman optimality equation -- and, therefore, $v_{\pi'}$ must be $v
 <div class="col40">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:400px;">
-<img src="../.decker/code/code-c885d170.tex.svg" style="height:auto;width:100%;" alt="code-c885d170.tex.svg" />
+<img src="../decker/code/code-c885d170.tex.svg" style="height:auto;width:100%;" alt="code-c885d170.tex.svg" />
 </figure>
 </div>
 </div>
@@ -1755,7 +1755,7 @@ This is the Bellman optimality equation -- and, therefore, $v_{\pi'}$ must be $v
 <div class="box block">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:auto;">
-<img src="../.decker/code/code-f4440bcf.tex.svg" style="height:540px;width:auto;" alt="code-f4440bcf.tex.svg" />
+<img src="../decker/code/code-f4440bcf.tex.svg" style="height:540px;width:auto;" alt="code-f4440bcf.tex.svg" />
 </figure>
 </div>
 </div>
@@ -1888,7 +1888,7 @@ fourth
 <div class="box block">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:640px;">
-<img src="../.decker/code/code-d8fe6e36.tex.svg" style="height:auto;width:100%;" alt="code-d8fe6e36.tex.svg" />
+<img src="../decker/code/code-d8fe6e36.tex.svg" style="height:auto;width:100%;" alt="code-d8fe6e36.tex.svg" />
 </figure>
 </div>
 <p><strong>Policy evaluation</strong> = Estimate <span class="math inline">\(v_{\pi}\)</span></p>
@@ -1916,7 +1916,7 @@ fourth
 <div class="col40">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:400px;">
-<img src="../.decker/code/code-70e237e8.tex.svg" style="height:auto;width:100%;" alt="code-70e237e8.tex.svg" />
+<img src="../decker/code/code-70e237e8.tex.svg" style="height:auto;width:100%;" alt="code-70e237e8.tex.svg" />
 </figure>
 </div>
 </div>
@@ -1969,7 +1969,7 @@ fourth
 <div class="col40">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:400px;">
-<img src="../.decker/code/code-70e237e8.tex.svg" style="height:auto;width:100%;" alt="code-70e237e8.tex.svg" />
+<img src="../decker/code/code-70e237e8.tex.svg" style="height:auto;width:100%;" alt="code-70e237e8.tex.svg" />
 </figure>
 </div>
 </div>
@@ -2002,7 +2002,7 @@ fourth
 <!--
 # Considering Convergence of Bellman Backup (4)
 
-We can think of the Bellman expectation backup as this operator $T^\pi$, 
+We can think of the Bellman expectation backup as this operator $T^\pi$,
 
 $$
 T^\pi (v) = R^\pi + \gamma P^\pi v
