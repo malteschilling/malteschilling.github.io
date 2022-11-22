@@ -5,8 +5,8 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="author" content="Prof. Dr. Malte Schilling">
-  <title>Deep Reinforcement Learning: 6 - Model Free Control (and TD
-Learning)</title>
+  <title>Deep Reinforcement Learning: 6 - Temporal Difference
+Learning</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -435,7 +435,7 @@ Learning)</title>
   <link rel="stylesheet" href="../support/plugins/quiz-wue/quiz-wue.css">
   <link rel="stylesheet" href="../support/css/deck.css">
   <link rel="stylesheet" href="../support/css/msms-deck.css">
-
+  
 </head>
 
 <body >
@@ -446,18 +446,17 @@ Learning)</title>
 
          <div class="background-on-accent">
                      <h1>Deep Reinforcement Learning</h1>
-                              <h2>6 - Model Free Control (and TD
-Learning)</h2>
+                              <h2>6 - Temporal Difference Learning</h2>
                   </div>
 
-
-
+         
+         
                   <div class="author"> Prof. Dr. Malte Schilling </div>
-
+         
                   <div class="affiliation"> Autonomous Intelligent
 Systems Group </div>
-
-
+         
+         
          <img class="logo affiliation-logo light-only" src="./../support/assets/ms-logo-light.svg">
          <img class="logo affiliation-logo dark-only" src="./../support/assets/ms-logo-dark.svg">
 
@@ -518,7 +517,7 @@ Systems Group </div>
 <div class="col70">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:800px;">
-<img src="../decker/code/code-af647fbb.tex.svg" style="height:auto;width:100%;" alt="code-af647fbb.tex.svg" />
+<img src="../.decker/code/code-af647fbb.tex.svg" style="height:auto;width:100%;" alt="code-af647fbb.tex.svg" />
 </figure>
 </div>
 <h2 id="section"></h2>
@@ -552,7 +551,7 @@ v_{\pi}(s) \leftarrow \sum_{a \in \mathcal{A}} \pi (a|s) \sum_{r} \sum_{s&#39; \
 <div class="col70">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:800px;">
-<img src="../decker/code/code-80ff354a.tex.svg" style="height:auto;width:100%;" alt="code-80ff354a.tex.svg" />
+<img src="../.decker/code/code-80ff354a.tex.svg" style="height:auto;width:100%;" alt="code-80ff354a.tex.svg" />
 </figure>
 </div>
 <h2 id="section"></h2>
@@ -569,7 +568,7 @@ v_{\pi}(s) \leftarrow \sum_{a \in \mathcal{A}} \pi (a|s) \sum_{r} \sum_{s&#39; \
 <section id="big-picture-monte-carlo-sampling" class="slide level1">
 <div class="decker">
 <div class="alignment">
-<h1>Big picture: Monte Carlo Sampling</h1>
+<h1>Big picture: Monte-Carlo Sampling</h1>
 <div class="layout">
 <div class="area">
 <div class="box block">
@@ -586,7 +585,7 @@ v_{\pi}(s) \leftarrow \sum_{a \in \mathcal{A}} \pi (a|s) \sum_{r} \sum_{s&#39; \
 <div class="col70">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:800px;">
-<img src="../decker/code/code-9828e4fe.tex.svg" style="height:auto;width:100%;" alt="code-9828e4fe.tex.svg" />
+<img src="../.decker/code/code-9828e4fe.tex.svg" style="height:auto;width:100%;" alt="code-9828e4fe.tex.svg" />
 </figure>
 </div>
 <h2 id="section"></h2>
@@ -646,12 +645,12 @@ v(s) = \frac{\sum_{t=1}^T \mathbb{1}[S_t = s] G_t}{\sum_{t=1}^T \mathbb{1}[S_t =
 <div class="layout">
 <div class="area">
 <div class="box block">
-<p>Update <span class="math inline">\(v(s)\)</span> incrementally after epise <span class="math inline">\(S_1, A_1, R_2, \dots, S_T\)</span></p>
+<p>Update <span class="math inline">\(v(s)\)</span> incrementally after episode <span class="math inline">\(S_1, A_1, R_2, \dots, S_T\)</span></p>
 <p>For each state <span class="math inline">\(S_t\)</span> with return <span class="math inline">\(G_t\)</span></p>
 <p><span class="math display">\[
 \begin{eqnarray*}
 N(S_t) &amp;\leftarrow&amp; N(S_t) + 1 \\
-v(S_t) &amp;\leftarrow&amp; v(S_t) + \frac{1}{N(S_t)} (G_t - v(S_t))
+v(S_t) &amp;\leftarrow&amp; v(S_t) + \frac{1}{N(S_t)} (G_t - v(S_t)) 
 \end{eqnarray*}
 \]</span></p>
 <p>In non-stationary problems, it can be useful to track a running mean, i.e. forget old episodes:</p>
@@ -680,7 +679,7 @@ v(S_t) \leftarrow v(S_t) + \alpha (G_t - v(S_t)) \\
 <p><span class="math display">\[G_t = R_{t+1} + \gamma R_{t+2} + ... \]</span></p>
 <ul>
 <li>Model-free Approach.</li>
-<li>Sample from experience (Monte Carlo.</li>
+<li>Sample from experience (Monte-Carlo).</li>
 <li>Exploit sequential data.</li>
 </ul>
 <p>But: Bootstrap as in DP (use Bellman equation).</p>
@@ -688,7 +687,7 @@ v(S_t) \leftarrow v(S_t) + \alpha (G_t - v(S_t)) \\
 <div class="col70">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:800px;">
-<img src="../decker/code/code-766ac014.tex.svg" style="height:auto;width:100%;" alt="code-766ac014.tex.svg" />
+<img src="../.decker/code/code-766ac014.tex.svg" style="height:auto;width:100%;" alt="code-766ac014.tex.svg" />
 </figure>
 </div>
 <h2 id="section"></h2>
@@ -776,7 +775,7 @@ v(S_t) \leftarrow v(S_t) + \alpha (R_{t+1} + \gamma v(S_t+1) - v(S_t))
 <p>Simple temporal-difference learning algorithm TD(0):</p>
 <ul>
 <li>Update value <span class="math inline">\(v(S_t)\)</span> towards <strong>estimated</strong> return <span class="math inline">\(\color{blue}R_{t+1} + \gamma v(S_{t+1})\)</span>:<br />
-<span class="math display">\[v(S_t) \leftarrow v(S_t) + \alpha (\color{blue}R_{t+1} + \gamma v(S_t+1) \color{black}- v(S_t))\]</span></li>
+<span class="math display">\[v(S_t) \leftarrow v(S_t) + \alpha (\color{blue}R_{t+1} + \gamma v(S_{t+1}) \color{black}- v(S_t))\]</span></li>
 </ul>
 </div>
 <div id="section-4" class="footer box block">
@@ -820,9 +819,9 @@ v(S_t) \leftarrow v(S_t) + \alpha (R_{t+1} + \gamma v(S_t+1) - v(S_t))
 <p>Update of the value function is regulated by the learning rate <span class="math inline">\(\alpha\)</span>.</p>
 <p>In brief: TD means update a guess (of the value function) towards a guess (experiencing a single step and a guess of what follows):</p>
 <p><span class="math display">\[\begin{align*}
-v(S_t) &amp;\leftarrow (1- \alpha) v(S_t) + \alpha G_t \\
-v(S_t) &amp;\leftarrow v(S_t) + \alpha (G_t - v(S_t)) \\
-v(S_t) &amp;\leftarrow v(S_t) + \alpha (R_{t+1} + \gamma v(S_{t+1}) - v(S_t))
+\text{MC: } v(S_t) &amp;\leftarrow (1- \alpha) v(S_t) + \alpha G_t \\
+v(S_t) &amp;\leftarrow \fragment{v(S_t) + \alpha (G_t - v(S_t)) }\\
+\text{TD: } v(S_t) &amp;\leftarrow\fragment{ v(S_t) + \alpha (R_{t+1} + \gamma v(S_{t+1}) - v(S_t))}
 \end{align*}\]</span></p>
 <p>Similarly for the Q-function: <span class="math display">\[
 q(S_t, A_t) \leftarrow q(S_t, A_t) + \alpha (R_{t+1} + \gamma q(S_{t+1}, A_{t+1}) - q(S_t, A_t))
@@ -846,7 +845,7 @@ q(S_t, A_t) \leftarrow q(S_t, A_t) + \alpha (R_{t+1} + \gamma q(S_{t+1}, A_{t+1}
 <div class="box block">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:auto;">
-<img src="../decker/code/code-8b2db11e.tex.svg" style="height:480px;width:auto;" alt="code-8b2db11e.tex.svg" />
+<img src="../.decker/code/code-8b2db11e.tex.svg" style="height:480px;width:auto;" alt="code-8b2db11e.tex.svg" />
 </figure>
 </div>
 <p><span class="math inline">\(\color{blue}\text{Agent part of the algorithm; } \color{red}\text{ Environment interaction}\)</span></p>
@@ -946,10 +945,10 @@ q(S_t, A_t) \leftarrow q(S_t, A_t) + \alpha (R_{t+1} + \gamma q(S_{t+1}, A_{t+1}
 * TD can learn before knowing the final outcome
   * TD can learn online after every step
   MC must wait until end of episode before return is known
-* TD can learn without the final outcome
+* TD can learn without the final outcome 
   * TD can learn from incomplete sequences
   * MC can only learn from complete sequences
-  * TD works in continuing (non-terminating) environments
+  * TD works in continuing (non-terminating) environments 
   * MC only works for episodic (terminating) environments
 
 ## {.footer}
@@ -971,7 +970,7 @@ q(S_t, A_t) \leftarrow q(S_t, A_t) + \alpha (R_{t+1} + \gamma q(S_{t+1}, A_{t+1}
 <div class="box block">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:1200px;">
-<img src="../decker/code/code-1ded5678.tex.svg" style="height:auto;width:100%;" alt="code-1ded5678.tex.svg" />
+<img src="../.decker/code/code-1ded5678.tex.svg" style="height:auto;width:100%;" alt="code-1ded5678.tex.svg" />
 </figure>
 </div>
 <ul>
@@ -1009,7 +1008,7 @@ q(S_t, A_t) \leftarrow q(S_t, A_t) + \alpha (R_{t+1} + \gamma q(S_{t+1}, A_{t+1}
 <h2 class="top"></h2>
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:1200px;">
-<img src="../decker/code/code-1ded5678.tex.svg" style="height:auto;width:100%;" alt="code-1ded5678.tex.svg" />
+<img src="../.decker/code/code-1ded5678.tex.svg" style="height:auto;width:100%;" alt="code-1ded5678.tex.svg" />
 </figure>
 </div>
 </div>
@@ -1412,9 +1411,9 @@ Bias = \mathbb{E}[R_{t+1} + \gamma v_\pi(S_{t+1})] - v_\pi(S_t)\]</span> <span c
 
 * Return $G_t = R_{t+1} + \gamma R_{t+2} + \dots + \gamma^{T−1}R_T$ is unbiased estimate of $v_\pi(S_t)$
 * True TD target $R_{t+1} + \gamma v_\pi(S_{t+1})$ is unbiased estimate of $v_\pi(S_t)$
-* TD target $R_{t+1} + \gamma v(S_{t+1})$ is biased estimate of $v_\pi(S_t)$
+* TD target $R_{t+1} + \gamma v(S_{t+1})$ is biased estimate of $v_\pi(S_t)$ 
 * TD target is much lower variance than the return:
-  * Return depends on many random actions, transitions, rewards
+  * Return depends on many random actions, transitions, rewards 
   * TD target depends on one random action, transition, reward
 
 ## {.footer}
@@ -1502,7 +1501,7 @@ Bias = \mathbb{E}[R_{t+1} + \gamma v_\pi(S_{t+1})] - v_\pi(S_t)\]</span> <span c
 <li>Update value <span class="math inline">\(q_t(S_t, A_t)\)</span> towards estimated return <span class="math inline">\(\color{blue}R_{t+1} + \gamma q(S_{t+1}, A_{t+1})\)</span></li>
 </ul>
 <span class="math display">\[
-q_{t+1} (S_{t+1}, A_{t+1}) \leftarrow q_{t+1} (S_{t+1}, A_{t+1}) + \alpha \Big( \underbrace{\color{blue} R_{t+1} + \gamma q(S_{t+1}, A_{t+1} \color{black} -   q_{t} (S_{t}, A_{t})}_{\text{TD Error}}  \Big)
+q(S_{t}, A_{t}) \leftarrow q (S_{t}, A_{t}) + \alpha \Big( \underbrace{\color{blue} R_{t+1} + \gamma q(S_{t+1}, A_{t+1} \color{black} -   q_{t} (S_{t}, A_{t})}_{\text{TD Error}}  \Big)
 \]</span></li>
 </ul>
 <p>This algorithm is known as SARSA, because it uses <span class="math inline">\((S_t, A_t, R_{t+1}, S_{t+1}, A_{t+1})\)</span>.</p>
@@ -1574,7 +1573,7 @@ v(s) = \frac{\sum_{t=1}^T \mathbb{1}[S_t = s] G_t}{\sum_{t=1}^T \mathbb{1}[S_t =
 <p><span class="math display">\[
 \begin{eqnarray*}
 v(S_t) &amp;\leftarrow&amp; v(S_t) + \alpha (\color{blue}R_{t+1} + \\
-&amp;&amp; \color{blue}\gamma v(S_t+1) \color{black}- v(S_t))
+&amp;&amp; \color{blue}\gamma v(S_{t+1}) \color{black}- v(S_t))
 \end{eqnarray*}\]</span></p>
 </div>
 </div>
@@ -1602,7 +1601,7 @@ v(S_t) &amp;\leftarrow&amp; v(S_t) + \alpha (\color{blue}R_{t+1} + \\
 <p><span class="math display">\[
 \begin{eqnarray*}
 v(A) &amp;=&amp; \frac{0}{1} = 0 \\
-v(B) &amp;=&amp; \frac{6}{8} = 0.75
+v(B) &amp;=&amp; \frac{6}{8} = 0.75 
 \end{eqnarray*}
 \]</span></p>
 </div>
@@ -1614,7 +1613,7 @@ v(B) &amp;=&amp; \frac{6}{8} = 0.75
 <li><span class="math inline">\(v(B)\)</span> (easier, always terminating):</li>
 </ol>
 <p><span class="math display">\[
-v(B) = \frac{6}{8} = 0.75
+v(B) = \frac{6}{8} = 0.75 
 \]</span></p>
 <ol start="2" style="list-style-type: decimal">
 <li>only one episode with <span class="math inline">\(A\)</span>, but use value estimate for ending in <span class="math inline">\(B\)</span>:</li>
@@ -1640,7 +1639,7 @@ v(A) = \color{blue}0 \color{black} + \color{green}0.75 \color{black}= 0.75
 <div id="batch-setting" class="box block fragment">
 <h2>Batch Setting</h2>
 <p>We collect multiple episodes <span class="math inline">\(1\)</span> to <span class="math inline">\(K\)</span>, : <span class="math display">\[
-\text{episode } k: S_1^k, A_1^k, R_2^k, ..., S_{T_k}^k
+\text{episode } k: S_1^k, A_1^k, R_2^k, ..., S_{T_k}^k 
 \]</span></p>
 <p>We can repeatedly use each episode <span class="math inline">\(k \in [1,K]\)</span> for training.</p>
 <p>This means: we sample from an empirical model.</p>
@@ -1659,7 +1658,7 @@ v(A) = \color{blue}0 \color{black} + \color{green}0.75 \color{black}= 0.75
 <div class="box block">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:600px;">
-<img src="../decker/code/code-62b78051.tex.svg" style="height:auto;width:100%;" alt="code-62b78051.tex.svg" />
+<img src="../.decker/code/code-62b78051.tex.svg" style="height:auto;width:100%;" alt="code-62b78051.tex.svg" />
 </figure>
 </div>
 <p>Could be derived from experiences: Maximum-Likelihood Estimation – which is the most likely MDP producing such data?</p>
@@ -1720,365 +1719,6 @@ r( s,a ) = \frac{1}{N(s,a)} \sum_{k=1}^K\sum_{t=1}^{T_k}\mathbb{1} (s_t^k, a_t^k
 <div id="section-26" class="footer box block">
 <h2 class="footer"></h2>
 <p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="advantages-and-disadvantages-of-mc-vs.-td" class="slide level1">
-<div class="decker">
-<div class="alignment">
-<h1>Advantages and Disadvantages of MC vs. TD</h1>
-<div class="layout">
-<div class="area">
-<div class="box block">
-<ul>
-<li>TD can learn before knowing the final outcome
-<ul>
-<li>TD can learn online after every step</li>
-<li>MC must wait until end of episode before return is known</li>
-</ul></li>
-<li>TD can learn without the final outcome
-<ul>
-<li>TD can learn from incomplete sequences</li>
-<li>MC can only learn from complete sequences</li>
-<li>TD works in continuing (non-terminating) environments</li>
-<li>MC only works for episodic (terminating) environments</li>
-</ul></li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="advantages-and-disadvantages-of-mc-vs.-td-2" class="slide level1">
-<div class="decker">
-<div class="alignment">
-<h1>Advantages and Disadvantages of MC vs. TD (2)</h1>
-<div class="layout">
-<div class="area">
-<div class="box block">
-<ul>
-<li>TD is independent of the temporal span of the prediction
-<ul>
-<li>TD can learn from single transitions</li>
-<li>MC must store all predictions (or states) to update at the end of an episode</li>
-</ul></li>
-<li>TD needs reasonable value estimates</li>
-<li>TD exploits Markov property
-<ul>
-<li>Usually more efficient in Markov environments</li>
-</ul></li>
-<li>MC does not exploit Markov property
-<ul>
-<li>Usually more effective in non-Markov environments</li>
-</ul></li>
-<li>With finite data (or with function approximation) the solutions may differ</li>
-</ul>
-</div>
-<div id="section-27" class="footer box block">
-<h2 class="footer"></h2>
-<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="combining-the-two-approaches-a-unifying-perspective" class="slide level1">
-<div class="decker">
-<div class="alignment">
-<h1>Combining the two approaches – a unifying perspective</h1>
-<div class="layout">
-<div class="area">
-<div class="box block">
-<div class="grid-layout" style="grid-template-columns: 20fr 60fr 20fr;">
-<div class="media">
-<figure class="render image rendered" style="height:auto;width:auto;">
-<img src="../decker/code/code-9860f0e5.tex.svg" style="height:450px;width:auto;" alt="code-9860f0e5.tex.svg" />
-</figure>
-</div>
-<ul>
-<li>TD uses value estimates which might be inaccurate</li>
-<li>In addition, information can propagate back quite slowly (possible bias)</li>
-<li>In MC information propagates faster, but the updates are noisier (high variance)</li>
-<li>We can go in between TD and MC</li>
-</ul>
-<div class="media">
-<figure class="render image rendered" style="height:auto;width:auto;">
-<img src="../decker/code/code-a70695ea.tex.svg" style="height:450px;width:auto;" alt="code-a70695ea.tex.svg" />
-</figure>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="multi-step-predictions" class="slide level1">
-<div class="decker">
-<div class="alignment">
-<h1>Multi-step Predictions</h1>
-<div class="layout">
-<div class="area">
-<div class="box block">
-<div class="media">
-<figure class="render image rendered" style="height:auto;width:auto;">
-<img src="../decker/code/code-a2120521.tex.svg" style="height:510px;width:auto;" alt="code-a2120521.tex.svg" />
-</figure>
-</div>
-<p>Make <span class="math inline">\(n\)</span> steps and then use TD target for prediction.</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="n-step-return" class="slide level1">
-<div class="decker">
-<div class="alignment">
-<h1><span class="math inline">\(n\)</span>-step Return</h1>
-<div class="layout">
-<div class="area">
-<div class="box block">
-<p>Consider the following <span class="math inline">\(n\)</span>-step returns for <span class="math inline">\(n = 1, 2, \infty:\)</span></p>
-<table>
-<thead>
-<tr class="header">
-<th>steps</th>
-<th>Approach</th>
-<th>Return</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">\(n = 1\)</span></td>
-<td>TD</td>
-<td><span class="math inline">\(G_t^{(1)} = R_{t+1} + \gamma v(S_{t+1})\)</span></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(n = 2\)</span></td>
-<td></td>
-<td><span class="math inline">\(G_t^{(2)} = R_{t+1} + \gamma R_{t+2} + \gamma^2 v(S_{t+2})\)</span></td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(\vdots\)</span></td>
-<td></td>
-<td><span class="math inline">\(\vdots\)</span></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(n = \infty\)</span></td>
-<td>MC</td>
-<td><span class="math inline">\(G_t^{(\infty)} = R_{t+1} + \gamma R_{t+2} + \dots + \gamma^{T-1} R_T\)</span></td>
-</tr>
-</tbody>
-</table>
-<p>Define the n-step return <span class="math display">\[
-G_t^{(n)} = R_{t+1} + \gamma R_{t+2} + \dots + \gamma^{n-1} R_{t+n} +  \gamma^n v(S_{t+n})
-\]</span></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="n-step-return-1" class="slide level1">
-<div class="decker">
-<div class="alignment">
-<h1><span class="math inline">\(n\)</span>-step Return</h1>
-<div class="layout">
-<div class="area">
-<div id="n-step-return-2" class="definition box block">
-<h2 class="definition">n-step return</h2>
-<p><span class="math display">\[
-G_t^{(n)} = R_{t+1} + \gamma R_{t+2} + \dots + \gamma^{n-1} R_{t+n} +  \gamma^n v(S_{t+n})
-\]</span></p>
-</div>
-<div id="n-step-temporal-difference-learning" class="box block">
-<h2><span class="math inline">\(n\)</span>-step Temporal Difference learning</h2>
-<p><span class="math display">\[v(S_t) \leftarrow v(S_t)+ \alpha \big( G_t^{(n)} − v(S_t) \big) \]</span></p>
-</div>
-<div id="section-28" class="footer box block">
-<h2 class="footer"></h2>
-<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="large-random-walk-example-error-for-different-n-steps" class="slide level1">
-<div class="decker">
-<div class="alignment">
-<h1>(Large) Random Walk Example – Error for different <span class="math inline">\(n\)</span>-steps</h1>
-<div class="layout">
-<div class="area">
-<div class="box block">
-<p>MDP: Chain of 19 Nodes; Start in <span class="math inline">\(J\)</span>; random policy; <span class="math inline">\(r=0\)</span> unless terminating right: <span class="math inline">\(r = 1\)</span></p>
-<div class="media">
-<figure class="render image rendered" style="height:auto;width:1100px;">
-<img src="../decker/code/code-11c316c2.tex.svg" style="height:auto;width:100%;" alt="code-11c316c2.tex.svg" />
-</figure>
-</div>
-<div class="media">
-<figure class="image" style="height:auto;width:auto;">
-<img src="../data/06/sb_large_random_walk_rms.png" style="height:360px;width:auto;" alt="../data/06/sb_large_random_walk_rms.png" />
-</figure>
-</div>
-</div>
-<div id="section-29" class="footer box block">
-<h2 class="footer"></h2>
-<p><span class="citation">(<a href="#ref-deepmind2021" role="doc-biblioref">Hasselt und Borsa 2021</a>)</span> following <span class="citation">(<a href="#ref-sutton2018" role="doc-biblioref">Sutton und Barto 2018</a>)</span></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="averaging-n-step-return" class="slide level1">
-<div class="decker">
-<div class="alignment">
-<h1>Averaging <span class="math inline">\(n\)</span>-step Return</h1>
-<div class="layout">
-<div class="area">
-<div class="box block">
-<div class="col60">
-<ul>
-<li>We can average <span class="math inline">\(n\)</span>-step returns over different <span class="math inline">\(n\)</span>.</li>
-<li>For example: average the <span class="math inline">\(2\)</span>-step and <span class="math inline">\(3\)</span>-step returns as <span class="math display">\[\frac{1}{2}G^{(2)} + \frac{1}{2}G^{(3)}\]</span></li>
-<li>Combines information from two different time-steps</li>
-</ul>
-</div>
-<div class="col40">
-<div class="media">
-<figure class="render image rendered" style="height:auto;width:auto;">
-<img src="../decker/code/code-41f12720.tex.svg" style="height:450px;width:auto;" alt="code-41f12720.tex.svg" />
-</figure>
-</div>
-</div>
-</div>
-<div id="section-30" class="footer box block">
-<h2 class="footer"></h2>
-<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="lambda-return" class="slide level1">
-<div class="decker">
-<div class="alignment">
-<h1><span class="math inline">\(\lambda\)</span>-Return</h1>
-<div class="layout">
-<div class="area">
-<div class="box block">
-<div class="col50">
-<div class="media">
-<figure class="render image rendered" style="height:auto;width:auto;">
-<img src="../decker/code/code-385542c3.tex.svg" style="height:400px;width:auto;" alt="code-385542c3.tex.svg" />
-</figure>
-</div>
-</div>
-<div class="col50">
-<p>The <span class="math inline">\(\lambda\)</span>-return <span class="math inline">\(G_t^\lambda\)</span> combines all <span class="math inline">\(n\)</span>-step returns <span class="math inline">\(G_t^{(n)}\)</span> using as a weight <span class="math inline">\((1 − \lambda)\lambda^{n−1}\)</span></p>
-<p><span class="math display">\[
-G_t^\lambda =(1−\lambda) \sum_{n=1}^\infty \lambda^{n-1} G_t^{(n)}
-\]</span></p>
-<p>Forward-view TD(<span class="math inline">\(\lambda\)</span>)</p>
-<p><span class="math display">\[ v(S_t)\leftarrow v(S_t)+ \alpha \Big( G_t^\lambda  −v(S_t)\Big)\]</span></p>
-</div>
-</div>
-<div id="section-31" class="footer box block">
-<h2 class="footer"></h2>
-<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="computation-of-tdlambda" class="columns slide level1">
-<div class="decker">
-<div class="alignment">
-<h1>Computation of TD(<span class="math inline">\(\lambda\)</span>)</h1>
-<div class="layout row columns">
-<div class="area left">
-<div id="forward-view-tdlambda" class="left box block">
-<h2 class="left">Forward-view TD(<span class="math inline">\(\lambda\)</span>)</h2>
-<ul>
-<li>Update value function towards the <span class="math inline">\(\lambda\)</span>-return</li>
-<li>Forward-view looks into the future to compute <span class="math inline">\(G_t^\lambda\)</span></li>
-<li>Drawback: Like Monte-Carlo, can only be computed from complete episodes</li>
-</ul>
-</div>
-</div><div class="area right">
-<div id="backward-view-tdlambda" class="right box block fragment">
-<h2 class="right">Backward View TD(<span class="math inline">\(\lambda\)</span>)</h2>
-<ul>
-<li>While Forward view provides theory</li>
-<li>Backward view provides mechanism</li>
-<li>Update online, every step, from incomplete sequences – and update for previous steps going backwards into the past</li>
-</ul>
-</div>
-<div id="section-32" class="footer box block">
-<h2 class="footer"></h2>
-<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="large-random-walk-example-error-for-tdlambda" class="slide level1">
-<div class="decker">
-<div class="alignment">
-<h1>(Large) Random Walk Example – Error for TD(<span class="math inline">\(\lambda\)</span>)</h1>
-<div class="layout">
-<div class="area">
-<div class="box block">
-<!--Start: in central node ($J$), random policy. Always reward $0$ unless terminating right ($r = 1$).-->
-<div class="media">
-<figure class="render image rendered" style="height:auto;width:1100px;">
-<img src="../decker/code/code-11c316c2.tex.svg" style="height:auto;width:100%;" alt="code-11c316c2.tex.svg" />
-</figure>
-</div>
-<div class="media">
-<figure class="image" style="height:auto;width:auto;">
-<img src="../data/06/sb_large_random_lambda.png" style="height:360px;width:auto;" alt="../data/06/sb_large_random_lambda.png" />
-</figure>
-</div>
-<p>Intuition: <span class="math inline">\(\frac{1}{1-\lambda}\)</span> is the `horizon’, e.g., <span class="math inline">\(\lambda =0.9 \rightsquigarrow n = 10\)</span> steps.</p>
-</div>
-<div id="section-33" class="footer box block">
-<h2 class="footer"></h2>
-<p><span class="citation">(<a href="#ref-deepmind2021" role="doc-biblioref">Hasselt und Borsa 2021</a>)</span> following <span class="citation">(<a href="#ref-sutton2018" role="doc-biblioref">Sutton und Barto 2018</a>)</span></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="benefits-of-multi-step-returns" class="slide level1">
-<div class="decker">
-<div class="alignment">
-<h1>Benefits of multi-step returns</h1>
-<div class="layout">
-<div class="area">
-<div class="box block">
-<p>Multi-step returns have benefits from both TD and MC</p>
-<ul>
-<li>Bootstrapping can have issues with bias</li>
-<li>Monte-Carlo can have issues with variance</li>
-<li>Typically, intermediate values of <span class="math inline">\(n\)</span> or <span class="math inline">\(\lambda\)</span> are good (e.g., <span class="math inline">\(n = 10, \lambda = 0.9\)</span>)</li>
-</ul>
-</div>
-<div id="section-34" class="footer box block">
-<h2 class="footer"></h2>
-<p><span class="citation">(<a href="#ref-deepmind2021" role="doc-biblioref">Hasselt und Borsa 2021</a>)</span></p>
 </div>
 </div>
 </div>
