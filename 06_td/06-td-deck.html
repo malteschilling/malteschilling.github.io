@@ -1,0 +1,2217 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Prof. Dr. Malte Schilling">
+  <title>Deep Reinforcement Learning: 6 - Model Free Control (and TD
+Learning)</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+  <!-- Default values for CSS variables can live here. They can be overridden by
+  meta data values. -->
+  <link rel="stylesheet" href="../support/css/variables.css">
+
+  <!-- Transfer meta data values from keys `palette.colors` and `css-variables`
+  into a style sheet. Default values can come from `variables.css`. -->
+  <style class="css-declarations">
+    @media (prefers-color-scheme: light) {
+      :root {
+                  --shade7: #1d1f21;
+                  --shade6: #282a2e;
+                  --shade5: #4d4d4c;
+                  --shade4: #969896;
+                  --shade3: #8e908c;
+                  --shade2: #d6d6d6;
+                  --shade1: #e0e0e0;
+                  --shade0: #ffffff;
+                  --base0F-fg: #825449;
+                  --base0F-ffg: #513733;
+                  --base0F-bg: #ceb9b5;
+                  --base0F-bbg: #f0ebea;
+                  --base0F: #a3685a;
+                  --base0E-fg: #6e4887;
+                  --base0E-ffg: #453155;
+                  --base0E-bg: #c4b5d1;
+                  --base0E-bbg: #edeaf1;
+                  --base0E: #8959a8;
+                  --base0D-fg: #257eb3;
+                  --base0D-ffg: #204f6f;
+                  --base0D-bg: #acccec;
+                  --base0D-bbg: #e8f0f9;
+                  --base0D: #2a9ddf;
+                  --base0C-fg: #347b80;
+                  --base0C-ffg: #264d51;
+                  --base0C-bg: #afcacd;
+                  --base0C-bbg: #e8eff0;
+                  --base0C: #3e999f;
+                  --base0B-fg: #6a931c;
+                  --base0B-ffg: #435c20;
+                  --base0B-bg: #c2d8ab;
+                  --base0B-bbg: #edf3e7;
+                  --base0B: #84b819;
+                  --base0A-fg: #bb9212;
+                  --base0A-ffg: #745b1d;
+                  --base0A-bg: #f3d8aa;
+                  --base0A-bbg: #fbf3e7;
+                  --base0A: #eab700;
+                  --base09-fg: #c46c20;
+                  --base09-ffg: #794521;
+                  --base09-bg: #f9c3ab;
+                  --base09-bbg: #fdede7;
+                  --base09: #f5871f;
+                  --base08-fg: #a02526;
+                  --base08-ffg: #632123;
+                  --base08-bg: #e0acac;
+                  --base08-bbg: #f5e8e8;
+                  --base08: #c82829;
+                  --base07: #1d1f21;
+                  --base06: #282a2e;
+                  --base05: #4d4d4c;
+                  --base04: #969896;
+                  --base03: #8e908c;
+                  --base02: #d6d6d6;
+                  --base01: #e0e0e0;
+                  --base00: #ffffff;
+                  --accent7-fg: #825449;
+                  --accent7-ffg: #513733;
+                  --accent7-bg: #ceb9b5;
+                  --accent7-bbg: #f0ebea;
+                  --accent7: #a3685a;
+                  --accent6-fg: #6e4887;
+                  --accent6-ffg: #453155;
+                  --accent6-bg: #c4b5d1;
+                  --accent6-bbg: #edeaf1;
+                  --accent6: #8959a8;
+                  --accent5-fg: #257eb3;
+                  --accent5-ffg: #204f6f;
+                  --accent5-bg: #acccec;
+                  --accent5-bbg: #e8f0f9;
+                  --accent5: #2a9ddf;
+                  --accent4-fg: #347b80;
+                  --accent4-ffg: #264d51;
+                  --accent4-bg: #afcacd;
+                  --accent4-bbg: #e8eff0;
+                  --accent4: #3e999f;
+                  --accent3-fg: #6a931c;
+                  --accent3-ffg: #435c20;
+                  --accent3-bg: #c2d8ab;
+                  --accent3-bbg: #edf3e7;
+                  --accent3: #84b819;
+                  --accent2-fg: #bb9212;
+                  --accent2-ffg: #745b1d;
+                  --accent2-bg: #f3d8aa;
+                  --accent2-bbg: #fbf3e7;
+                  --accent2: #eab700;
+                  --accent1-fg: #c46c20;
+                  --accent1-ffg: #794521;
+                  --accent1-bg: #f9c3ab;
+                  --accent1-bbg: #fdede7;
+                  --accent1: #f5871f;
+                  --accent0-fg: #a02526;
+                  --accent0-ffg: #632123;
+                  --accent0-bg: #e0acac;
+                  --accent0-bbg: #f5e8e8;
+                  --accent0: #c82829;
+              }
+
+      :root.dark {
+                  --shade7: #ffffff;
+                  --shade6: #e0e0e0;
+                  --shade5: #c5c8c6;
+                  --shade4: #b4b7b4;
+                  --shade3: #969896;
+                  --shade2: #373b41;
+                  --shade1: #282a2e;
+                  --shade0: #1d1f21;
+                  --base0F-fg: #ceb9b5;
+                  --base0F-ffg: #f0ebea;
+                  --base0F-bg: #825449;
+                  --base0F-bbg: #513733;
+                  --base0F: #a3685a;
+                  --base0E-fg: #d5c8da;
+                  --base0E-ffg: #f2eff3;
+                  --base0E-bg: #8e7796;
+                  --base0E-bbg: #594b5e;
+                  --base0E: #b294bb;
+                  --base0D-fg: #c1cedb;
+                  --base0D-ffg: #edf0f4;
+                  --base0D-bg: #678298;
+                  --base0D-bbg: #42515f;
+                  --base0D: #81a2be;
+                  --base0C-fg: #c4dbd8;
+                  --base0C-ffg: #edf4f3;
+                  --base0C-bg: #6e9893;
+                  --base0C-bbg: #465f5c;
+                  --base0C: #8abeb7;
+                  --base0B-fg: #bfd0ac;
+                  --base0B-ffg: #ecf1e8;
+                  --base0B-bg: #648627;
+                  --base0B-bbg: #405423;
+                  --base0B: #7da72a;
+                  --base0A-fg: #f6dfbc;
+                  --base0A-ffg: #fcf5ec;
+                  --base0A-bg: #c09f5e;
+                  --base0A-bbg: #77633d;
+                  --base0A: #f0c674;
+                  --base09-fg: #ecc8b6;
+                  --base09-ffg: #f9eeea;
+                  --base09-bg: #b2764d;
+                  --base09-bbg: #6e4a35;
+                  --base09: #de935f;
+                  --base08-fg: #e2b8b8;
+                  --base08-ffg: #f6eaea;
+                  --base08-bg: #a35253;
+                  --base08-bbg: #653637;
+                  --base08: #cc6666;
+                  --base07: #ffffff;
+                  --base06: #e0e0e0;
+                  --base05: #c5c8c6;
+                  --base04: #b4b7b4;
+                  --base03: #969896;
+                  --base02: #373b41;
+                  --base01: #282a2e;
+                  --base00: #1d1f21;
+                  --accent7-fg: #ceb9b5;
+                  --accent7-ffg: #f0ebea;
+                  --accent7-bg: #825449;
+                  --accent7-bbg: #513733;
+                  --accent7: #a3685a;
+                  --accent6-fg: #d5c8da;
+                  --accent6-ffg: #f2eff3;
+                  --accent6-bg: #8e7796;
+                  --accent6-bbg: #594b5e;
+                  --accent6: #b294bb;
+                  --accent5-fg: #c1cedb;
+                  --accent5-ffg: #edf0f4;
+                  --accent5-bg: #678298;
+                  --accent5-bbg: #42515f;
+                  --accent5: #81a2be;
+                  --accent4-fg: #c4dbd8;
+                  --accent4-ffg: #edf4f3;
+                  --accent4-bg: #6e9893;
+                  --accent4-bbg: #465f5c;
+                  --accent4: #8abeb7;
+                  --accent3-fg: #bfd0ac;
+                  --accent3-ffg: #ecf1e8;
+                  --accent3-bg: #648627;
+                  --accent3-bbg: #405423;
+                  --accent3: #7da72a;
+                  --accent2-fg: #f6dfbc;
+                  --accent2-ffg: #fcf5ec;
+                  --accent2-bg: #c09f5e;
+                  --accent2-bbg: #77633d;
+                  --accent2: #f0c674;
+                  --accent1-fg: #ecc8b6;
+                  --accent1-ffg: #f9eeea;
+                  --accent1-bg: #b2764d;
+                  --accent1-bbg: #6e4a35;
+                  --accent1: #de935f;
+                  --accent0-fg: #e2b8b8;
+                  --accent0-ffg: #f6eaea;
+                  --accent0-bg: #a35253;
+                  --accent0-bbg: #653637;
+                  --accent0: #cc6666;
+              }
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+                  --shade7: #ffffff;
+                  --shade6: #e0e0e0;
+                  --shade5: #c5c8c6;
+                  --shade4: #b4b7b4;
+                  --shade3: #969896;
+                  --shade2: #373b41;
+                  --shade1: #282a2e;
+                  --shade0: #1d1f21;
+                  --base0F-fg: #ceb9b5;
+                  --base0F-ffg: #f0ebea;
+                  --base0F-bg: #825449;
+                  --base0F-bbg: #513733;
+                  --base0F: #a3685a;
+                  --base0E-fg: #d5c8da;
+                  --base0E-ffg: #f2eff3;
+                  --base0E-bg: #8e7796;
+                  --base0E-bbg: #594b5e;
+                  --base0E: #b294bb;
+                  --base0D-fg: #c1cedb;
+                  --base0D-ffg: #edf0f4;
+                  --base0D-bg: #678298;
+                  --base0D-bbg: #42515f;
+                  --base0D: #81a2be;
+                  --base0C-fg: #c4dbd8;
+                  --base0C-ffg: #edf4f3;
+                  --base0C-bg: #6e9893;
+                  --base0C-bbg: #465f5c;
+                  --base0C: #8abeb7;
+                  --base0B-fg: #bfd0ac;
+                  --base0B-ffg: #ecf1e8;
+                  --base0B-bg: #648627;
+                  --base0B-bbg: #405423;
+                  --base0B: #7da72a;
+                  --base0A-fg: #f6dfbc;
+                  --base0A-ffg: #fcf5ec;
+                  --base0A-bg: #c09f5e;
+                  --base0A-bbg: #77633d;
+                  --base0A: #f0c674;
+                  --base09-fg: #ecc8b6;
+                  --base09-ffg: #f9eeea;
+                  --base09-bg: #b2764d;
+                  --base09-bbg: #6e4a35;
+                  --base09: #de935f;
+                  --base08-fg: #e2b8b8;
+                  --base08-ffg: #f6eaea;
+                  --base08-bg: #a35253;
+                  --base08-bbg: #653637;
+                  --base08: #cc6666;
+                  --base07: #ffffff;
+                  --base06: #e0e0e0;
+                  --base05: #c5c8c6;
+                  --base04: #b4b7b4;
+                  --base03: #969896;
+                  --base02: #373b41;
+                  --base01: #282a2e;
+                  --base00: #1d1f21;
+                  --accent7-fg: #ceb9b5;
+                  --accent7-ffg: #f0ebea;
+                  --accent7-bg: #825449;
+                  --accent7-bbg: #513733;
+                  --accent7: #a3685a;
+                  --accent6-fg: #d5c8da;
+                  --accent6-ffg: #f2eff3;
+                  --accent6-bg: #8e7796;
+                  --accent6-bbg: #594b5e;
+                  --accent6: #b294bb;
+                  --accent5-fg: #c1cedb;
+                  --accent5-ffg: #edf0f4;
+                  --accent5-bg: #678298;
+                  --accent5-bbg: #42515f;
+                  --accent5: #81a2be;
+                  --accent4-fg: #c4dbd8;
+                  --accent4-ffg: #edf4f3;
+                  --accent4-bg: #6e9893;
+                  --accent4-bbg: #465f5c;
+                  --accent4: #8abeb7;
+                  --accent3-fg: #bfd0ac;
+                  --accent3-ffg: #ecf1e8;
+                  --accent3-bg: #648627;
+                  --accent3-bbg: #405423;
+                  --accent3: #7da72a;
+                  --accent2-fg: #f6dfbc;
+                  --accent2-ffg: #fcf5ec;
+                  --accent2-bg: #c09f5e;
+                  --accent2-bbg: #77633d;
+                  --accent2: #f0c674;
+                  --accent1-fg: #ecc8b6;
+                  --accent1-ffg: #f9eeea;
+                  --accent1-bg: #b2764d;
+                  --accent1-bbg: #6e4a35;
+                  --accent1: #de935f;
+                  --accent0-fg: #e2b8b8;
+                  --accent0-ffg: #f6eaea;
+                  --accent0-bg: #a35253;
+                  --accent0-bbg: #653637;
+                  --accent0: #cc6666;
+              }
+
+      :root.light {
+                  --shade7: #1d1f21;
+                  --shade6: #282a2e;
+                  --shade5: #4d4d4c;
+                  --shade4: #969896;
+                  --shade3: #8e908c;
+                  --shade2: #d6d6d6;
+                  --shade1: #e0e0e0;
+                  --shade0: #ffffff;
+                  --base0F-fg: #825449;
+                  --base0F-ffg: #513733;
+                  --base0F-bg: #ceb9b5;
+                  --base0F-bbg: #f0ebea;
+                  --base0F: #a3685a;
+                  --base0E-fg: #6e4887;
+                  --base0E-ffg: #453155;
+                  --base0E-bg: #c4b5d1;
+                  --base0E-bbg: #edeaf1;
+                  --base0E: #8959a8;
+                  --base0D-fg: #257eb3;
+                  --base0D-ffg: #204f6f;
+                  --base0D-bg: #acccec;
+                  --base0D-bbg: #e8f0f9;
+                  --base0D: #2a9ddf;
+                  --base0C-fg: #347b80;
+                  --base0C-ffg: #264d51;
+                  --base0C-bg: #afcacd;
+                  --base0C-bbg: #e8eff0;
+                  --base0C: #3e999f;
+                  --base0B-fg: #6a931c;
+                  --base0B-ffg: #435c20;
+                  --base0B-bg: #c2d8ab;
+                  --base0B-bbg: #edf3e7;
+                  --base0B: #84b819;
+                  --base0A-fg: #bb9212;
+                  --base0A-ffg: #745b1d;
+                  --base0A-bg: #f3d8aa;
+                  --base0A-bbg: #fbf3e7;
+                  --base0A: #eab700;
+                  --base09-fg: #c46c20;
+                  --base09-ffg: #794521;
+                  --base09-bg: #f9c3ab;
+                  --base09-bbg: #fdede7;
+                  --base09: #f5871f;
+                  --base08-fg: #a02526;
+                  --base08-ffg: #632123;
+                  --base08-bg: #e0acac;
+                  --base08-bbg: #f5e8e8;
+                  --base08: #c82829;
+                  --base07: #1d1f21;
+                  --base06: #282a2e;
+                  --base05: #4d4d4c;
+                  --base04: #969896;
+                  --base03: #8e908c;
+                  --base02: #d6d6d6;
+                  --base01: #e0e0e0;
+                  --base00: #ffffff;
+                  --accent7-fg: #825449;
+                  --accent7-ffg: #513733;
+                  --accent7-bg: #ceb9b5;
+                  --accent7-bbg: #f0ebea;
+                  --accent7: #a3685a;
+                  --accent6-fg: #6e4887;
+                  --accent6-ffg: #453155;
+                  --accent6-bg: #c4b5d1;
+                  --accent6-bbg: #edeaf1;
+                  --accent6: #8959a8;
+                  --accent5-fg: #257eb3;
+                  --accent5-ffg: #204f6f;
+                  --accent5-bg: #acccec;
+                  --accent5-bbg: #e8f0f9;
+                  --accent5: #2a9ddf;
+                  --accent4-fg: #347b80;
+                  --accent4-ffg: #264d51;
+                  --accent4-bg: #afcacd;
+                  --accent4-bbg: #e8eff0;
+                  --accent4: #3e999f;
+                  --accent3-fg: #6a931c;
+                  --accent3-ffg: #435c20;
+                  --accent3-bg: #c2d8ab;
+                  --accent3-bbg: #edf3e7;
+                  --accent3: #84b819;
+                  --accent2-fg: #bb9212;
+                  --accent2-ffg: #745b1d;
+                  --accent2-bg: #f3d8aa;
+                  --accent2-bbg: #fbf3e7;
+                  --accent2: #eab700;
+                  --accent1-fg: #c46c20;
+                  --accent1-ffg: #794521;
+                  --accent1-bg: #f9c3ab;
+                  --accent1-bbg: #fdede7;
+                  --accent1: #f5871f;
+                  --accent0-fg: #a02526;
+                  --accent0-ffg: #632123;
+                  --accent0-bg: #e0acac;
+                  --accent0-bbg: #f5e8e8;
+                  --accent0: #c82829;
+              }
+    }
+    :root {
+          }
+  </style>
+
+  <link rel="stylesheet" href="../support/vendor/reveal/dist/reset.css">
+  <link rel="stylesheet" href="../support/vendor/reveal/dist/reveal.css">
+  <link rel="stylesheet" href="../support/components/components.css">
+  <link rel="stylesheet" href="../support/plugins/decker/ui-anchors.css">
+  <link rel="stylesheet" href="../support/plugins/whiteboard/whiteboard.css">
+  <link rel="stylesheet" href="../support/plugins/menu/menu.css">
+  <link rel="stylesheet" href="../support/plugins/feedback/feedback.css">
+  <link rel="stylesheet" href="../support/plugins/explain/explain.css">
+    <link rel="stylesheet" href="../support/plugins/live-captioning/live-captioning.css">
+    <link rel="stylesheet" href="../support/vendor/videojs/video-js.min.css">
+  <link rel="stylesheet" href="../support/vendor/css/xcode.css">
+  <link rel="stylesheet" href="../support/flyingFocus/flying-focus.css">
+  <link rel="stylesheet" href="../support/plugins/quiz-wue/quiz-wue.css">
+  <link rel="stylesheet" href="../support/css/deck.css">
+  <link rel="stylesheet" href="../support/css/msms-deck.css">
+
+</head>
+
+<body >
+  <div class="reveal">
+    <div class="slides">
+
+      <section id="title-slide">
+
+         <div class="background-on-accent">
+                     <h1>Deep Reinforcement Learning</h1>
+                              <h2>6 - Model Free Control (and TD
+Learning)</h2>
+                  </div>
+
+
+
+                  <div class="author"> Prof. Dr. Malte Schilling </div>
+
+                  <div class="affiliation"> Autonomous Intelligent
+Systems Group </div>
+
+
+         <img class="logo affiliation-logo light-only" src="./../support/assets/ms-logo-light.svg">
+         <img class="logo affiliation-logo dark-only" src="./../support/assets/ms-logo-dark.svg">
+
+               </section>
+
+
+<section id="overview-lecture" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Overview Lecture</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="for-known-mdp" class="left box block">
+<h2 class="left">For Known MDP:</h2>
+<p>General Policy Improvement Approach:</p>
+<ul>
+<li>Policy Evaluation</li>
+<li>Policy Improvement</li>
+</ul>
+</div>
+</div><div class="area right">
+<div id="in-contrast-model-free-approaches" class="right box block">
+<h2 class="right">In Contrast: Model-Free Approaches</h2>
+<ul>
+<li>Prediction: Estimate the value function of an unknown MDP
+<ul>
+<li>Monte-Carlo Method</li>
+<li><strong>Temporal Difference Learning</strong></li>
+</ul></li>
+<li>Model-free control (next week):
+<ul>
+<li>Optimise the policy</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="big-picture-solving-an-mdp" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Big picture: Solving an MDP</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="col30">
+<p>Goal: Maximize return</p>
+<p><span class="math display">\[G_t = R_{t+1} + R_{t+2} + ... \]</span></p>
+<p>When MDP is fully known, joint probability <span class="math inline">\(p(s&#39;, r | s,a)\)</span>:</p>
+<ul>
+<li>How environment develops and</li>
+<li>how reward is given.</li>
+</ul>
+<p>Plus we fixed a policy how to act.</p>
+</div>
+<div class="col70">
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:800px;">
+<img src="../decker/code/code-af647fbb.tex.svg" style="height:auto;width:100%;" alt="code-af647fbb.tex.svg" />
+</figure>
+</div>
+<h2 id="section"></h2>
+<p><span class="math display">\[
+v_{\pi}(s) \leftarrow \sum_{a \in \mathcal{A}} \pi (a|s) \sum_{r} \sum_{s&#39; \in \mathcal{S}} p (r, s&#39;|s,a) \Big(r + \dots \Big)
+\]</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="big-picture-solving-an-mdp-dynamic-programming" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Big picture: Solving an MDP, Dynamic Programming</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="col30">
+<p>Goal: Maximize return</p>
+<p><span class="math display">\[G_t = R_{t+1} + \gamma R_{t+2} + ... \]</span></p>
+<ul>
+<li>Use Bellman Equation for (recursive) backup.</li>
+<li>Model-Based Approach.</li>
+<li>Value function based Approach.</li>
+</ul>
+<p>Called <strong>bootstrapping</strong>.</p>
+</div>
+<div class="col70">
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:800px;">
+<img src="../decker/code/code-80ff354a.tex.svg" style="height:auto;width:100%;" alt="code-80ff354a.tex.svg" />
+</figure>
+</div>
+<h2 id="section"></h2>
+<p><span class="math display">\[
+v_{\pi}(s) \leftarrow \sum_{a \in \mathcal{A}} \pi (a|s) \sum_{r} \sum_{s&#39; \in \mathcal{S}} p (r, s&#39;|s,a) \Big(r + \gamma v_{\pi}(s&#39;) \Big)
+\]</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="big-picture-monte-carlo-sampling" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Big picture: Monte Carlo Sampling</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="col30">
+<p>Goal: Maximize return</p>
+<p><span class="math display">\[G_t = R_{t+1} + \gamma R_{t+2} + ... \]</span></p>
+<ul>
+<li>Model-free Approach.</li>
+<li>Sample from experience.</li>
+<li>Exploit sequential data.</li>
+</ul>
+<p>Sample along path (Monte Carlo)</p>
+</div>
+<div class="col70">
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:800px;">
+<img src="../decker/code/code-9828e4fe.tex.svg" style="height:auto;width:100%;" alt="code-9828e4fe.tex.svg" />
+</figure>
+</div>
+<h2 id="section"></h2>
+<p><span class="math display">\[
+v_\pi(s) \leftarrow \mathbb{E}_\pi (G_t | S_t=s )
+\]</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="recap-using-monte-carlo-method-for-reinforcement-learning" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Recap – Using Monte-Carlo Method for Reinforcement Learning</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Monte-Carlo:</p>
+<ul>
+<li>is a model-free approach that does not use knowledge of MDP (neither transition probabilities nor reward distribution),</li>
+<li>learns directly from full episodes of experience and the obtained return in these</li>
+<li>as it uses the straightforward idea to estimate the mean return for a state from these episodes.</li>
+</ul>
+<p>One drawback: requires episodic MDPs as the episodes must terminate.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="recap-monte-carlo-methods" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Recap – Monte-Carlo Methods</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>… learns from episodes of raw experience without modeling the environmental dynamics.</p>
+<p>MC methods computes the observed mean return as an approximation of the expected return.</p>
+<p>Computation of the empirical return <span class="math inline">\(G_t\)</span> requires complete episodes <span class="math inline">\(S_1, A_1, R_2, ... , S_T\)</span>:</p>
+<p><span class="math display">\[
+v(s) = \frac{\sum_{t=1}^T \mathbb{1}[S_t = s] G_t}{\sum_{t=1}^T \mathbb{1}[S_t = s]}, q(s, a) = \frac{\sum_{t=1}^T \mathbb{1}[S_t = s, A_t = a] G_t}{\sum_{t=1}^T \mathbb{1}[S_t = s, A_t = a]}
+\]</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="recap-incremental-monte-carlo-updates" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Recap – Incremental Monte-Carlo Updates</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Update <span class="math inline">\(v(s)\)</span> incrementally after epise <span class="math inline">\(S_1, A_1, R_2, \dots, S_T\)</span></p>
+<p>For each state <span class="math inline">\(S_t\)</span> with return <span class="math inline">\(G_t\)</span></p>
+<p><span class="math display">\[
+\begin{eqnarray*}
+N(S_t) &amp;\leftarrow&amp; N(S_t) + 1 \\
+v(S_t) &amp;\leftarrow&amp; v(S_t) + \frac{1}{N(S_t)} (G_t - v(S_t))
+\end{eqnarray*}
+\]</span></p>
+<p>In non-stationary problems, it can be useful to track a running mean, i.e. forget old episodes:</p>
+<p><span class="math display">\[
+v(S_t) \leftarrow v(S_t) + \alpha (G_t - v(S_t)) \\
+\]</span></p>
+</div>
+<div id="section" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="temporal-difference-learning-backup-diagram" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Temporal Difference Learning – Backup Diagram</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="col30">
+<p>Goal: Maximize return</p>
+<p><span class="math display">\[G_t = R_{t+1} + \gamma R_{t+2} + ... \]</span></p>
+<ul>
+<li>Model-free Approach.</li>
+<li>Sample from experience (Monte Carlo.</li>
+<li>Exploit sequential data.</li>
+</ul>
+<p>But: Bootstrap as in DP (use Bellman equation).</p>
+</div>
+<div class="col70">
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:800px;">
+<img src="../decker/code/code-766ac014.tex.svg" style="height:auto;width:100%;" alt="code-766ac014.tex.svg" />
+</figure>
+</div>
+<h2 id="section"></h2>
+<p><span class="math display">\[
+v(S_t) \leftarrow v(S_t) + \alpha (R_{t+1} + \gamma v(S_t+1) - v(S_t))
+\]</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="reinforcement-learning-algorithms-overview" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Reinforcement Learning Algorithms Overview</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/05/arulkumaran_drl.svg" style="height:460px;width:auto;" alt="../data/05/arulkumaran_drl.svg" />
+</figure>
+</div>
+</div>
+<div id="section-1" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-arulkumaran2017brief" role="doc-biblioref">Arulkumaran u. a. 2017</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="temporal-difference-learning" class="section slide level1" data-background-color="#6A931C">
+<div class="decker">
+<div class="alignment">
+<h1>Temporal Difference Learning</h1>
+</div>
+</div>
+</section>
+<section id="temporal-difference-learning-1" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Temporal Difference Learning</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Temporal Difference …</p>
+<ul>
+<li>Learning is model-free: no knowledge on MDP transition or reward probabilities is needed</li>
+<li>methods also learn directly from episodes of experience</li>
+</ul>
+</div>
+<div id="bootstrapping" class="definition box block">
+<h2 class="definition">Bootstrapping</h2>
+<p>TD learning methods update targets with regard to existing estimates rather than exclusively relying on actual rewards and complete returns as in MC methods.</p>
+</div>
+<div id="section-2" class="box block">
+<h2></h2>
+<p>The key idea in TD learning is to update the value function <span class="math inline">\(v(S_t)\)</span> towards an estimated return <span class="math inline">\(R_{t+1}+\gamma v(S_{t+1})\)</span> (known as “TD target”).</p>
+</div>
+<div id="section-3" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-weng2018rl" role="doc-biblioref">Weng 2018</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="from-mc-to-temporal-difference-learning" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>From MC to Temporal Difference Learning</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>In both: Goal is to learn <span class="math inline">\(v_\pi\)</span> online from experience under policy <span class="math inline">\(\pi\)</span></p>
+<p>Incremental every-visit Monte-Carlo:</p>
+<ul>
+<li>Update value <span class="math inline">\(v(S_t)\)</span> towards <strong>actual</strong> return <span class="math inline">\(\color{red}G_t\)</span>: <span class="math display">\[v(S_t) \leftarrow v(S_t) + \alpha(\color{red}G_t\color{black} − v(S_t))\]</span></li>
+</ul>
+<p>Simple temporal-difference learning algorithm TD(0):</p>
+<ul>
+<li>Update value <span class="math inline">\(v(S_t)\)</span> towards <strong>estimated</strong> return <span class="math inline">\(\color{blue}R_{t+1} + \gamma v(S_{t+1})\)</span>:<br />
+<span class="math display">\[v(S_t) \leftarrow v(S_t) + \alpha (\color{blue}R_{t+1} + \gamma v(S_t+1) \color{black}- v(S_t))\]</span></li>
+</ul>
+</div>
+<div id="section-4" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="temporal-difference-learning-2" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Temporal Difference Learning</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p><span class="math display">\[v(S_t) \leftarrow v(S_t) + \alpha (\color{blue}R_{t+1} + \gamma v(S_t+1) \color{green}- v(S_t)\color{black})\]</span></p>
+</div>
+<div id="td-target" class="definition box block">
+<h2 class="definition">TD Target</h2>
+<p><span class="math inline">\(\color{blue}R_{t+1} + \gamma v(S_t+1)\)</span> is called the TD target.</p>
+</div>
+<div id="td-error" class="definition box block">
+<h2 class="definition">TD Error</h2>
+<p><span class="math inline">\(\delta_t = \color{blue}R_{t+1} + \gamma v(S_t+1) \color{green} - v(S_t)\)</span> is called the TD error.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="td-value-estimation" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>TD: Value Estimation</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Update of the value function is regulated by the learning rate <span class="math inline">\(\alpha\)</span>.</p>
+<p>In brief: TD means update a guess (of the value function) towards a guess (experiencing a single step and a guess of what follows):</p>
+<p><span class="math display">\[\begin{align*}
+v(S_t) &amp;\leftarrow (1- \alpha) v(S_t) + \alpha G_t \\
+v(S_t) &amp;\leftarrow v(S_t) + \alpha (G_t - v(S_t)) \\
+v(S_t) &amp;\leftarrow v(S_t) + \alpha (R_{t+1} + \gamma v(S_{t+1}) - v(S_t))
+\end{align*}\]</span></p>
+<p>Similarly for the Q-function: <span class="math display">\[
+q(S_t, A_t) \leftarrow q(S_t, A_t) + \alpha (R_{t+1} + \gamma q(S_{t+1}, A_{t+1}) - q(S_t, A_t))
+\]</span></p>
+</div>
+<div id="section-5" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-weng2018rl" role="doc-biblioref">Weng 2018</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="tabular-td0-for-estimating-v_pi" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Tabular TD(0) for estimating <span class="math inline">\(v_\pi\)</span></h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:auto;">
+<img src="../decker/code/code-8b2db11e.tex.svg" style="height:480px;width:auto;" alt="code-8b2db11e.tex.svg" />
+</figure>
+</div>
+<p><span class="math inline">\(\color{blue}\text{Agent part of the algorithm; } \color{red}\text{ Environment interaction}\)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-driving-home" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Example: Driving Home</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<table>
+<thead>
+<tr class="header">
+<th>State</th>
+<th>Elapsed time</th>
+<th>Predicted time to Go</th>
+<th>Predicted total time</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Leaving office, Friday at 6</td>
+<td>0</td>
+<td>30</td>
+<td>30</td>
+</tr>
+<tr class="even">
+<td>Reach car, raining</td>
+<td>5</td>
+<td>35</td>
+<td>40</td>
+</tr>
+<tr class="odd">
+<td>Exiting highway</td>
+<td>20</td>
+<td>15</td>
+<td>35</td>
+</tr>
+<tr class="even">
+<td>small road, behind truck</td>
+<td>30</td>
+<td>10</td>
+<td>40</td>
+</tr>
+<tr class="odd">
+<td>Entering home street</td>
+<td>40</td>
+<td>3</td>
+<td>43</td>
+</tr>
+<tr class="even">
+<td>Arrive home</td>
+<td>43</td>
+<td>0</td>
+<td>43</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-comparison-monte-carlo-and-td-approach" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Example: Comparison Monte-Carlo and TD Approach</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="monte-carlo-approach" class="left box block">
+<h2 class="left">Monte-Carlo Approach</h2>
+<p>Changes recommended, MC (<span class="math inline">\(\alpha=1\)</span>):</p>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/05/driving_mc.png" style="height:360px;width:auto;" alt="../data/05/driving_mc.png" />
+</figure>
+</div>
+</div>
+</div><div class="area right">
+<div id="temporal-difference-method" class="right box block">
+<h2 class="right">Temporal Difference Method</h2>
+<p>Changes recommended in TD (<span class="math inline">\(\alpha=1\)</span>):</p>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/05/driving_td.png" style="height:360px;width:auto;" alt="../data/05/driving_td.png" />
+</figure>
+</div>
+<!--# Comparison TD and MC
+
+* TD can learn before knowing the final outcome
+  * TD can learn online after every step
+  MC must wait until end of episode before return is known
+* TD can learn without the final outcome
+  * TD can learn from incomplete sequences
+  * MC can only learn from complete sequences
+  * TD works in continuing (non-terminating) environments
+  * MC only works for episodic (terminating) environments
+
+## {.footer}
+
+[@silver2015]
+-->
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-random-walk" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Example: Random Walk</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:1200px;">
+<img src="../decker/code/code-1ded5678.tex.svg" style="height:auto;width:100%;" alt="code-1ded5678.tex.svg" />
+</figure>
+</div>
+<ul>
+<li>all episodes start in the center state <span class="math inline">\(C\)</span>,</li>
+<li>then proceed randomly left or right.</li>
+<li>Termination states are on the extreme left and extreme right.</li>
+<li>Reward: only given when terminating right (<span class="math inline">\(+1\)</span>).</li>
+</ul>
+<p>Value of a state is the probability of terminating in the right node.</p>
+<div class="grid-layout" style="grid-template-columns: 10fr 80fr;">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/Discussion.png" style="height:40px;width:auto;" alt="../data/Discussion.png" />
+</figure>
+</div>
+<p><em>Can you derive some of the state values?</em></p>
+</div>
+</div>
+<div id="section-6" class="box block fragment">
+<h2></h2>
+<p><span class="math inline">\(v_\pi(C) = \frac{1}{2}\)</span>, and for states <span class="math inline">\(A\)</span> through <span class="math inline">\(E\)</span> these are <span class="math inline">\(\frac{1}{6}, \frac{2}{6}, \frac{3}{6}, \frac{4}{6}, \frac{5}{6}\)</span>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-compare-mc-and-td-empirically" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Example: Compare MC and TD empirically</h1>
+<div class="layout row columns">
+<div class="area ">
+<div id="section-7" class="top box block">
+<h2 class="top"></h2>
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:1200px;">
+<img src="../decker/code/code-1ded5678.tex.svg" style="height:auto;width:100%;" alt="code-1ded5678.tex.svg" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="layout row columns">
+<div class="area left">
+<div id="td0-estimates-for-v_pi" class="left box block">
+<h2 class="left">TD(0) Estimates for <span class="math inline">\(v_\pi\)</span></h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/05/sb_td_randomwalk.png" style="height:320px;width:auto;" alt="../data/05/sb_td_randomwalk.png" />
+</figure>
+</div>
+</div>
+</div><div class="area right">
+<div id="learning-curves" class="right box block fragment">
+<h2 class="right">Learning Curves</h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/05/dm_randomwalk.png" style="height:320px;width:auto;" alt="../data/05/dm_randomwalk.png" />
+</figure>
+</div>
+</div>
+<div id="section-8" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-sutton2018" role="doc-biblioref">Sutton und Barto 2018</a>; <a href="#ref-deepmind2021" role="doc-biblioref">Hasselt und Borsa 2021</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="ml-background-bias-variance-tradeoff" class="section slide level1" data-background-color="#1f77b4">
+<div class="decker">
+<div class="alignment">
+<h1>ML Background: Bias-Variance Tradeoff</h1>
+</div>
+</div>
+</section>
+<section id="bias-variance-tradeoff-interactive-visualization" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Bias-Variance Tradeoff – Interactive Visualization</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="iframe print iframe" style="width:1280px;height:auto;">
+<iframe style="width:100%;height:540px;" allow="fullscreen" data-src="https://mlu-explain.github.io/bias-variance/#scrolly">
+
+</iframe>
+</figure>
+</div>
+</div>
+<div id="section-9" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-wilber_bias_variance" role="doc-biblioref">Wilber und Werness 2021</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="bias-and-variance-tradeoff-in-ml-classification" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Bias and Variance Tradeoff in ML: Classification</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="underfitting" class="left box block fragment">
+<h2 class="left">Underfitting</h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/06/var_bias_underfit.png" style="height:450px;width:auto;" alt="../data/06/var_bias_underfit.png" />
+</figure>
+</div>
+</div>
+</div><div class="area center">
+<div id="original-data" class="center box block">
+<h2 class="center">Original Data</h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/06/var_bias_orig.png" style="height:450px;width:auto;" alt="../data/06/var_bias_orig.png" />
+</figure>
+</div>
+</div>
+</div><div class="area right">
+<div id="overfitting" class="right box block fragment">
+<h2 class="right">Overfitting</h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/06/var_bias_overfit.png" style="height:450px;width:auto;" alt="../data/06/var_bias_overfit.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="layout row columns">
+<div class="area ">
+<div id="section-10" class="bottom box block">
+<h2 class="bottom"></h2>
+<p>For two classes (shown as red dots and blue crosses).</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="bias-and-variance" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Bias and Variance</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/06/BiasVariance_Tradeoff.png" style="height:480px;width:auto;" alt="../data/06/BiasVariance_Tradeoff.png" />
+</figure>
+</div>
+</div>
+<div id="section-11" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-fortmannroe2012" role="doc-biblioref">Fortmann-Roe 2012</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="bias-and-variance-tradeoff-in-ml-regression-problem" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Bias and Variance Tradeoff in ML: Regression Problem</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/06/sphx_glr_plot_bias_variance_001.png" style="height:450px;width:auto;" alt="../data/06/sphx_glr_plot_bias_variance_001.png" />
+</figure>
+</div>
+</div>
+<div id="section-12" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-scipy_bias" role="doc-biblioref">Varoquaux u. a. 2022</a>)</span>, see as well <span class="citation">(<a href="#ref-bishop2006" role="doc-biblioref">Bishop 2006</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="bias-and-variance-tradeoff-in-ml" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Bias and Variance Tradeoff in ML</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/06/bias_variance_tradeoff.png" style="height:450px;width:auto;" alt="../data/06/bias_variance_tradeoff.png" />
+</figure>
+</div>
+</div>
+<div id="section-13" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-goodfellow2016" role="doc-biblioref">Goodfellow, Bengio, und Courville 2016</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="task-compare-different-models" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Task – Compare different models</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="grid-layout" style="grid-template-columns: 20fr 80fr;">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/Discussion.png" style="height:60px;width:auto;" alt="../data/Discussion.png" />
+</figure>
+</div>
+<p>For a two-class classifier model, we find the following errors during training and when testing our model afterwards. Discuss the bias and variance of the models.</p>
+</div>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/06/VarianceBias_Ex_2.png" style="height:400px;width:auto;" alt="../data/06/VarianceBias_Ex_2.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="task-solution-for-different-models" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Task – Solution for different models</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/06/VarianceBias_Ex_5.png" style="height:460px;width:auto;" alt="../data/06/VarianceBias_Ex_5.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="bias-and-variance-1" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Bias and Variance</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="bias" class="definition left box block">
+<h2 class="definition left">Bias</h2>
+<p><span class="math inline">\(Bias^2(x) = \Big( \mathbb{E}[\hat{f}(x)] - f(x) \Big)^2\)</span></p>
+</div>
+<div id="source-of-error-in-bias" class="theorem box block fragment">
+<h2 class="theorem">Source of Error in Bias</h2>
+<p>The error due to bias is taken as the difference between the expected (or average) prediction of our model and the correct value which we are trying to predict.</p>
+</div>
+<div id="section-14" class="box block fragment">
+<h2></h2>
+<p>Bias measures how far off in general models’ predictions are from the correct value.</p>
+</div>
+</div><div class="area right">
+<div id="variance" class="right definition box block">
+<h2 class="right definition">Variance</h2>
+<p><span class="math inline">\(Variance(x) = \mathbb{E}\Big[\hat{f}(x) - \mathbb{E}[f(x)] \Big]\)</span></p>
+</div>
+<div id="source-of-error-in-variance" class="theorem box block fragment">
+<h2 class="theorem">Source of Error in Variance</h2>
+<p>The error due to variance is taken as the variability of a model prediction for a given data point.</p>
+</div>
+<div id="section-15" class="box block fragment">
+<h2></h2>
+<p>The variance is how much the predictions for a given point vary between different realizations of the model.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="dealing-with-variance-and-bias-in-neural-network-models" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Dealing with Variance and Bias in Neural Network Models</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="r-stack">
+<p><span class="media"><span class="figure image" style="height:auto;width:auto;"><img src="../data/06/VarianceBias_Sol_2.png" style="height:450px;width:auto;" alt="../data/06/VarianceBias_Sol_2.png" /></span></span> <span class="media"><span class="figure fragment image" style="height:auto;width:auto;"><img src="../data/06/VarianceBias_Sol_3.png" style="height:450px;width:auto;" alt="../data/06/VarianceBias_Sol_3.png" /></span></span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="bias-and-variance-2" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Bias and Variance</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/06/BiasVariance_Tradeoff.png" style="height:480px;width:auto;" alt="../data/06/BiasVariance_Tradeoff.png" />
+</figure>
+</div>
+</div>
+<div id="section-16" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-fortmannroe2012" role="doc-biblioref">Fortmann-Roe 2012</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="bias-variance-trade-off-monte-carlo" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Bias-Variance Trade-Off: Monte-Carlo</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Aiming for estimated Return from that state: <span class="math inline">\(v(S_t) = \mathbb{E}[G_t]\)</span></p>
+<p><strong>Monte-Carlo</strong>: Update value <span class="math inline">\(v(S_t)\)</span> toward actual return <span class="math inline">\(\color{red}G_t\)</span></p>
+<p><span class="math display">\[v(S_t) \leftarrow v(S_t) + \alpha \big( \color{red}G_t^{(n)} \color{black} − v(S_t) \big) \]</span></p>
+<ul>
+<li><p>Return <span class="math inline">\(\color{red}G_t^{(n)} \color{black} = R_{t+1} + \gamma R_{t+2} + \dots + \gamma^{T-1} R_{T}\)</span> is unbiased estimate of <span class="math inline">\(v_\pi(S_t)\)</span>.</p></li>
+<li><p>MC has high variance, zero bias</p>
+<ul>
+<li>Bias: <span class="math inline">\(Bias = \mathbb{E}[G_t] - v_\pi(S_t) = 0\)</span>, as <span class="math inline">\(v(S_t) = \mathbb{E}[G_t]\)</span> as true sample from estimate</li>
+<li>but following a long trajectory can possibly induce a large variance</li>
+</ul></li>
+</ul>
+</div>
+<div id="section-17" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-satakhutdinov_2018" role="doc-biblioref">Satakhutdinov 2018</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="bias-variance-trade-off-difference-using-return-or-td-target" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Bias-Variance Trade-Off: Difference using Return or TD target</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<ul>
+<li>TD target is much lower variance than the return:
+<ul>
+<li>Return depends on many random actions, transitions, rewards,</li>
+<li>TD target depends on one random action, transition, reward combined with stable estimate.</li>
+</ul></li>
+</ul>
+</div>
+<div id="section-18" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-satakhutdinov_2018" role="doc-biblioref">Satakhutdinov 2018</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="bias-variance-trade-off-td-learning" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Bias-Variance Trade-Off: TD Learning</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p><strong>TD</strong>: Update value <span class="math inline">\(v(S_t)\)</span> toward estimated returns <span class="math inline">\(R_{t+1} + \gamma v(S_{t+1})\)</span></p>
+<p><span class="math display">\[v(S_t) \leftarrow v(S_t) + \alpha \big( \color{red}R_{t+1} + \gamma v(S_{t+1}) \color{black} − v(S_t) \big) \]</span></p>
+<ul>
+<li>True TD target: <span class="math inline">\(R_{t+1} + \gamma v_\pi(S_{t+1})\)</span> is unbiased estimate of <span class="math inline">\(v_\pi(S_t)\)</span></li>
+<li>But: TD target <span class="math inline">\(R_{t+1} + \gamma v(S_{t+1})\)</span> is biased estimate of <span class="math inline">\(v_\pi(S_t)\)</span>, as <span class="math display">\[
+Bias = \mathbb{E}[R_{t+1} + \gamma v_\pi(S_{t+1})] - v_\pi(S_t)\]</span> <span class="math inline">\(R_{t+1}\)</span> and <span class="math inline">\(S_{t+1}\)</span> are directly from sample therefore unbiased. But <span class="math inline">\(v_\pi(S_{t+1})\)</span> is an estimate and not true value function which can be biased.</li>
+<li>As an advantage: Estimate using value function for most part of the trajectory reduces variance.</li>
+</ul>
+</div>
+<div id="section-19" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-satakhutdinov_2018" role="doc-biblioref">Satakhutdinov 2018</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="bias-variance-trade-off" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Bias-Variance Trade-Off</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="mc-has-high-variance-zero-bias" class="left box block">
+<h2 class="left">MC has high variance, zero bias</h2>
+<ul>
+<li>Good convergence properties</li>
+<li>Even with function approximation</li>
+<li>Not very sensitive to initial value</li>
+<li>Very simple to understand and use</li>
+</ul>
+</div>
+</div><div class="area right">
+<div id="td-has-low-variance-some-bias" class="right box block fragment">
+<h2 class="right">TD has low variance, some bias</h2>
+<ul>
+<li>Usually more efficient than MC</li>
+<li>TD(0) converges to <span class="math inline">\(v_\pi(s)\)</span></li>
+<li>More sensitive to initial value</li>
+</ul>
+</div>
+<div id="section-20" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-satakhutdinov_2018" role="doc-biblioref">Satakhutdinov 2018</a>)</span></p>
+<!--
+# Bias/Variance Trade-Off
+
+* Return $G_t = R_{t+1} + \gamma R_{t+2} + \dots + \gamma^{T−1}R_T$ is unbiased estimate of $v_\pi(S_t)$
+* True TD target $R_{t+1} + \gamma v_\pi(S_{t+1})$ is unbiased estimate of $v_\pi(S_t)$
+* TD target $R_{t+1} + \gamma v(S_{t+1})$ is biased estimate of $v_\pi(S_t)$
+* TD target is much lower variance than the return:
+  * Return depends on many random actions, transitions, rewards
+  * TD target depends on one random action, transition, reward
+
+## {.footer}
+
+[@silver2015]
+
+-->
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="bootstrapping-and-sampling" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Bootstrapping and Sampling</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="grid-layout" style="grid-template-columns: 60fr 40fr;">
+<ul>
+<li>Bootstrapping: update involves an estimate
+<ul>
+<li>MC does not bootstrap</li>
+<li>DP bootstraps</li>
+<li>TD bootstraps</li>
+</ul></li>
+<li>Sampling: update samples an expectation
+<ul>
+<li>MC samples</li>
+<li>DP does not sample</li>
+<li>TD samples</li>
+</ul></li>
+</ul>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/05/arulkumaran_drl.svg" style="height:400px;width:auto;" alt="../data/05/arulkumaran_drl.svg" />
+</figure>
+</div>
+</div>
+</div>
+<div id="section-21" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-arulkumaran2017brief" role="doc-biblioref">Arulkumaran u. a. 2017</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="temporal-difference-learning-3" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Temporal-Difference Learning</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<ul>
+<li>TD is model-free (no knowledge of MDP) and learn directly from experience</li>
+<li>TD can learn from incomplete episodes, by bootstrapping</li>
+<li>TD can learn during each episode</li>
+</ul>
+</div>
+<div id="section-22" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-deepmind2021" role="doc-biblioref">Hasselt und Borsa 2021</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="temporal-difference-learning-q-function" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Temporal difference learning – <span class="math inline">\(q\)</span>-function</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<ul>
+<li>We can apply the same idea to action values – when dynamics are unknown, this is much more important</li>
+<li>Temporal-difference learning for action values:
+<ul>
+<li>Update value <span class="math inline">\(q_t(S_t, A_t)\)</span> towards estimated return <span class="math inline">\(\color{blue}R_{t+1} + \gamma q(S_{t+1}, A_{t+1})\)</span></li>
+</ul>
+<span class="math display">\[
+q_{t+1} (S_{t+1}, A_{t+1}) \leftarrow q_{t+1} (S_{t+1}, A_{t+1}) + \alpha \Big( \underbrace{\color{blue} R_{t+1} + \gamma q(S_{t+1}, A_{t+1} \color{black} -   q_{t} (S_{t}, A_{t})}_{\text{TD Error}}  \Big)
+\]</span></li>
+</ul>
+<p>This algorithm is known as SARSA, because it uses <span class="math inline">\((S_t, A_t, R_{t+1}, S_{t+1}, A_{t+1})\)</span>.</p>
+</div>
+<div id="section-23" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-deepmind2021" role="doc-biblioref">Hasselt und Borsa 2021</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="task-td---mc-direct-comparison" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Task – TD - MC direct Comparison</h1>
+<div class="layout row columns">
+<div class="area ">
+<div id="section-24" class="top box block">
+<h2 class="top"></h2>
+<div class="grid-layout" style="grid-template-columns: 30fr 70fr;">
+<div class="media">
+<figure class="image" style="height:auto;width:240px;">
+<img src="../data/Discussion.png" style="height:auto;width:100%;" alt="../data/Discussion.png" />
+</figure>
+</div>
+<p>Calculate the values for the two possible states given the experience collected (<span class="math inline">\(\gamma = 1\)</span>; for TD you might want to start with <span class="math inline">\(B\)</span> – why?).</p>
+</div>
+</div>
+</div>
+</div>
+<div class="layout row columns">
+<div class="area left">
+<div id="monte-carlo" class="left box block">
+<h2 class="left">Monte-Carlo</h2>
+<p>Calculation of <span class="math inline">\(v_\pi(s)\)</span></p>
+<p><span class="math display">\[
+v(s) = \frac{\sum_{t=1}^T \mathbb{1}[S_t = s] G_t}{\sum_{t=1}^T \mathbb{1}[S_t = s]}\]</span></p>
+</div>
+</div><div class="area center">
+<div id="observed-episodes" class="center box block">
+<h2 class="center">Observed Episodes</h2>
+<table>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(A \rightarrow 0, B \rightarrow 0\)</span></td>
+<td><span class="math inline">\(B \rightarrow 1\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(B \rightarrow 1\)</span></td>
+<td><span class="math inline">\(B \rightarrow 1\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(B \rightarrow 1\)</span></td>
+<td><span class="math inline">\(B \rightarrow 1\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(B \rightarrow 1\)</span></td>
+<td><span class="math inline">\(B \rightarrow 0\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div><div class="area right">
+<div id="temporal-difference-learning-4" class="right box block">
+<h2 class="right">Temporal Difference Learning</h2>
+<p>Update of <span class="math inline">\(v_\pi(s)\)</span></p>
+<p><span class="math display">\[
+\begin{eqnarray*}
+v(S_t) &amp;\leftarrow&amp; v(S_t) + \alpha (\color{blue}R_{t+1} + \\
+&amp;&amp; \color{blue}\gamma v(S_t+1) \color{black}- v(S_t))
+\end{eqnarray*}\]</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="task-value-function" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Task – Value Function</h1>
+<div class="layout row columns">
+<div class="area ">
+<div id="episodes" class="top box block">
+<h2 class="top">Episodes</h2>
+<p><span class="math inline">\(A \rightarrow 0, B \rightarrow 0\)</span>; <span class="math inline">\(B \rightarrow 1\)</span>; <span class="math inline">\(B \rightarrow 1\)</span>; <span class="math inline">\(B \rightarrow 1\)</span>; <span class="math inline">\(B \rightarrow 1\)</span>; <span class="math inline">\(B \rightarrow 1\)</span>; <span class="math inline">\(B \rightarrow 1\)</span>; <span class="math inline">\(B \rightarrow 0\)</span></p>
+</div>
+</div>
+</div>
+<div class="layout row columns">
+<div class="area left">
+<div id="monte-carlo-1" class="left box block">
+<h2 class="left">Monte-Carlo</h2>
+<p>Calculation of <span class="math inline">\(v_\pi(s)\)</span></p>
+<p><span class="math display">\[
+\begin{eqnarray*}
+v(A) &amp;=&amp; \frac{0}{1} = 0 \\
+v(B) &amp;=&amp; \frac{6}{8} = 0.75
+\end{eqnarray*}
+\]</span></p>
+</div>
+</div><div class="area right">
+<div id="temporal-difference-learning-5" class="right box block fragment">
+<h2 class="right">Temporal Difference Learning</h2>
+<p><span class="math inline">\(v(S_t) \leftarrow v(S_t) + \alpha (\color{blue}R_{t+1} \color{black} + \color{green} \gamma v(S_t+1) \color{black}- v(S_t))\)</span></p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(v(B)\)</span> (easier, always terminating):</li>
+</ol>
+<p><span class="math display">\[
+v(B) = \frac{6}{8} = 0.75
+\]</span></p>
+<ol start="2" style="list-style-type: decimal">
+<li>only one episode with <span class="math inline">\(A\)</span>, but use value estimate for ending in <span class="math inline">\(B\)</span>:</li>
+</ol>
+<p><span class="math display">\[
+v(A) = \color{blue}0 \color{black} + \color{green}0.75 \color{black}= 0.75
+\]</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="batch-learning-using-limited-data-for-learning" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Batch Learning – Using limited Data for Learning</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Tabular MC and TD converge to <span class="math inline">\(v_\pi\)</span> as we gather unlimited experience which we usually can’t gather. How do these behave with limited experience?</p>
+</div>
+<div id="batch-setting" class="box block fragment">
+<h2>Batch Setting</h2>
+<p>We collect multiple episodes <span class="math inline">\(1\)</span> to <span class="math inline">\(K\)</span>, : <span class="math display">\[
+\text{episode } k: S_1^k, A_1^k, R_2^k, ..., S_{T_k}^k
+\]</span></p>
+<p>We can repeatedly use each episode <span class="math inline">\(k \in [1,K]\)</span> for training.</p>
+<p>This means: we sample from an empirical model.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="underlying-mdp-for-the-example" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Underlying MDP for the example</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:600px;">
+<img src="../decker/code/code-62b78051.tex.svg" style="height:auto;width:100%;" alt="code-62b78051.tex.svg" />
+</figure>
+</div>
+<p>Could be derived from experiences: Maximum-Likelihood Estimation – which is the most likely MDP producing such data?</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="differences-in-batch-solutions" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Differences in batch solutions</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="monte-carlo-2" class="left box block">
+<h2 class="left">Monte-Carlo</h2>
+<p>MC converges to best mean-squared fit for the observed returns:</p>
+<p><span class="math display">\[
+\sum_{k=1}^K \sum_{t=1}^{T_k} \big( G_t^k -v(S_t^k) \big)^2
+\]</span></p>
+<p>For the example: <span class="math inline">\(v(A) = 0\)</span></p>
+</div>
+</div><div class="area right">
+<div id="temporal-difference" class="right box block">
+<h2 class="right">Temporal Difference</h2>
+<p>TD converges to solution of maximum likelihood Markov model, given the observed data.</p>
+<ul>
+<li>Solution to the empirical MDP <span class="math inline">\((\mathcal{S,A}, p, \gamma)\)</span> that best fits the data</li>
+<li>In the AB example: <span class="math inline">\(p(S_{t+1} = B | S_t = A) = 1\)</span>, and therefore <span class="math inline">\(v(A) = v(B) = 0.75\)</span></li>
+</ul>
+</div>
+<div id="section-25" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-deepmind2021" role="doc-biblioref">Hasselt und Borsa 2021</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="detail-temporal-difference-learning" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Detail: Temporal Difference Learning</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>TD(0) converges to solution of maximum likelihood Markov model</p>
+<p>Solution to the MDP <span class="math inline">\(⟨\mathcal{S, A}, p, \gamma⟩\)</span> that best fits the data <span class="math display">\[
+p( s&#39; | s,a ) = \frac{1}{N(s,a)} \sum_{k=1}^K\sum_{t=1}^{T_k}\mathbb{1} (s_t^k, a_t^k, s_{t+1}^k = s, a, s&#39;)
+\]</span></p>
+<p><span class="math display">\[
+r( s,a ) = \frac{1}{N(s,a)} \sum_{k=1}^K\sum_{t=1}^{T_k}\mathbb{1} (s_t^k, a_t^k = s, a) r_t^k
+\]</span></p>
+<p>In the AB example, <span class="math inline">\(v(A) = 0.75\)</span></p>
+</div>
+<div id="section-26" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="advantages-and-disadvantages-of-mc-vs.-td" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Advantages and Disadvantages of MC vs. TD</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<ul>
+<li>TD can learn before knowing the final outcome
+<ul>
+<li>TD can learn online after every step</li>
+<li>MC must wait until end of episode before return is known</li>
+</ul></li>
+<li>TD can learn without the final outcome
+<ul>
+<li>TD can learn from incomplete sequences</li>
+<li>MC can only learn from complete sequences</li>
+<li>TD works in continuing (non-terminating) environments</li>
+<li>MC only works for episodic (terminating) environments</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="advantages-and-disadvantages-of-mc-vs.-td-2" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Advantages and Disadvantages of MC vs. TD (2)</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<ul>
+<li>TD is independent of the temporal span of the prediction
+<ul>
+<li>TD can learn from single transitions</li>
+<li>MC must store all predictions (or states) to update at the end of an episode</li>
+</ul></li>
+<li>TD needs reasonable value estimates</li>
+<li>TD exploits Markov property
+<ul>
+<li>Usually more efficient in Markov environments</li>
+</ul></li>
+<li>MC does not exploit Markov property
+<ul>
+<li>Usually more effective in non-Markov environments</li>
+</ul></li>
+<li>With finite data (or with function approximation) the solutions may differ</li>
+</ul>
+</div>
+<div id="section-27" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="combining-the-two-approaches-a-unifying-perspective" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Combining the two approaches – a unifying perspective</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="grid-layout" style="grid-template-columns: 20fr 60fr 20fr;">
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:auto;">
+<img src="../decker/code/code-9860f0e5.tex.svg" style="height:450px;width:auto;" alt="code-9860f0e5.tex.svg" />
+</figure>
+</div>
+<ul>
+<li>TD uses value estimates which might be inaccurate</li>
+<li>In addition, information can propagate back quite slowly (possible bias)</li>
+<li>In MC information propagates faster, but the updates are noisier (high variance)</li>
+<li>We can go in between TD and MC</li>
+</ul>
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:auto;">
+<img src="../decker/code/code-a70695ea.tex.svg" style="height:450px;width:auto;" alt="code-a70695ea.tex.svg" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="multi-step-predictions" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Multi-step Predictions</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:auto;">
+<img src="../decker/code/code-a2120521.tex.svg" style="height:510px;width:auto;" alt="code-a2120521.tex.svg" />
+</figure>
+</div>
+<p>Make <span class="math inline">\(n\)</span> steps and then use TD target for prediction.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="n-step-return" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1><span class="math inline">\(n\)</span>-step Return</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Consider the following <span class="math inline">\(n\)</span>-step returns for <span class="math inline">\(n = 1, 2, \infty:\)</span></p>
+<table>
+<thead>
+<tr class="header">
+<th>steps</th>
+<th>Approach</th>
+<th>Return</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(n = 1\)</span></td>
+<td>TD</td>
+<td><span class="math inline">\(G_t^{(1)} = R_{t+1} + \gamma v(S_{t+1})\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(n = 2\)</span></td>
+<td></td>
+<td><span class="math inline">\(G_t^{(2)} = R_{t+1} + \gamma R_{t+2} + \gamma^2 v(S_{t+2})\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\vdots\)</span></td>
+<td></td>
+<td><span class="math inline">\(\vdots\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(n = \infty\)</span></td>
+<td>MC</td>
+<td><span class="math inline">\(G_t^{(\infty)} = R_{t+1} + \gamma R_{t+2} + \dots + \gamma^{T-1} R_T\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Define the n-step return <span class="math display">\[
+G_t^{(n)} = R_{t+1} + \gamma R_{t+2} + \dots + \gamma^{n-1} R_{t+n} +  \gamma^n v(S_{t+n})
+\]</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="n-step-return-1" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1><span class="math inline">\(n\)</span>-step Return</h1>
+<div class="layout">
+<div class="area">
+<div id="n-step-return-2" class="definition box block">
+<h2 class="definition">n-step return</h2>
+<p><span class="math display">\[
+G_t^{(n)} = R_{t+1} + \gamma R_{t+2} + \dots + \gamma^{n-1} R_{t+n} +  \gamma^n v(S_{t+n})
+\]</span></p>
+</div>
+<div id="n-step-temporal-difference-learning" class="box block">
+<h2><span class="math inline">\(n\)</span>-step Temporal Difference learning</h2>
+<p><span class="math display">\[v(S_t) \leftarrow v(S_t)+ \alpha \big( G_t^{(n)} − v(S_t) \big) \]</span></p>
+</div>
+<div id="section-28" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="large-random-walk-example-error-for-different-n-steps" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>(Large) Random Walk Example – Error for different <span class="math inline">\(n\)</span>-steps</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>MDP: Chain of 19 Nodes; Start in <span class="math inline">\(J\)</span>; random policy; <span class="math inline">\(r=0\)</span> unless terminating right: <span class="math inline">\(r = 1\)</span></p>
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:1100px;">
+<img src="../decker/code/code-11c316c2.tex.svg" style="height:auto;width:100%;" alt="code-11c316c2.tex.svg" />
+</figure>
+</div>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/06/sb_large_random_walk_rms.png" style="height:360px;width:auto;" alt="../data/06/sb_large_random_walk_rms.png" />
+</figure>
+</div>
+</div>
+<div id="section-29" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-deepmind2021" role="doc-biblioref">Hasselt und Borsa 2021</a>)</span> following <span class="citation">(<a href="#ref-sutton2018" role="doc-biblioref">Sutton und Barto 2018</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="averaging-n-step-return" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Averaging <span class="math inline">\(n\)</span>-step Return</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="col60">
+<ul>
+<li>We can average <span class="math inline">\(n\)</span>-step returns over different <span class="math inline">\(n\)</span>.</li>
+<li>For example: average the <span class="math inline">\(2\)</span>-step and <span class="math inline">\(3\)</span>-step returns as <span class="math display">\[\frac{1}{2}G^{(2)} + \frac{1}{2}G^{(3)}\]</span></li>
+<li>Combines information from two different time-steps</li>
+</ul>
+</div>
+<div class="col40">
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:auto;">
+<img src="../decker/code/code-41f12720.tex.svg" style="height:450px;width:auto;" alt="code-41f12720.tex.svg" />
+</figure>
+</div>
+</div>
+</div>
+<div id="section-30" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="lambda-return" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1><span class="math inline">\(\lambda\)</span>-Return</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="col50">
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:auto;">
+<img src="../decker/code/code-385542c3.tex.svg" style="height:400px;width:auto;" alt="code-385542c3.tex.svg" />
+</figure>
+</div>
+</div>
+<div class="col50">
+<p>The <span class="math inline">\(\lambda\)</span>-return <span class="math inline">\(G_t^\lambda\)</span> combines all <span class="math inline">\(n\)</span>-step returns <span class="math inline">\(G_t^{(n)}\)</span> using as a weight <span class="math inline">\((1 − \lambda)\lambda^{n−1}\)</span></p>
+<p><span class="math display">\[
+G_t^\lambda =(1−\lambda) \sum_{n=1}^\infty \lambda^{n-1} G_t^{(n)}
+\]</span></p>
+<p>Forward-view TD(<span class="math inline">\(\lambda\)</span>)</p>
+<p><span class="math display">\[ v(S_t)\leftarrow v(S_t)+ \alpha \Big( G_t^\lambda  −v(S_t)\Big)\]</span></p>
+</div>
+</div>
+<div id="section-31" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="computation-of-tdlambda" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Computation of TD(<span class="math inline">\(\lambda\)</span>)</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="forward-view-tdlambda" class="left box block">
+<h2 class="left">Forward-view TD(<span class="math inline">\(\lambda\)</span>)</h2>
+<ul>
+<li>Update value function towards the <span class="math inline">\(\lambda\)</span>-return</li>
+<li>Forward-view looks into the future to compute <span class="math inline">\(G_t^\lambda\)</span></li>
+<li>Drawback: Like Monte-Carlo, can only be computed from complete episodes</li>
+</ul>
+</div>
+</div><div class="area right">
+<div id="backward-view-tdlambda" class="right box block fragment">
+<h2 class="right">Backward View TD(<span class="math inline">\(\lambda\)</span>)</h2>
+<ul>
+<li>While Forward view provides theory</li>
+<li>Backward view provides mechanism</li>
+<li>Update online, every step, from incomplete sequences – and update for previous steps going backwards into the past</li>
+</ul>
+</div>
+<div id="section-32" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="large-random-walk-example-error-for-tdlambda" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>(Large) Random Walk Example – Error for TD(<span class="math inline">\(\lambda\)</span>)</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<!--Start: in central node ($J$), random policy. Always reward $0$ unless terminating right ($r = 1$).-->
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:1100px;">
+<img src="../decker/code/code-11c316c2.tex.svg" style="height:auto;width:100%;" alt="code-11c316c2.tex.svg" />
+</figure>
+</div>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/06/sb_large_random_lambda.png" style="height:360px;width:auto;" alt="../data/06/sb_large_random_lambda.png" />
+</figure>
+</div>
+<p>Intuition: <span class="math inline">\(\frac{1}{1-\lambda}\)</span> is the `horizon’, e.g., <span class="math inline">\(\lambda =0.9 \rightsquigarrow n = 10\)</span> steps.</p>
+</div>
+<div id="section-33" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-deepmind2021" role="doc-biblioref">Hasselt und Borsa 2021</a>)</span> following <span class="citation">(<a href="#ref-sutton2018" role="doc-biblioref">Sutton und Barto 2018</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="benefits-of-multi-step-returns" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Benefits of multi-step returns</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Multi-step returns have benefits from both TD and MC</p>
+<ul>
+<li>Bootstrapping can have issues with bias</li>
+<li>Monte-Carlo can have issues with variance</li>
+<li>Typically, intermediate values of <span class="math inline">\(n\)</span> or <span class="math inline">\(\lambda\)</span> are good (e.g., <span class="math inline">\(n = 10, \lambda = 0.9\)</span>)</li>
+</ul>
+</div>
+<div id="section-34" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-deepmind2021" role="doc-biblioref">Hasselt und Borsa 2021</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="references" class="unnumbered biblio slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>References</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-arulkumaran2017brief" class="csl-entry">
+Arulkumaran, Kai, Marc P. Deisenroth, Miles Brundage, und Anil A. Bharath. 2017. <span>„Deep Reinforcement Learning: A Brief Survey“</span>. <em>IEEE Signal Processing Magazine</em> 34 (6).
+</div>
+<div id="ref-bishop2006" class="csl-entry">
+Bishop, Christopher M. 2006. <em>Pattern Recognition and Machine Learning</em>. Springer.
+</div>
+<div id="ref-fortmannroe2012" class="csl-entry">
+Fortmann-Roe, Scott. 2012. <span>„Understanding the Bias-Variance Tradeoff“</span>. <a href="http://scott.fortmann-roe.com/docs/BiasVariance.html">http://scott.fortmann-roe.com/docs/BiasVariance.html</a>.
+</div>
+<div id="ref-goodfellow2016" class="csl-entry">
+Goodfellow, Ian, Yoshua Bengio, und Aaron Courville. 2016. <em>Deep Learning</em>. MIT Press.
+</div>
+<div id="ref-deepmind2021" class="csl-entry">
+Hasselt, Hado van, und Diana Borsa. 2021. <span>„Reinforcement Learning Lecture Series 2021“</span>. https://www.deepmind.com/learning-resources/reinforcement-learning-lecture-series-2021.
+</div>
+<div id="ref-satakhutdinov_2018" class="csl-entry">
+Satakhutdinov, Ruslan. 2018. <span>„Deep RL and Control“</span>. Course 10703, Carnegie Mellon University, School of Computer Science.
+</div>
+<div id="ref-silver2015" class="csl-entry">
+Silver, David. 2015. <span>„UCL Course on RL UCL Course on RL UCL Course on Reinforcement Learning“</span>. http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html.
+</div>
+<div id="ref-sutton2018" class="csl-entry">
+Sutton, Richard S., und Andrew G. Barto. 2018. <em>Reinforcement Learning: An Introduction</em>. Second. The MIT Press.
+</div>
+<div id="ref-scipy_bias" class="csl-entry">
+Varoquaux, V., E. Gouillart, O. Vahtras, und P. de Buyl. 2022. <span>„Bias and variance of polynomial fit“</span>. <a href="https://scipy-lectures.org/packages/scikit-learn/auto_examples/plot_bias_variance.html">https://scipy-lectures.org/packages/scikit-learn/auto_examples/plot_bias_variance.html</a>.
+</div>
+<div id="ref-weng2018rl" class="csl-entry">
+Weng, Lilian. 2018. <span>„A (Long) Peek into Reinforcement Learning“</span>. <a href="https://lilianweng.github.io/lil-log/2018/02/19/a-long-peek-into-reinforcement-learning.html">https://lilianweng.github.io/lil-log/2018/02/19/a-long-peek-into-reinforcement-learning.html</a>.
+</div>
+<div id="ref-wilber_bias_variance" class="csl-entry">
+Wilber, Jared, und Brent Werness. 2021. <span>„The Bias Variance Tradeoff“</span>. <a href="https://mlu-explain.github.io/bias-variance/">https://mlu-explain.github.io/bias-variance/</a>.
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<code class="force-highlight-styles markdown"
+style="display:none;"></code>
+
+    </div>
+  </div>
+
+  <script type="module">
+    /* Store JSON encoded Pandoc meta data in a global variable. */
+    import initializeDecker from "./../support/js/decker.js";
+    initializeDecker("e25d3f1cb.json");
+  </script>
+
+  <script src="../support/vendor/videojs/video.min.js"></script>
+  <script type="module" src="../support/components/custom-dialog.js"></script>
+
+  <script type="module">
+    // import Reveal and all plugins
+    import Reveal from './../support/vendor/reveal/dist/reveal.esm.js';
+    import deckerPlugin from './../support/plugins/decker/decker.js';
+    import uiAnchorsPlugin from './../support/plugins/decker/ui-anchors.js'
+    import mathPlugin from './../support/plugins/math/math.js';
+    import whiteboardPlugin from './../support/plugins/whiteboard/whiteboard.js';
+    import sagePlugin from './../support/plugins/sage/sage.js';
+    import searchPlugin from './../support/plugins/search/search.js';
+    import zoomPlugin from './../support/plugins/zoom/zoom.js';
+    import printPlugin from './../support/plugins/print/print.js';
+    import jinglesPlugin from './../support/plugins/jingles/jingles.js';
+    import quizPlugin from './../support/plugins/quiz/quiz.js';
+    import quizWuePlugin from './../support/plugins/quiz-wue/quiz-wue.js';
+    import explainPlugin from './../support/plugins/explain/explain.js';
+    import chartsPlugin from './../support/plugins/charts/charts.js';
+    import menuPlugin from './../support/plugins/menu/menu.js';
+    import feedbackPlugin from './../support/plugins/feedback/feedback.js';
+    import highlightPlugin from './../support/vendor/reveal/plugin/highlight/highlight.esm.js';
+    import notesPlugin from './../support/vendor/reveal/plugin/notes/notes.esm.js';
+        import captionPlugin from './../support/plugins/live-captioning/live-captioning.js';
+        import a11yPlugin from './../support/plugins/a11y/a11y.js';
+
+    let revealConfig = {
+      // reveal configuration (see https://revealjs.com/config/)
+      ...Decker.meta.reveal,
+
+      // plugin configuration
+      math: { mathjax: String.raw`../support/vendor/mathjax/`, ...Decker.meta.math },
+      chart: Decker.meta.chart,
+      menu: Decker.meta.menu,
+      explain: Decker.meta.explain,
+      feedback: Decker.meta.feedback || Decker.meta["decker-engine"],
+      jingles: Decker.meta.jingles,
+
+      // list of plugins
+      plugins: [
+        deckerPlugin,
+        uiAnchorsPlugin,
+        sagePlugin,
+        mathPlugin,
+        chartsPlugin,
+        whiteboardPlugin,
+        searchPlugin,
+        zoomPlugin,
+        printPlugin,
+        jinglesPlugin,
+        quizPlugin,
+        quizWuePlugin,
+        explainPlugin,
+        menuPlugin,
+        feedbackPlugin,
+        highlightPlugin,
+        notesPlugin,
+                captionPlugin,
+                a11yPlugin,
+      ]
+    };
+
+    Reveal.initialize(revealConfig);
+  </script>
+
+</body>
+<script src="../support/js/inert-polyfill.min.js"></script>
+<!-- script src="../support/js/inert.min.js"></script -->
+<!-- Use the other implementation if things break under Firefox -->
+</html>
