@@ -435,7 +435,7 @@ Learning</title>
   <link rel="stylesheet" href="../support/plugins/quiz-wue/quiz-wue.css">
   <link rel="stylesheet" href="../support/css/deck.css">
   <link rel="stylesheet" href="../support/css/msms-deck.css">
-  
+
 </head>
 
 <body >
@@ -449,14 +449,14 @@ Learning</title>
                               <h2>6 - Temporal Difference Learning</h2>
                   </div>
 
-         
-         
+
+
                   <div class="author"> Prof. Dr. Malte Schilling </div>
-         
+
                   <div class="affiliation"> Autonomous Intelligent
 Systems Group </div>
-         
-         
+
+
          <img class="logo affiliation-logo light-only" src="./../support/assets/ms-logo-light.svg">
          <img class="logo affiliation-logo dark-only" src="./../support/assets/ms-logo-dark.svg">
 
@@ -517,7 +517,7 @@ Systems Group </div>
 <div class="col70">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:800px;">
-<img src="../.decker/code/code-af647fbb.tex.svg" style="height:auto;width:100%;" alt="code-af647fbb.tex.svg" />
+<img src="../decker/code/code-af647fbb.tex.svg" style="height:auto;width:100%;" alt="code-af647fbb.tex.svg" />
 </figure>
 </div>
 <h2 id="section"></h2>
@@ -551,7 +551,7 @@ v_{\pi}(s) \leftarrow \sum_{a \in \mathcal{A}} \pi (a|s) \sum_{r} \sum_{s&#39; \
 <div class="col70">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:800px;">
-<img src="../.decker/code/code-80ff354a.tex.svg" style="height:auto;width:100%;" alt="code-80ff354a.tex.svg" />
+<img src="../decker/code/code-80ff354a.tex.svg" style="height:auto;width:100%;" alt="code-80ff354a.tex.svg" />
 </figure>
 </div>
 <h2 id="section"></h2>
@@ -585,7 +585,7 @@ v_{\pi}(s) \leftarrow \sum_{a \in \mathcal{A}} \pi (a|s) \sum_{r} \sum_{s&#39; \
 <div class="col70">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:800px;">
-<img src="../.decker/code/code-9828e4fe.tex.svg" style="height:auto;width:100%;" alt="code-9828e4fe.tex.svg" />
+<img src="../decker/code/code-9828e4fe.tex.svg" style="height:auto;width:100%;" alt="code-9828e4fe.tex.svg" />
 </figure>
 </div>
 <h2 id="section"></h2>
@@ -650,7 +650,7 @@ v(s) = \frac{\sum_{t=1}^T \mathbb{1}[S_t = s] G_t}{\sum_{t=1}^T \mathbb{1}[S_t =
 <p><span class="math display">\[
 \begin{eqnarray*}
 N(S_t) &amp;\leftarrow&amp; N(S_t) + 1 \\
-v(S_t) &amp;\leftarrow&amp; v(S_t) + \frac{1}{N(S_t)} (G_t - v(S_t)) 
+v(S_t) &amp;\leftarrow&amp; v(S_t) + \frac{1}{N(S_t)} (G_t - v(S_t))
 \end{eqnarray*}
 \]</span></p>
 <p>In non-stationary problems, it can be useful to track a running mean, i.e. forget old episodes:</p>
@@ -687,7 +687,7 @@ v(S_t) \leftarrow v(S_t) + \alpha (G_t - v(S_t)) \\
 <div class="col70">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:800px;">
-<img src="../.decker/code/code-766ac014.tex.svg" style="height:auto;width:100%;" alt="code-766ac014.tex.svg" />
+<img src="../decker/code/code-766ac014.tex.svg" style="height:auto;width:100%;" alt="code-766ac014.tex.svg" />
 </figure>
 </div>
 <h2 id="section"></h2>
@@ -845,7 +845,7 @@ q(S_t, A_t) \leftarrow q(S_t, A_t) + \alpha (R_{t+1} + \gamma q(S_{t+1}, A_{t+1}
 <div class="box block">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:auto;">
-<img src="../.decker/code/code-8b2db11e.tex.svg" style="height:480px;width:auto;" alt="code-8b2db11e.tex.svg" />
+<img src="../decker/code/code-8b2db11e.tex.svg" style="height:480px;width:auto;" alt="code-8b2db11e.tex.svg" />
 </figure>
 </div>
 <p><span class="math inline">\(\color{blue}\text{Agent part of the algorithm; } \color{red}\text{ Environment interaction}\)</span></p>
@@ -945,10 +945,10 @@ q(S_t, A_t) \leftarrow q(S_t, A_t) + \alpha (R_{t+1} + \gamma q(S_{t+1}, A_{t+1}
 * TD can learn before knowing the final outcome
   * TD can learn online after every step
   MC must wait until end of episode before return is known
-* TD can learn without the final outcome 
+* TD can learn without the final outcome
   * TD can learn from incomplete sequences
   * MC can only learn from complete sequences
-  * TD works in continuing (non-terminating) environments 
+  * TD works in continuing (non-terminating) environments
   * MC only works for episodic (terminating) environments
 
 ## {.footer}
@@ -970,7 +970,7 @@ q(S_t, A_t) \leftarrow q(S_t, A_t) + \alpha (R_{t+1} + \gamma q(S_{t+1}, A_{t+1}
 <div class="box block">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:1200px;">
-<img src="../.decker/code/code-1ded5678.tex.svg" style="height:auto;width:100%;" alt="code-1ded5678.tex.svg" />
+<img src="../decker/code/code-1ded5678.tex.svg" style="height:auto;width:100%;" alt="code-1ded5678.tex.svg" />
 </figure>
 </div>
 <ul>
@@ -1008,7 +1008,7 @@ q(S_t, A_t) \leftarrow q(S_t, A_t) + \alpha (R_{t+1} + \gamma q(S_{t+1}, A_{t+1}
 <h2 class="top"></h2>
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:1200px;">
-<img src="../.decker/code/code-1ded5678.tex.svg" style="height:auto;width:100%;" alt="code-1ded5678.tex.svg" />
+<img src="../decker/code/code-1ded5678.tex.svg" style="height:auto;width:100%;" alt="code-1ded5678.tex.svg" />
 </figure>
 </div>
 </div>
@@ -1411,9 +1411,9 @@ Bias = \mathbb{E}[R_{t+1} + \gamma v_\pi(S_{t+1})] - v_\pi(S_t)\]</span> <span c
 
 * Return $G_t = R_{t+1} + \gamma R_{t+2} + \dots + \gamma^{T−1}R_T$ is unbiased estimate of $v_\pi(S_t)$
 * True TD target $R_{t+1} + \gamma v_\pi(S_{t+1})$ is unbiased estimate of $v_\pi(S_t)$
-* TD target $R_{t+1} + \gamma v(S_{t+1})$ is biased estimate of $v_\pi(S_t)$ 
+* TD target $R_{t+1} + \gamma v(S_{t+1})$ is biased estimate of $v_\pi(S_t)$
 * TD target is much lower variance than the return:
-  * Return depends on many random actions, transitions, rewards 
+  * Return depends on many random actions, transitions, rewards
   * TD target depends on one random action, transition, reward
 
 ## {.footer}
@@ -1601,7 +1601,7 @@ v(S_t) &amp;\leftarrow&amp; v(S_t) + \alpha (\color{blue}R_{t+1} + \\
 <p><span class="math display">\[
 \begin{eqnarray*}
 v(A) &amp;=&amp; \frac{0}{1} = 0 \\
-v(B) &amp;=&amp; \frac{6}{8} = 0.75 
+v(B) &amp;=&amp; \frac{6}{8} = 0.75
 \end{eqnarray*}
 \]</span></p>
 </div>
@@ -1613,7 +1613,7 @@ v(B) &amp;=&amp; \frac{6}{8} = 0.75
 <li><span class="math inline">\(v(B)\)</span> (easier, always terminating):</li>
 </ol>
 <p><span class="math display">\[
-v(B) = \frac{6}{8} = 0.75 
+v(B) = \frac{6}{8} = 0.75
 \]</span></p>
 <ol start="2" style="list-style-type: decimal">
 <li>only one episode with <span class="math inline">\(A\)</span>, but use value estimate for ending in <span class="math inline">\(B\)</span>:</li>
@@ -1639,7 +1639,7 @@ v(A) = \color{blue}0 \color{black} + \color{green}0.75 \color{black}= 0.75
 <div id="batch-setting" class="box block fragment">
 <h2>Batch Setting</h2>
 <p>We collect multiple episodes <span class="math inline">\(1\)</span> to <span class="math inline">\(K\)</span>, : <span class="math display">\[
-\text{episode } k: S_1^k, A_1^k, R_2^k, ..., S_{T_k}^k 
+\text{episode } k: S_1^k, A_1^k, R_2^k, ..., S_{T_k}^k
 \]</span></p>
 <p>We can repeatedly use each episode <span class="math inline">\(k \in [1,K]\)</span> for training.</p>
 <p>This means: we sample from an empirical model.</p>
@@ -1658,7 +1658,7 @@ v(A) = \color{blue}0 \color{black} + \color{green}0.75 \color{black}= 0.75
 <div class="box block">
 <div class="media">
 <figure class="render image rendered" style="height:auto;width:600px;">
-<img src="../.decker/code/code-62b78051.tex.svg" style="height:auto;width:100%;" alt="code-62b78051.tex.svg" />
+<img src="../decker/code/code-62b78051.tex.svg" style="height:auto;width:100%;" alt="code-62b78051.tex.svg" />
 </figure>
 </div>
 <p>Could be derived from experiences: Maximum-Likelihood Estimation – which is the most likely MDP producing such data?</p>

@@ -1,0 +1,24 @@
+\documentclass{standalone}
+\usepackage[boxruled,lined]{algorithm2e}
+\usepackage{mathtools}
+\usepackage{amsmath} 
+\usepackage{amsfonts} 
+
+\SetKwInput{KwInput}{Input}
+\SetKwInput{KwOutput}{Output}
+\begin{document}
+\pagestyle{empty}
+\begin{algorithm}[H]
+  \KwInput{The policy $\pi$ to be evaluated; step size $\alpha \in (0, 1]$}
+  Initialize $V(s)$, for all $s \in \mathcal S^+$, arbitrarily except that   $V(\texttt{terminal}) = 0$ \\
+\For{each episode} {
+  Initialize $S$ \\
+  \For{each step in the episode, until state $S$ is terminal} {
+    $A \gets $ \textcolor{red}{action} given by $\pi$ for $S$ \\
+    Take action $A$, observe $R$, $S'$ \\
+    $V(S) \gets V(S) + \alpha \left[ R + \gamma V(S') - V(S) \right]$ \\
+    $S \gets S'$
+  }
+}
+\end{algorithm}
+\end{document}
