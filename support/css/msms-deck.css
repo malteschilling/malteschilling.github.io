@@ -281,7 +281,7 @@ div.grid-layout {
 .reveal section.section h1,
 .reveal section h1:only-child {
   color: #f8f8f8;
-  background-color: var(--primary-color);
+  /*background-color: var(--primary-color);*/
   text-align: center;
   padding: 50px;
   margin: 0;
@@ -295,7 +295,7 @@ div.grid-layout {
  * colored boxes
  *********************************************/
 
-/* .reveal div:is(.definition, .example, .axiom, .theorem) {
+.reveal div:is(.definition, .example, .axiom, .theorem) {
   padding: 0.5em 1em;
   margin: auto;
   border: none;
@@ -327,7 +327,7 @@ div.grid-layout {
 
 :is(.definition, .example, .axiom, .theorem) ol > li::marker {
   font-weight: bold;
-} */
+}
 
 /*********************************************
  * paragraphs
@@ -993,7 +993,7 @@ section#title-slide img.department-logo {
   padding-left: 1em;
   text-indent: -1em;
   text-align: left;
-  font-size: 0.5em;
+  font-size: 0.4em;
   margin-bottom: 1em;
 }
 
