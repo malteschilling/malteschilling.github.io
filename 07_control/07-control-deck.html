@@ -1,0 +1,2033 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Prof. Dr. Malte Schilling">
+  <title>Deep Reinforcement Learning: 7 - Model Free Control</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+  <!-- Default values for CSS variables can live here. They can be overridden by
+  meta data values. -->
+  <link rel="stylesheet" href="../support/css/variables.css">
+
+  <!-- Transfer meta data values from keys `palette.colors` and `css-variables`
+  into a style sheet. Default values can come from `variables.css`. -->
+  <style class="css-declarations">
+    @media (prefers-color-scheme: light) {
+      :root {
+                  --shade7: #1d1f21;
+                  --shade6: #282a2e;
+                  --shade5: #4d4d4c;
+                  --shade4: #969896;
+                  --shade3: #8e908c;
+                  --shade2: #d6d6d6;
+                  --shade1: #e0e0e0;
+                  --shade0: #ffffff;
+                  --base0F-fg: #825449;
+                  --base0F-ffg: #513733;
+                  --base0F-bg: #ceb9b5;
+                  --base0F-bbg: #f0ebea;
+                  --base0F: #a3685a;
+                  --base0E-fg: #6e4887;
+                  --base0E-ffg: #453155;
+                  --base0E-bg: #c4b5d1;
+                  --base0E-bbg: #edeaf1;
+                  --base0E: #8959a8;
+                  --base0D-fg: #257eb3;
+                  --base0D-ffg: #204f6f;
+                  --base0D-bg: #acccec;
+                  --base0D-bbg: #e8f0f9;
+                  --base0D: #2a9ddf;
+                  --base0C-fg: #347b80;
+                  --base0C-ffg: #264d51;
+                  --base0C-bg: #afcacd;
+                  --base0C-bbg: #e8eff0;
+                  --base0C: #3e999f;
+                  --base0B-fg: #6a931c;
+                  --base0B-ffg: #435c20;
+                  --base0B-bg: #c2d8ab;
+                  --base0B-bbg: #edf3e7;
+                  --base0B: #84b819;
+                  --base0A-fg: #bb9212;
+                  --base0A-ffg: #745b1d;
+                  --base0A-bg: #f3d8aa;
+                  --base0A-bbg: #fbf3e7;
+                  --base0A: #eab700;
+                  --base09-fg: #c46c20;
+                  --base09-ffg: #794521;
+                  --base09-bg: #f9c3ab;
+                  --base09-bbg: #fdede7;
+                  --base09: #f5871f;
+                  --base08-fg: #a02526;
+                  --base08-ffg: #632123;
+                  --base08-bg: #e0acac;
+                  --base08-bbg: #f5e8e8;
+                  --base08: #c82829;
+                  --base07: #1d1f21;
+                  --base06: #282a2e;
+                  --base05: #4d4d4c;
+                  --base04: #969896;
+                  --base03: #8e908c;
+                  --base02: #d6d6d6;
+                  --base01: #e0e0e0;
+                  --base00: #ffffff;
+                  --accent7-fg: #825449;
+                  --accent7-ffg: #513733;
+                  --accent7-bg: #ceb9b5;
+                  --accent7-bbg: #f0ebea;
+                  --accent7: #a3685a;
+                  --accent6-fg: #6e4887;
+                  --accent6-ffg: #453155;
+                  --accent6-bg: #c4b5d1;
+                  --accent6-bbg: #edeaf1;
+                  --accent6: #8959a8;
+                  --accent5-fg: #257eb3;
+                  --accent5-ffg: #204f6f;
+                  --accent5-bg: #acccec;
+                  --accent5-bbg: #e8f0f9;
+                  --accent5: #2a9ddf;
+                  --accent4-fg: #347b80;
+                  --accent4-ffg: #264d51;
+                  --accent4-bg: #afcacd;
+                  --accent4-bbg: #e8eff0;
+                  --accent4: #3e999f;
+                  --accent3-fg: #6a931c;
+                  --accent3-ffg: #435c20;
+                  --accent3-bg: #c2d8ab;
+                  --accent3-bbg: #edf3e7;
+                  --accent3: #84b819;
+                  --accent2-fg: #bb9212;
+                  --accent2-ffg: #745b1d;
+                  --accent2-bg: #f3d8aa;
+                  --accent2-bbg: #fbf3e7;
+                  --accent2: #eab700;
+                  --accent1-fg: #c46c20;
+                  --accent1-ffg: #794521;
+                  --accent1-bg: #f9c3ab;
+                  --accent1-bbg: #fdede7;
+                  --accent1: #f5871f;
+                  --accent0-fg: #a02526;
+                  --accent0-ffg: #632123;
+                  --accent0-bg: #e0acac;
+                  --accent0-bbg: #f5e8e8;
+                  --accent0: #c82829;
+              }
+
+      :root.dark {
+                  --shade7: #ffffff;
+                  --shade6: #e0e0e0;
+                  --shade5: #c5c8c6;
+                  --shade4: #b4b7b4;
+                  --shade3: #969896;
+                  --shade2: #373b41;
+                  --shade1: #282a2e;
+                  --shade0: #1d1f21;
+                  --base0F-fg: #ceb9b5;
+                  --base0F-ffg: #f0ebea;
+                  --base0F-bg: #825449;
+                  --base0F-bbg: #513733;
+                  --base0F: #a3685a;
+                  --base0E-fg: #d5c8da;
+                  --base0E-ffg: #f2eff3;
+                  --base0E-bg: #8e7796;
+                  --base0E-bbg: #594b5e;
+                  --base0E: #b294bb;
+                  --base0D-fg: #c1cedb;
+                  --base0D-ffg: #edf0f4;
+                  --base0D-bg: #678298;
+                  --base0D-bbg: #42515f;
+                  --base0D: #81a2be;
+                  --base0C-fg: #c4dbd8;
+                  --base0C-ffg: #edf4f3;
+                  --base0C-bg: #6e9893;
+                  --base0C-bbg: #465f5c;
+                  --base0C: #8abeb7;
+                  --base0B-fg: #bfd0ac;
+                  --base0B-ffg: #ecf1e8;
+                  --base0B-bg: #648627;
+                  --base0B-bbg: #405423;
+                  --base0B: #7da72a;
+                  --base0A-fg: #f6dfbc;
+                  --base0A-ffg: #fcf5ec;
+                  --base0A-bg: #c09f5e;
+                  --base0A-bbg: #77633d;
+                  --base0A: #f0c674;
+                  --base09-fg: #ecc8b6;
+                  --base09-ffg: #f9eeea;
+                  --base09-bg: #b2764d;
+                  --base09-bbg: #6e4a35;
+                  --base09: #de935f;
+                  --base08-fg: #e2b8b8;
+                  --base08-ffg: #f6eaea;
+                  --base08-bg: #a35253;
+                  --base08-bbg: #653637;
+                  --base08: #cc6666;
+                  --base07: #ffffff;
+                  --base06: #e0e0e0;
+                  --base05: #c5c8c6;
+                  --base04: #b4b7b4;
+                  --base03: #969896;
+                  --base02: #373b41;
+                  --base01: #282a2e;
+                  --base00: #1d1f21;
+                  --accent7-fg: #ceb9b5;
+                  --accent7-ffg: #f0ebea;
+                  --accent7-bg: #825449;
+                  --accent7-bbg: #513733;
+                  --accent7: #a3685a;
+                  --accent6-fg: #d5c8da;
+                  --accent6-ffg: #f2eff3;
+                  --accent6-bg: #8e7796;
+                  --accent6-bbg: #594b5e;
+                  --accent6: #b294bb;
+                  --accent5-fg: #c1cedb;
+                  --accent5-ffg: #edf0f4;
+                  --accent5-bg: #678298;
+                  --accent5-bbg: #42515f;
+                  --accent5: #81a2be;
+                  --accent4-fg: #c4dbd8;
+                  --accent4-ffg: #edf4f3;
+                  --accent4-bg: #6e9893;
+                  --accent4-bbg: #465f5c;
+                  --accent4: #8abeb7;
+                  --accent3-fg: #bfd0ac;
+                  --accent3-ffg: #ecf1e8;
+                  --accent3-bg: #648627;
+                  --accent3-bbg: #405423;
+                  --accent3: #7da72a;
+                  --accent2-fg: #f6dfbc;
+                  --accent2-ffg: #fcf5ec;
+                  --accent2-bg: #c09f5e;
+                  --accent2-bbg: #77633d;
+                  --accent2: #f0c674;
+                  --accent1-fg: #ecc8b6;
+                  --accent1-ffg: #f9eeea;
+                  --accent1-bg: #b2764d;
+                  --accent1-bbg: #6e4a35;
+                  --accent1: #de935f;
+                  --accent0-fg: #e2b8b8;
+                  --accent0-ffg: #f6eaea;
+                  --accent0-bg: #a35253;
+                  --accent0-bbg: #653637;
+                  --accent0: #cc6666;
+              }
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+                  --shade7: #ffffff;
+                  --shade6: #e0e0e0;
+                  --shade5: #c5c8c6;
+                  --shade4: #b4b7b4;
+                  --shade3: #969896;
+                  --shade2: #373b41;
+                  --shade1: #282a2e;
+                  --shade0: #1d1f21;
+                  --base0F-fg: #ceb9b5;
+                  --base0F-ffg: #f0ebea;
+                  --base0F-bg: #825449;
+                  --base0F-bbg: #513733;
+                  --base0F: #a3685a;
+                  --base0E-fg: #d5c8da;
+                  --base0E-ffg: #f2eff3;
+                  --base0E-bg: #8e7796;
+                  --base0E-bbg: #594b5e;
+                  --base0E: #b294bb;
+                  --base0D-fg: #c1cedb;
+                  --base0D-ffg: #edf0f4;
+                  --base0D-bg: #678298;
+                  --base0D-bbg: #42515f;
+                  --base0D: #81a2be;
+                  --base0C-fg: #c4dbd8;
+                  --base0C-ffg: #edf4f3;
+                  --base0C-bg: #6e9893;
+                  --base0C-bbg: #465f5c;
+                  --base0C: #8abeb7;
+                  --base0B-fg: #bfd0ac;
+                  --base0B-ffg: #ecf1e8;
+                  --base0B-bg: #648627;
+                  --base0B-bbg: #405423;
+                  --base0B: #7da72a;
+                  --base0A-fg: #f6dfbc;
+                  --base0A-ffg: #fcf5ec;
+                  --base0A-bg: #c09f5e;
+                  --base0A-bbg: #77633d;
+                  --base0A: #f0c674;
+                  --base09-fg: #ecc8b6;
+                  --base09-ffg: #f9eeea;
+                  --base09-bg: #b2764d;
+                  --base09-bbg: #6e4a35;
+                  --base09: #de935f;
+                  --base08-fg: #e2b8b8;
+                  --base08-ffg: #f6eaea;
+                  --base08-bg: #a35253;
+                  --base08-bbg: #653637;
+                  --base08: #cc6666;
+                  --base07: #ffffff;
+                  --base06: #e0e0e0;
+                  --base05: #c5c8c6;
+                  --base04: #b4b7b4;
+                  --base03: #969896;
+                  --base02: #373b41;
+                  --base01: #282a2e;
+                  --base00: #1d1f21;
+                  --accent7-fg: #ceb9b5;
+                  --accent7-ffg: #f0ebea;
+                  --accent7-bg: #825449;
+                  --accent7-bbg: #513733;
+                  --accent7: #a3685a;
+                  --accent6-fg: #d5c8da;
+                  --accent6-ffg: #f2eff3;
+                  --accent6-bg: #8e7796;
+                  --accent6-bbg: #594b5e;
+                  --accent6: #b294bb;
+                  --accent5-fg: #c1cedb;
+                  --accent5-ffg: #edf0f4;
+                  --accent5-bg: #678298;
+                  --accent5-bbg: #42515f;
+                  --accent5: #81a2be;
+                  --accent4-fg: #c4dbd8;
+                  --accent4-ffg: #edf4f3;
+                  --accent4-bg: #6e9893;
+                  --accent4-bbg: #465f5c;
+                  --accent4: #8abeb7;
+                  --accent3-fg: #bfd0ac;
+                  --accent3-ffg: #ecf1e8;
+                  --accent3-bg: #648627;
+                  --accent3-bbg: #405423;
+                  --accent3: #7da72a;
+                  --accent2-fg: #f6dfbc;
+                  --accent2-ffg: #fcf5ec;
+                  --accent2-bg: #c09f5e;
+                  --accent2-bbg: #77633d;
+                  --accent2: #f0c674;
+                  --accent1-fg: #ecc8b6;
+                  --accent1-ffg: #f9eeea;
+                  --accent1-bg: #b2764d;
+                  --accent1-bbg: #6e4a35;
+                  --accent1: #de935f;
+                  --accent0-fg: #e2b8b8;
+                  --accent0-ffg: #f6eaea;
+                  --accent0-bg: #a35253;
+                  --accent0-bbg: #653637;
+                  --accent0: #cc6666;
+              }
+
+      :root.light {
+                  --shade7: #1d1f21;
+                  --shade6: #282a2e;
+                  --shade5: #4d4d4c;
+                  --shade4: #969896;
+                  --shade3: #8e908c;
+                  --shade2: #d6d6d6;
+                  --shade1: #e0e0e0;
+                  --shade0: #ffffff;
+                  --base0F-fg: #825449;
+                  --base0F-ffg: #513733;
+                  --base0F-bg: #ceb9b5;
+                  --base0F-bbg: #f0ebea;
+                  --base0F: #a3685a;
+                  --base0E-fg: #6e4887;
+                  --base0E-ffg: #453155;
+                  --base0E-bg: #c4b5d1;
+                  --base0E-bbg: #edeaf1;
+                  --base0E: #8959a8;
+                  --base0D-fg: #257eb3;
+                  --base0D-ffg: #204f6f;
+                  --base0D-bg: #acccec;
+                  --base0D-bbg: #e8f0f9;
+                  --base0D: #2a9ddf;
+                  --base0C-fg: #347b80;
+                  --base0C-ffg: #264d51;
+                  --base0C-bg: #afcacd;
+                  --base0C-bbg: #e8eff0;
+                  --base0C: #3e999f;
+                  --base0B-fg: #6a931c;
+                  --base0B-ffg: #435c20;
+                  --base0B-bg: #c2d8ab;
+                  --base0B-bbg: #edf3e7;
+                  --base0B: #84b819;
+                  --base0A-fg: #bb9212;
+                  --base0A-ffg: #745b1d;
+                  --base0A-bg: #f3d8aa;
+                  --base0A-bbg: #fbf3e7;
+                  --base0A: #eab700;
+                  --base09-fg: #c46c20;
+                  --base09-ffg: #794521;
+                  --base09-bg: #f9c3ab;
+                  --base09-bbg: #fdede7;
+                  --base09: #f5871f;
+                  --base08-fg: #a02526;
+                  --base08-ffg: #632123;
+                  --base08-bg: #e0acac;
+                  --base08-bbg: #f5e8e8;
+                  --base08: #c82829;
+                  --base07: #1d1f21;
+                  --base06: #282a2e;
+                  --base05: #4d4d4c;
+                  --base04: #969896;
+                  --base03: #8e908c;
+                  --base02: #d6d6d6;
+                  --base01: #e0e0e0;
+                  --base00: #ffffff;
+                  --accent7-fg: #825449;
+                  --accent7-ffg: #513733;
+                  --accent7-bg: #ceb9b5;
+                  --accent7-bbg: #f0ebea;
+                  --accent7: #a3685a;
+                  --accent6-fg: #6e4887;
+                  --accent6-ffg: #453155;
+                  --accent6-bg: #c4b5d1;
+                  --accent6-bbg: #edeaf1;
+                  --accent6: #8959a8;
+                  --accent5-fg: #257eb3;
+                  --accent5-ffg: #204f6f;
+                  --accent5-bg: #acccec;
+                  --accent5-bbg: #e8f0f9;
+                  --accent5: #2a9ddf;
+                  --accent4-fg: #347b80;
+                  --accent4-ffg: #264d51;
+                  --accent4-bg: #afcacd;
+                  --accent4-bbg: #e8eff0;
+                  --accent4: #3e999f;
+                  --accent3-fg: #6a931c;
+                  --accent3-ffg: #435c20;
+                  --accent3-bg: #c2d8ab;
+                  --accent3-bbg: #edf3e7;
+                  --accent3: #84b819;
+                  --accent2-fg: #bb9212;
+                  --accent2-ffg: #745b1d;
+                  --accent2-bg: #f3d8aa;
+                  --accent2-bbg: #fbf3e7;
+                  --accent2: #eab700;
+                  --accent1-fg: #c46c20;
+                  --accent1-ffg: #794521;
+                  --accent1-bg: #f9c3ab;
+                  --accent1-bbg: #fdede7;
+                  --accent1: #f5871f;
+                  --accent0-fg: #a02526;
+                  --accent0-ffg: #632123;
+                  --accent0-bg: #e0acac;
+                  --accent0-bbg: #f5e8e8;
+                  --accent0: #c82829;
+              }
+    }
+    :root {
+          }
+  </style>
+
+  <link rel="stylesheet" href="../support/vendor/reveal/dist/reset.css">
+  <link rel="stylesheet" href="../support/vendor/reveal/dist/reveal.css">
+  <link rel="stylesheet" href="../support/components/components.css">
+  <link rel="stylesheet" href="../support/plugins/decker/ui-anchors.css">
+  <link rel="stylesheet" href="../support/plugins/whiteboard/whiteboard.css">
+  <link rel="stylesheet" href="../support/plugins/menu/menu.css">
+  <link rel="stylesheet" href="../support/plugins/feedback/feedback.css">
+  <link rel="stylesheet" href="../support/plugins/explain/explain.css">
+    <link rel="stylesheet" href="../support/plugins/live-captioning/live-captioning.css">
+    <link rel="stylesheet" href="../support/vendor/videojs/video-js.min.css">
+  <link rel="stylesheet" href="../support/vendor/css/xcode.css">
+  <link rel="stylesheet" href="../support/flyingFocus/flying-focus.css">
+  <link rel="stylesheet" href="../support/plugins/quiz-wue/quiz-wue.css">
+  <link rel="stylesheet" href="../support/css/deck.css">
+  <link rel="stylesheet" href="../support/css/msms-deck.css">
+
+</head>
+
+<body >
+  <div class="reveal">
+    <div class="slides">
+
+      <section id="title-slide">
+
+         <div class="background-on-accent">
+                     <h1>Deep Reinforcement Learning</h1>
+                              <h2>7 - Model Free Control</h2>
+                  </div>
+
+
+
+                  <div class="author"> Prof. Dr. Malte Schilling </div>
+
+                  <div class="affiliation"> Autonomous Intelligent
+Systems Group </div>
+
+
+         <img class="logo affiliation-logo light-only" src="./../support/assets/ms-logo-light.svg">
+         <img class="logo affiliation-logo dark-only" src="./../support/assets/ms-logo-dark.svg">
+
+               </section>
+
+
+<section id="recap-overview-bootstrapping-and-sampling" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Recap Overview – Bootstrapping and Sampling</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="grid-layout" style="grid-template-columns: 60fr 40fr;">
+<ul>
+<li>Bootstrapping: update involves an estimate
+<ul>
+<li>MC does not bootstrap</li>
+<li>DP bootstraps</li>
+<li>TD bootstraps</li>
+</ul></li>
+<li>Sampling: update samples an expectation
+<ul>
+<li>MC samples</li>
+<li>DP does not sample</li>
+<li>TD samples</li>
+</ul></li>
+</ul>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/05/arulkumaran_drl.svg" style="height:400px;width:auto;" alt="../data/05/arulkumaran_drl.svg" />
+</figure>
+</div>
+</div>
+</div>
+<div id="section" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-arulkumaran2017brief" role="doc-biblioref">Arulkumaran u. a. 2017</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="overview-lecture" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Overview Lecture</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<ul>
+<li>Prediction: Estimate the value function of an unknown MDP
+<ul>
+<li>Monte-Carlo Method</li>
+<li>Temporal Difference Learning</li>
+</ul></li>
+<li>Model-free control (today):
+<ul>
+<li><strong>Optimise the policy</strong>: General Policy Improvement
+<ul>
+<li>On-Policy Approach</li>
+<li>Off-Policy Approach</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="recap---from-mc-to-temporal-difference-learning" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Recap - From MC to Temporal Difference Learning</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>In both: Goal is to learn <span class="math inline">\(v_\pi\)</span> online from experience under policy <span class="math inline">\(\pi\)</span></p>
+<p>Incremental every-visit Monte-Carlo:</p>
+<ul>
+<li>Update value <span class="math inline">\(v(S_t)\)</span> towards <strong>actual</strong> return <span class="math inline">\(\color{red}G_t\)</span>: <span class="math display">\[v(S_t) \leftarrow v(S_t) + \alpha(\color{red}G_t\color{black} − v(S_t))\]</span></li>
+</ul>
+<p>Simple temporal-difference learning algorithm TD(0):</p>
+<ul>
+<li>Update value <span class="math inline">\(v(S_t)\)</span> towards <strong>estimated</strong> return <span class="math inline">\(\color{blue}R_{t+1} + \gamma v(S_{t+1})\)</span>:<br />
+<span class="math display">\[v(S_t) \leftarrow v(S_t) + \alpha (\color{blue}R_{t+1} + \gamma v(S_t+1) \color{black}- v(S_t))\]</span></li>
+</ul>
+</div>
+<div id="section-1" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="last-week-example-compare-mc-and-td-empirically" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Last week – Example: Compare MC and TD empirically</h1>
+<div class="layout row columns">
+<div class="area ">
+<div id="section-2" class="top box block">
+<h2 class="top"></h2>
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:1200px;">
+<img src="../decker/code/code-1ded5678.tex.svg" style="height:auto;width:100%;" alt="code-1ded5678.tex.svg" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="layout row columns">
+<div class="area left">
+<div id="td0-estimates-for-v_pi" class="left box block">
+<h2 class="left">TD(0) Estimates for <span class="math inline">\(v_\pi\)</span></h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/05/sb_td_randomwalk.png" style="height:320px;width:auto;" alt="../data/05/sb_td_randomwalk.png" />
+</figure>
+</div>
+</div>
+</div><div class="area right">
+<div id="learning-curves" class="right box block">
+<h2 class="right">Learning Curves</h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/05/dm_randomwalk.png" style="height:320px;width:auto;" alt="../data/05/dm_randomwalk.png" />
+</figure>
+</div>
+</div>
+<div id="section-3" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-sutton2018" role="doc-biblioref">Sutton und Barto 2018</a>; <a href="#ref-deepmind2021" role="doc-biblioref">Hasselt und Borsa 2021</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="recap-bias-variance-trade-off" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Recap – Bias-Variance Trade-Off</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="mc-has-high-variance-zero-bias" class="left box block">
+<h2 class="left">MC has high variance, zero bias</h2>
+<ul>
+<li>Good convergence properties</li>
+<li>Even with function approximation</li>
+<li>Not very sensitive to initial value</li>
+<li>Very simple to understand and use</li>
+</ul>
+</div>
+</div><div class="area center">
+<div id="bias-and-variance" class="center box block">
+<h2 class="center">Bias and Variance</h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/06/BiasVariance_Tradeoff.png" style="height:400px;width:auto;" alt="../data/06/BiasVariance_Tradeoff.png" />
+</figure>
+</div>
+</div>
+</div><div class="area right">
+<div id="td-has-low-variance-some-bias" class="right box block fragment">
+<h2 class="right">TD has low variance, some bias</h2>
+<ul>
+<li>Usually more efficient than MC</li>
+<li>TD(0) converges to <span class="math inline">\(v_\pi(s)\)</span></li>
+<li>More sensitive to initial value</li>
+</ul>
+</div>
+<div id="section-4" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-satakhutdinov_2018" role="doc-biblioref">Satakhutdinov 2018</a>)</span>, <span class="citation">(<a href="#ref-fortmannroe2012" role="doc-biblioref">Fortmann-Roe 2012</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="recap-temporal-difference-learning-q-function" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Recap – Temporal difference learning – <span class="math inline">\(q\)</span>-function</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<ul>
+<li>We can apply the same idea to action values – when dynamics are unknown, this is much more important</li>
+<li>Temporal-difference learning for action values:
+<ul>
+<li>Update value <span class="math inline">\(q_t(S_t, A_t)\)</span> towards estimated return <span class="math inline">\(\color{blue}R_{t+1} + \gamma q(S_{t+1}, A_{t+1})\)</span></li>
+</ul>
+<span class="math display">\[
+q(S_{t}, A_{t}) \leftarrow q (S_{t}, A_{t}) + \alpha \Big( \underbrace{\color{blue} R_{t+1} + \gamma q(S_{t+1}, A_{t+1} \color{black} -   q_{t} (S_{t}, A_{t})}_{\text{TD Error}}  \Big)
+\]</span></li>
+</ul>
+<p>This algorithm is known as SARSA, because it uses <span class="math inline">\((S_t, A_t, R_{t+1}, S_{t+1}, A_{t+1})\)</span>.</p>
+</div>
+<div id="section-5" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-deepmind2021" role="doc-biblioref">Hasselt und Borsa 2021</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="advantages-and-disadvantages-of-mc-vs.-td" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Advantages and Disadvantages of MC vs. TD</h1>
+<div class="layout">
+<div class="area">
+<div id="td-can-learn-before-knowing-the-final-outcome" class="box block">
+<h2>TD can learn before knowing the final outcome</h2>
+<ul>
+<li>TD can learn online after every step</li>
+<li>MC must wait until end of episode before return is known</li>
+</ul>
+</div>
+<div id="td-can-learn-without-the-final-outcome" class="box block fragment">
+<h2>TD can learn without the final outcome</h2>
+<ul>
+<li>TD can learn from incomplete sequences</li>
+<li>MC can only learn from complete sequences</li>
+<li>TD works in continuing (non-terminating) environments</li>
+<li>MC only works for episodic (terminating) environments</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="advantages-and-disadvantages-of-mc-vs.-td-2" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Advantages and Disadvantages of MC vs. TD (2)</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<ul>
+<li>TD is independent of the temporal span of the prediction
+<ul>
+<li>TD can learn from single transitions</li>
+<li>MC must store all predictions (or states) to update at the end of an episode</li>
+</ul></li>
+<li>TD needs reasonable value estimates</li>
+<li>TD exploits Markov property
+<ul>
+<li>Usually more efficient in Markov environments</li>
+</ul></li>
+<li>MC does not exploit Markov property
+<ul>
+<li>Usually more effective in non-Markov environments</li>
+</ul></li>
+<li>With finite data (or with function approximation) the solutions may differ</li>
+</ul>
+</div>
+<div id="section-6" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="combining-the-two-approaches-a-unifying-perspective" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Combining the two approaches – a unifying perspective</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="grid-layout" style="grid-template-columns: 20fr 60fr 20fr;">
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:auto;">
+<img src="../decker/code/code-9860f0e5.tex.svg" style="height:450px;width:auto;" alt="code-9860f0e5.tex.svg" />
+</figure>
+</div>
+<ul>
+<li>TD uses value estimates which might be inaccurate</li>
+<li>In addition, information can propagate back quite slowly (possible bias)</li>
+<li>In MC information propagates faster, but the updates are noisier (high variance)</li>
+<li>We can go in between TD and MC</li>
+</ul>
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:auto;">
+<img src="../decker/code/code-a70695ea.tex.svg" style="height:450px;width:auto;" alt="code-a70695ea.tex.svg" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="multi-step-predictions" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Multi-step Predictions</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:auto;">
+<img src="../decker/code/code-a2120521.tex.svg" style="height:510px;width:auto;" alt="code-a2120521.tex.svg" />
+</figure>
+</div>
+<p>Make <span class="math inline">\(n\)</span> steps and then use TD target for prediction.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="n-step-return" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1><span class="math inline">\(n\)</span>-step Return</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Consider the following <span class="math inline">\(n\)</span>-step returns for <span class="math inline">\(n = 1, 2, \infty:\)</span></p>
+<table>
+<thead>
+<tr class="header">
+<th>steps</th>
+<th>Approach</th>
+<th>Return</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(n = 1\)</span></td>
+<td>TD</td>
+<td><span class="math inline">\(G_t^{(1)} = R_{t+1} + \gamma v(S_{t+1})\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(n = 2\)</span></td>
+<td></td>
+<td><span class="math inline">\(G_t^{(2)} = R_{t+1} + \gamma R_{t+2} + \gamma^2 v(S_{t+2})\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\vdots\)</span></td>
+<td></td>
+<td><span class="math inline">\(\vdots\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(n = \infty\)</span></td>
+<td>MC</td>
+<td><span class="math inline">\(G_t^{(\infty)} = R_{t+1} + \gamma R_{t+2} + \dots + \gamma^{T-1} R_T\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Define the n-step return <span class="math display">\[
+G_t^{(n)} = R_{t+1} + \gamma R_{t+2} + \dots + \gamma^{n-1} R_{t+n} +  \gamma^n v(S_{t+n})
+\]</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="n-step-return-1" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1><span class="math inline">\(n\)</span>-step Return</h1>
+<div class="layout">
+<div class="area">
+<div id="n-step-return-2" class="definition box block">
+<h2 class="definition">n-step return</h2>
+<p><span class="math display">\[
+G_t^{(n)} = R_{t+1} + \gamma R_{t+2} + \dots + \gamma^{n-1} R_{t+n} +  \gamma^n v(S_{t+n})
+\]</span></p>
+</div>
+<div id="n-step-temporal-difference-learning" class="box block">
+<h2><span class="math inline">\(n\)</span>-step Temporal Difference learning</h2>
+<p><span class="math display">\[v(S_t) \leftarrow v(S_t)+ \alpha \big( G_t^{(n)} − v(S_t) \big) \]</span></p>
+</div>
+<div id="section-7" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="large-random-walk-example-error-for-different-n-steps" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>(Large) Random Walk Example – Error for different <span class="math inline">\(n\)</span>-steps</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>MDP: Chain of 19 Nodes; Start in <span class="math inline">\(J\)</span>; random policy; <span class="math inline">\(r=0\)</span> unless terminating right: <span class="math inline">\(r = 1\)</span></p>
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:1100px;">
+<img src="../decker/code/code-11c316c2.tex.svg" style="height:auto;width:100%;" alt="code-11c316c2.tex.svg" />
+</figure>
+</div>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/06/sb_large_random_walk_rms.png" style="height:360px;width:auto;" alt="../data/06/sb_large_random_walk_rms.png" />
+</figure>
+</div>
+</div>
+<div id="section-8" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-deepmind2021" role="doc-biblioref">Hasselt und Borsa 2021</a>)</span> following <span class="citation">(<a href="#ref-sutton2018" role="doc-biblioref">Sutton und Barto 2018</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="averaging-n-step-return" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Averaging <span class="math inline">\(n\)</span>-step Return</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="col60">
+<ul>
+<li>We can average <span class="math inline">\(n\)</span>-step returns over different <span class="math inline">\(n\)</span>.</li>
+<li>For example: average the <span class="math inline">\(2\)</span>-step and <span class="math inline">\(3\)</span>-step returns as <span class="math display">\[\frac{1}{2}G^{(2)} + \frac{1}{2}G^{(3)}\]</span></li>
+<li>Combines information from two different time-steps</li>
+</ul>
+</div>
+<div class="col40">
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:auto;">
+<img src="../decker/code/code-41f12720.tex.svg" style="height:450px;width:auto;" alt="code-41f12720.tex.svg" />
+</figure>
+</div>
+</div>
+</div>
+<div id="section-9" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="lambda-return" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1><span class="math inline">\(\lambda\)</span>-Return</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="col50">
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:auto;">
+<img src="../decker/code/code-385542c3.tex.svg" style="height:400px;width:auto;" alt="code-385542c3.tex.svg" />
+</figure>
+</div>
+</div>
+<div class="col50">
+<p>The <span class="math inline">\(\lambda\)</span>-return <span class="math inline">\(G_t^\lambda\)</span> combines all <span class="math inline">\(n\)</span>-step returns <span class="math inline">\(G_t^{(n)}\)</span> using as a weight <span class="math inline">\((1 − \lambda)\lambda^{n−1}\)</span></p>
+<p><span class="math display">\[
+G_t^\lambda =(1−\lambda) \sum_{n=1}^\infty \lambda^{n-1} G_t^{(n)}
+\]</span></p>
+<p>Forward-view TD(<span class="math inline">\(\lambda\)</span>)</p>
+<p><span class="math display">\[ v(S_t)\leftarrow v(S_t)+ \alpha \Big( G_t^\lambda  −v(S_t)\Big)\]</span></p>
+</div>
+</div>
+<div id="section-10" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="computation-of-tdlambda" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Computation of TD(<span class="math inline">\(\lambda\)</span>)</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="forward-view-tdlambda" class="left box block">
+<h2 class="left">Forward-view TD(<span class="math inline">\(\lambda\)</span>)</h2>
+<ul>
+<li>Update value function towards the <span class="math inline">\(\lambda\)</span>-return</li>
+<li>Forward-view looks into the future to compute <span class="math inline">\(G_t^\lambda\)</span></li>
+<li>Drawback: Like Monte-Carlo, can only be computed from complete episodes</li>
+</ul>
+</div>
+</div><div class="area right">
+<div id="backward-view-tdlambda" class="right box block fragment">
+<h2 class="right">Backward View TD(<span class="math inline">\(\lambda\)</span>)</h2>
+<ul>
+<li>While Forward view provides theory</li>
+<li>Backward view provides mechanism</li>
+<li>Update online, every step, from incomplete sequences – and update for previous steps going backwards into the past</li>
+</ul>
+</div>
+<div id="section-11" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="large-random-walk-example-error-for-tdlambda" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>(Large) Random Walk Example – Error for TD(<span class="math inline">\(\lambda\)</span>)</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<!--Start: in central node ($J$), random policy. Always reward $0$ unless terminating right ($r = 1$).-->
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:1100px;">
+<img src="../decker/code/code-11c316c2.tex.svg" style="height:auto;width:100%;" alt="code-11c316c2.tex.svg" />
+</figure>
+</div>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/06/sb_large_random_lambda.png" style="height:360px;width:auto;" alt="../data/06/sb_large_random_lambda.png" />
+</figure>
+</div>
+<p>Intuition: <span class="math inline">\(\frac{1}{1-\lambda}\)</span> is the `horizon’, e.g., <span class="math inline">\(\lambda =0.9 \rightsquigarrow n = 10\)</span> steps.</p>
+</div>
+<div id="section-12" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-deepmind2021" role="doc-biblioref">Hasselt und Borsa 2021</a>)</span> following <span class="citation">(<a href="#ref-sutton2018" role="doc-biblioref">Sutton und Barto 2018</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="benefits-of-multi-step-returns" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Benefits of multi-step returns</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Multi-step returns have benefits from both TD and MC</p>
+<ul>
+<li>Bootstrapping can have issues with bias</li>
+<li>Monte-Carlo can have issues with variance</li>
+<li>Typically, intermediate values of <span class="math inline">\(n\)</span> or <span class="math inline">\(\lambda\)</span> are good (e.g., <span class="math inline">\(n = 10, \lambda = 0.9\)</span>)</li>
+</ul>
+</div>
+<div id="section-13" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-deepmind2021" role="doc-biblioref">Hasselt und Borsa 2021</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="model-free-control-monte-carlo" class="section slide level1" data-background-color="#6A931C">
+<div class="decker">
+<div class="alignment">
+<h1>Model-free Control – Monte-Carlo</h1>
+</div>
+</div>
+</section>
+<section id="real-world-tasks-learning-control-with-unknown-mdp" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Real World Tasks – Learning Control with unknown MDP</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="stream" style="width:auto;height:auto;">
+<iframe style="width:auto;height:720px;aspect-ratio:16/9;" allow="fullscreen" data-src="https://www.youtube.com/embed/n2gE7n11h1Y?cc_load_policy=0&amp;controls=1&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;showinfo=0">
+
+</iframe>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-learning-walking-on-a-robot" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Example: Learning Walking on a Robot</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p><a href="https://www.youtube.com/watch?v=n2gE7n11h1Y">See Video of robot learning walking from scratch (exploration directly on robot)</a></p>
+</div>
+<div id="section-14" class="footer box block">
+<h2 class="footer"></h2>
+<p>Details see <span class="citation">(<a href="#ref-haarnoja2018" role="doc-biblioref">Haarnoja u. a. 2018</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="uses-of-model-free-control" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Uses of Model-Free Control</h1>
+<div class="layout row columns">
+<div class="area ">
+<div id="example-problems-that-can-be-modelled-as-mdps" class="top box block">
+<h2 class="top">Example problems that can be modelled as MDPs</h2>
+</div>
+</div>
+</div>
+<div class="layout row columns">
+<div class="area left">
+<div id="section-15" class="left box block">
+<h2 class="left"></h2>
+<ul>
+<li>Elevator control</li>
+<li>Parallel Parking</li>
+<li>Helicopter</li>
+</ul>
+</div>
+</div><div class="area right">
+<div id="section-16" class="right box block">
+<h2 class="right"></h2>
+<ul>
+<li>Robocup Soccer</li>
+<li>Portfolio management</li>
+<li>Robot walking</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="layout row columns">
+<div class="area ">
+<div id="for-most-of-these-problems-either" class="bottom box block fragment">
+<h2 class="bottom">For most of these problems, either:</h2>
+<ul>
+<li>MDP model is unknown, but experience can be sampled</li>
+<li>MDP model is known, but is too big to use, except by samples</li>
+</ul>
+<p>Model-free control can solve these problems</p>
+</div>
+<div id="section-17" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="recap-general-policy-iteration" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Recap – General Policy Iteration</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="col60">
+<p>General idea of running</p>
+<ul>
+<li>policy evaluation: find <span class="math inline">\(v_\pi(s) \forall s\)</span></li>
+<li>policy improvement: derive new policy <span class="math inline">\(\pi&#39;\)</span>, <span class="math inline">\(v_{\pi&#39;} (s) \geq v_\pi(s) \forall s\)</span></li>
+</ul>
+<p>in interaction.</p>
+<p>Most RL learning methods can be described as GPI: they consist of a policy and value function.</p>
+<p>When evaluation and improvement process each converge, then value function and policy are optimal – the policy is greedy wrt. the stable value function. This implies: the Bellman optimality equation holds.</p>
+</div>
+<div class="col40">
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:400px;">
+<img src="../decker/code/code-c885d170.tex.svg" style="height:auto;width:100%;" alt="code-c885d170.tex.svg" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="summary-model-free-policy-evaluation-approaches" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Summary: Model-Free Policy Evaluation Approaches</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Iterative approximation of value function for given policy <span class="math inline">\(\pi\)</span>:</p>
+<p><span class="math display">\[ v_{n+1} (S_t) = v_n(S_t) + \alpha \Big(G_t - v_n(S_t) \Big)\]</span></p>
+</div>
+<div id="different-methods" class="box block">
+<h2>Different Methods:</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Approach</th>
+<th>Target computation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Monte-Carlo</td>
+<td><span class="math inline">\(G_t^{\text{MC}} = R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \dots\)</span></td>
+</tr>
+<tr class="even">
+<td>TD(0)</td>
+<td><span class="math inline">\(G_t^{(1)} = R_{t+1} + \gamma v_t(S_{t+1})\)</span></td>
+</tr>
+<tr class="odd">
+<td>n-step TD</td>
+<td><span class="math inline">\(G_t^{(n)} = R_{t+1} + \gamma R_{t+2} + ... + \gamma^{n-1} R_{t+n}+ \gamma^n v_t(S_{t+n})\)</span></td>
+</tr>
+<tr class="even">
+<td>TD(<span class="math inline">\(\lambda\)</span>)</td>
+<td><span class="math inline">\(G_t^{(\lambda)} = R_{t+1} + \lambda \Big( (1-\gamma)v_t(S_{t+1}) + \lambda G_{t+1}^\lambda \Big)\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="recap-policy-iteration-control" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Recap – Policy Iteration (Control)</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:1200px;">
+<img src="../decker/code/code-2c8f8dd4.tex.svg" style="height:auto;width:100%;" alt="code-2c8f8dd4.tex.svg" />
+</figure>
+</div>
+<p><strong>Policy evaluation:</strong><span class="math inline">\(\overset{\textrm{E}}{\longrightarrow}\)</span></p>
+<p><strong>Policy improvement</strong> <span class="math inline">\(\overset{\textrm{I}}{\longrightarrow}\)</span></p>
+<p>For deterministic policies: each policy is guaranteed to be strictly better until we reach the optimal policy.</p>
+<p>For finite MDP: <span class="math inline">\(\exists\)</span> only a finite number of deterministic policies; therefore this converges to an optimal policy and an optimal value function in a finite number of iterations.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="model-free-policy-iteration-using-action-value-function" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Model-Free Policy Iteration Using Action-Value Function</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="using-value-function" class="left box block">
+<h2 class="left">Using Value Function</h2>
+<p>Using Value Function for improvement: We still need a model (which state do we arrive when using an action) for greedy policy improvement:</p>
+<p><span class="math display">\[
+\pi&#39;(s) = \arg\max_{a} \mathbb{E} ( R_{t+1} + \gamma v(S_{t+1}) | S_t = s, A_t = a )
+\]</span></p>
+</div>
+</div><div class="area right">
+<div id="using-action-value-function" class="right box block fragment">
+<h2 class="right">Using Action-Value Function</h2>
+<p>In contrast: Greedy policy improvement over <span class="math inline">\(q(s, a)\)</span> is model-free which makes it directly applicable</p>
+<p><span class="math display">\[
+\pi&#39;(s) = \arg\max_a q(s, a)
+\]</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="monte-carlo-policy-improvement" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Monte-Carlo Policy Improvement</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="monte-carlo-policy-iteration" class="left box block">
+<h2 class="left">Monte-Carlo Policy Iteration</h2>
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:600px;">
+<img src="../decker/code/code-04d07d4f.tex.svg" style="height:auto;width:100%;" alt="code-04d07d4f.tex.svg" />
+</figure>
+</div>
+<p><strong>Policy evaluation</strong>: MC policy evaluation, <span class="math inline">\(q = q_\pi\)</span></p>
+<p><strong>Policy improvement</strong>: <span class="math inline">\(\varepsilon\)</span>-greedy policy improvement</p>
+</div>
+</div><div class="area right">
+<div id="monte-carlo-control" class="right box block fragment">
+<h2 class="right">Monte-Carlo Control</h2>
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:600px;">
+<img src="../decker/code/code-a3071c23.tex.svg" style="height:auto;width:100%;" alt="code-a3071c23.tex.svg" />
+</figure>
+</div>
+<p><strong>Every episode:</strong></p>
+<p>MC policy evaluation, <span class="math inline">\(q ≈ q_\pi\)</span></p>
+<p><span class="math inline">\(\varepsilon\)</span>-greedy policy improvement</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="task-finding-a-good-policy-in-a-small-grid" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Task – Finding a Good Policy in a small Grid</h1>
+<div class="layout row columns">
+<div class="area ">
+<div id="section-18" class="top box block">
+<h2 class="top"></h2>
+<div class="grid-layout" style="grid-template-columns: 30fr 70fr;">
+<div class="media">
+<figure class="image" style="height:auto;width:180px;">
+<img src="../data/Discussion.png" style="height:auto;width:100%;" alt="../data/Discussion.png" />
+</figure>
+</div>
+<p>Explore a maze – but structure and rewards are unknown (visualized here as a MDP). Use MC to find an action-value function for a random policy, and improve the policy. </br> What are your observations and takeaways for GPI?</p>
+</div>
+</div>
+</div>
+</div>
+<div class="layout row columns">
+<div class="area left">
+<div id="deterministic-rewards" class="left box block">
+<h2 class="left">Deterministic Rewards</h2>
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:480px;">
+<img src="../decker/code/code-0337dbf4.tex.svg" style="height:auto;width:100%;" alt="code-0337dbf4.tex.svg" />
+</figure>
+</div>
+</div>
+</div><div class="area right">
+<div id="probabilistic-rewards" class="right box block">
+<h2 class="right">Probabilistic rewards</h2>
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:480px;">
+<img src="../decker/code/code-3937e6cb.tex.svg" style="height:auto;width:100%;" alt="code-3937e6cb.tex.svg" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="left-task-value-function-considerations" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Left Task – Value Function Considerations</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="deterministic-rewards-1" class="left box block">
+<h2 class="left">Deterministic Rewards</h2>
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:480px;">
+<img src="../decker/code/code-0337dbf4.tex.svg" style="height:auto;width:100%;" alt="code-0337dbf4.tex.svg" />
+</figure>
+</div>
+</div>
+</div><div class="area right">
+<div id="action-value-function" class="right box block fragment">
+<h2 class="right">Action-Value Function</h2>
+<table>
+<thead>
+<tr class="header">
+<th><span class="math inline">\(s\)</span></th>
+<th><span class="math inline">\(a\)</span></th>
+<th><span class="math inline">\(q(s,a)\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(C\)</span></td>
+<td>left</td>
+<td><span class="math inline">\(0\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(C\)</span></td>
+<td>right</td>
+<td><span class="math inline">\(-5\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>with discount factor <span class="math inline">\(\gamma = 1\)</span></p>
+</div>
+</div>
+</div>
+<div class="layout row columns">
+<div class="area ">
+<div id="section-19" class="bottom box block fragment">
+<h2 class="bottom"></h2>
+<p><strong>Observation</strong>: After first iteration, action-value-function for moving right – <span class="math inline">\(q(C,right)\)</span> – is negative and an improved policy will pick the (overall) suboptimal policy.</p>
+<div class="fragment">
+<p><strong>Important:</strong> Action-values are always with respect to a given policy. As this is still changing, there might be change in what is considered the better action.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="right-task-probabilistic-rewards" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Right Task – Probabilistic Rewards</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="probabilistic-rewards-1" class="left box block">
+<h2 class="left">Probabilistic rewards</h2>
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:480px;">
+<img src="../decker/code/code-3937e6cb.tex.svg" style="height:auto;width:100%;" alt="code-3937e6cb.tex.svg" />
+</figure>
+</div>
+</div>
+</div><div class="area right">
+<div id="action-value-function-1" class="right box block fragment">
+<h2 class="right">Action-Value Function</h2>
+<table>
+<thead>
+<tr class="header">
+<th><span class="math inline">\(s\)</span></th>
+<th><span class="math inline">\(a\)</span></th>
+<th><span class="math inline">\(q(s,a)\)</span></th>
+<th>single episode</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(C\)</span></td>
+<td>left</td>
+<td><span class="math inline">\(1\)</span></td>
+<td><span class="math inline">\(1\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(C\)</span></td>
+<td>right</td>
+<td><span class="math inline">\(3\)</span></td>
+<td><span class="math inline">\(0 \lor 1 \lor 5\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>with discount factor <span class="math inline">\(\gamma = 1\)</span>, but converges only for enough episodes.</p>
+</div>
+</div>
+</div>
+<div class="layout row columns">
+<div class="area ">
+<div id="section-20" class="bottom box block fragment">
+<h2 class="bottom"></h2>
+<p><strong>Observation</strong>: As reward is probabilistic, we have to sample enough to get a good estimate. If we only sample once we might improve our policy in a way that excludes the optimal action and never recovers.</p>
+<div class="fragment">
+<p><strong>Important:</strong> We still have to guarantee sufficient exploration in order to (guaranteed!) converge to a real estimate.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="convergence-of-policy-improvement-with-greedy-selection" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Convergence of Policy Improvement with Greedy Selection</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Policy improvement assures us that <span class="math inline">\(\pi_{k+1}\)</span> is uniformly better than <span class="math inline">\(\pi_k\)</span> – unless <span class="math inline">\(\pi\)</span> already converged and is then (guaranteed) the optimal policy.</p>
+<p>But: this requires, that our estimates converges for each action, state pair for which we have to test these an infinite number of times.</p>
+</div>
+<div id="approach-exploring-starts" class="box block fragment">
+<h2>Approach: Exploring Starts</h2>
+<p>In, e.g., simulated settings we can enforce this using Exploring Starts – and can assure starting from each possible state and selecting in that state each possible action.</p>
+<p>Example: Blackjack scenario for which we can initialize states and select the actions.</p>
+<p>We use a single policy for evaluation and directly improve this. This is called <strong>on-policy</strong>.</p>
+</div>
+<div id="problem-when-exploring-starts-is-not-possible" class="box block fragment">
+<h2>Problem: When exploring starts is not possible</h2>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="monte-carlo-exploring-starts-for-estimating-pi-approx-pi_" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Monte-Carlo Exploring Starts, for estimating <span class="math inline">\(\pi \approx \pi_*\)</span></h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:auto;">
+<img src="../decker/code/code-08acc374.tex.svg" style="height:540px;width:auto;" alt="code-08acc374.tex.svg" />
+</figure>
+</div>
+</div>
+<div id="section-21" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="math inline">\(\color{blue}\text{Agent part of the algorithm; } \color{red}\text{ Environment interaction}\)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="recap-example-blackjack" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Recap Example: Blackjack</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="section-22" class="left box block">
+<h2 class="left"></h2>
+<p>Game: Play only against a dealer.</p>
+<p>Goal: sum of cards is as great as possible without exceeding 21.</p>
+<p>Counting:</p>
+<ul>
+<li>Number cards equal their number,</li>
+<li>all face cards count as 10,</li>
+<li>an ace can count as either 1 or 11.</li>
+</ul>
+</div>
+</div><div class="area right">
+<div id="section-23" class="right box block">
+<h2 class="right"></h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/05/blackjack_cards.jpg" style="height:460px;width:auto;" alt="../data/05/blackjack_cards.jpg" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="mc-converged-policy" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>MC Converged Policy</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="grid-layout" style="grid-template-columns: 30fr 70fr;">
+<p>Optimal policy and state-value function for blackjack, found by Monte Carlo (using exploring starts) <span class="citation">(<a href="#ref-sutton2018" role="doc-biblioref">Sutton und Barto 2018</a>)</span>.</br> This direct improvement of a policy while running the environment interaction is called <strong>on-policy</strong>.</p>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/07/blackjack_mc_p.png" style="height:460px;width:auto;" alt="../data/07/blackjack_mc_p.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="on-and-off-policy-learning" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>On and Off-Policy Learning</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="on-policy-learning" class="left box block">
+<h2 class="left">On-policy learning</h2>
+<ul>
+<li>“Learn on the job”</li>
+<li>Learn about policy <span class="math inline">\(\pi\)</span> from experience sampled from <span class="math inline">\(\pi\)</span></li>
+<li>e.g., using MC with exploring starts</li>
+</ul>
+</div>
+</div><div class="area right">
+<div id="off-policy-learning" class="right box block fragment">
+<h2 class="right">Off-policy learning</h2>
+<ul>
+<li>“Look over someone’s shoulder”</li>
+<li>Learn about policy <span class="math inline">\(\pi\)</span> from experience sampled from different policy <span class="math inline">\(b\)</span></li>
+</ul>
+</div>
+<div id="section-24" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="varepsilon-greedy-exploration" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1><span class="math inline">\(\varepsilon\)</span>-Greedy Exploration</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Simplest idea for ensuring continual exploration: Continue to sample randomly (for a small fraction).</p>
+<ul>
+<li>All <span class="math inline">\(m\)</span> actions are tried with non-zero probability</li>
+<li>With probability <span class="math inline">\(1 − \varepsilon\)</span> choose the greedy action</li>
+<li>With probability <span class="math inline">\(\varepsilon\)</span> choose an action at random</li>
+</ul>
+<p><span class="math display">\[
+\pi(a|s) =
+\begin{cases}
+      \frac{\varepsilon}{m+1-\varepsilon} &amp; \text{if}\ a^*= \arg\max_{a \in \mathcal{A}} q(s,a) \\
+      \frac{\varepsilon}{m} &amp; \text{otherwise}
+\end{cases}
+\]</span></p>
+</div>
+<div id="section-25" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="on-policy-characteristics" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>On-Policy Characteristics</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>The policy …</p>
+<ul>
+<li>is generally <em>soft</em>: <span class="math inline">\(\pi(a|s) &gt; 0 \forall s \in \mathcal{S}\)</span> and <span class="math inline">\(a \in \mathcal{A}\)</span>,</li>
+<li>gradually shifts closer and closer to a deterministic optimal policy.</li>
+</ul>
+<p>We can use an <span class="math inline">\(\varepsilon\)</span>-greedy policy.</p>
+</div>
+<div id="varepsilon-soft-policy" class="definition box block fragment">
+<h2 class="definition"><span class="math inline">\(\varepsilon\)</span>-soft policy</h2>
+<p>A policy, for which</p>
+<p><span class="math display">\[\pi(a|s) \geq \frac{\varepsilon}{|\mathcal A(s)|} \forall \text{ states and actions for some } \varepsilon &gt; 0\]</span></p>
+<p>Among <span class="math inline">\(\varepsilon\)</span>-soft policies: <span class="math inline">\(\varepsilon\)</span>-greedy policies are closest to greedy.</p>
+</div>
+<div id="section-26" class="box block fragment">
+<h2></h2>
+<p>Overall: Idea of on-policy Monte Carlo methods is General Policy Improvement.</p>
+<!--
+# Generalised Policy Iteration Action-Value Function {.columns}
+
+## {.left}
+
+**Policy evaluation**: Monte-Carlo policy evaluation, $q ≈ q_\pi$
+
+**Policy improvement**: Greedy policy improvement -- but this can stop exploration!
+(We won't sample all $s, a$ when learning by interacting)
+
+## {.right .fragment}
+
+**Policy evaluation**: Monte-Carlo policy evaluation $q ≈ q_\pi$
+
+**Policy improvement**: $\varepsilon$-greedy policy improvement -->
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="convergence-glie" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Convergence: GLIE</h1>
+<div class="layout">
+<div class="area">
+<div id="greedy-in-the-limit-with-infinite-exploration-glie" class="definition box block">
+<h2 class="definition">Greedy in the Limit with Infinite Exploration (GLIE)</h2>
+<p>All state-action pairs are explored infinitely many times,</p>
+<p><span class="math display">\[\lim_{t \rightarrow \infty}  N_t(s,a)= \infty, \forall a, s\]</span></p>
+<p>The policy converges on a greedy policy, <span class="math display">\[\lim_{t \rightarrow \infty}  \pi_t(a | s)= \mathbb{1} \Big(\arg\max_{a&#39; \in \mathcal{A}} Q_t(s,a&#39;) \Big)\]</span></p>
+</div>
+<div id="section-27" class="box block">
+<h2></h2>
+<p>For example, <span class="math inline">\(\varepsilon\)</span>-greedy is GLIE if <span class="math inline">\(\varepsilon\)</span> reduces to zero at <span class="math inline">\(\varepsilon_t = \frac{1}{t}\)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="glie-monte-carlo-control" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>GLIE Monte-Carlo Control</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Sample <span class="math inline">\(k-th\)</span> episode using <span class="math inline">\(\pi\)</span>: <span class="math display">\[{S_1, A_1, R_2, \dots, S_T } ∼ \pi\]</span></p>
+</div>
+<div id="section-28" class="box block fragment">
+<h2></h2>
+<p>For each state <span class="math inline">\(S_t\)</span> and action <span class="math inline">\(A_t\)</span> in the episode: <span class="math display">\[
+\begin{eqnarray*}
+N(S_t , A_t ) &amp;\rightarrow&amp; N(S_t , A_t ) + 1 \\
+Q(S_t,A_t) &amp;\rightarrow&amp; Q(S_t,A_t)+ \frac{1}{N(S_t. A_t)} \big(G_t − Q(S_t,A_t)\big)\\
+\end{eqnarray*}
+\]</span></p>
+</div>
+<div id="section-29" class="box block fragment">
+<h2></h2>
+<p>Improve policy based on new action-value function <span class="math display">\[
+\varepsilon \rightarrow \frac{1}{k}, \pi \rightarrow \varepsilon\text{-greedy}(q)
+\]</span></p>
+</div>
+<div id="section-30" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="convergence-glie-1" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Convergence GLIE</h1>
+<div class="layout">
+<div class="area">
+<div id="section-31" class="theorem box block">
+<h2 class="theorem"></h2>
+<p>GLIE Model-free control converges to the optimal action-value function, <span class="math inline">\(q_t(s,a) \rightarrow q_∗(s,a)\)</span>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="model-free-control-temporal-difference-learning" class="section slide level1" data-background-color="#6A931C">
+<div class="decker">
+<div class="alignment">
+<h1>Model-free Control – Temporal Difference Learning</h1>
+</div>
+</div>
+</section>
+<section id="mc-vs.-td-control" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>MC vs. TD Control</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="td-learning-has-advantages-over-monte-carlo-in-prediction" class="left box block">
+<h2 class="left">TD-learning has advantages over Monte-Carlo in prediction</h2>
+<ul>
+<li>Lower variance</li>
+<li>Online</li>
+<li>Can use incomplete sequences</li>
+</ul>
+</div>
+</div><div class="area right">
+<div id="natural-idea" class="right box block fragment">
+<h2 class="right">Natural Idea</h2>
+<p>Use TD instead of MC in our control loop</p>
+<ul>
+<li>Apply TD to <span class="math inline">\(q(S, A)\)</span></li>
+<li>Use <span class="math inline">\(\varepsilon\)</span>-greedy policy improvement</li>
+<li>Update every time-step</li>
+</ul>
+</div>
+<div id="section-32" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-deepmind2021" role="doc-biblioref">Hasselt und Borsa 2021</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="sarsa---for-update-of-the-action-value-function" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>SARSA - for update of the Action-Value Function</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="section-35" class="left box block">
+<h2 class="left"></h2>
+<p>In every time-step:</p>
+<ul>
+<li>Policy evaluation: SARSA, <span class="math inline">\(q(s,a) \approx q_\pi(s,a)\)</span></li>
+<li>Policy improvement: <span class="math inline">\(\varepsilon\)</span>-greedy policy improvement step</li>
+</ul>
+</div>
+</div><div class="area right">
+<div id="section-33" class="right box block">
+<h2 class="right"></h2>
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:auto;">
+<img src="../decker/code/code-dfdbac68.tex.svg" style="height:360px;width:auto;" alt="code-dfdbac68.tex.svg" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="layout row columns">
+<div class="area ">
+<div id="section-34" class="bottom box block">
+<h2 class="bottom"></h2>
+<p><span class="math display">\[
+q&#39;(s,a) \leftarrow q(s,a) + \alpha \Big(r + \gamma q(S&#39;,A&#39;) - q(S,A)\Big)
+\]</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="sarsa-on-policy-td-control" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>SARSA – On-Policy TD Control</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:auto;">
+<img src="../decker/code/code-a000a053.tex.svg" style="height:460px;width:auto;" alt="code-a000a053.tex.svg" />
+</figure>
+</div>
+<p><span class="math inline">\(\color{blue}\text{Agent part of the algorithm; } \color{red}\text{ Environment interaction}\)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-for-td-learning-windy-grid-world" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Example for TD-Learning: Windy Grid World</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:auto;">
+<img src="../decker/code/code-7156b2c2.tex.svg" style="height:480px;width:auto;" alt="code-7156b2c2.tex.svg" />
+</figure>
+</div>
+</div>
+<div id="section-36" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-sutton2018" role="doc-biblioref">Sutton und Barto 2018</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="example---explanation-windy-grid-world" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Example - Explanation: Windy Grid World</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p><strong>Goal:</strong> An agent should find a travel from the start point to the goal point.</p>
+<p><strong>Environment:</strong></p>
+<ul>
+<li><span class="math inline">\(10 \times 7\)</span> grid environment</li>
+<li>actions in the four major directions</li>
+<li>crosswind (upwards) <span class="math inline">\(\rightarrow\)</span> shifts agent one grid further to the top</li>
+</ul>
+<p><strong>Reward:</strong> Aiming for reac hing goal as fast as possible, <span class="math inline">\(-1\)</span> for each timestep in environment.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-results-for-windy-grid-world-via-sarsa" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Example Results for Windy Grid World via SARSA</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="learning-optimal-path" class="left box block">
+<h2 class="left">Learning optimal path</h2>
+<div class="media">
+<figure class="image">
+<img src="../data/07/windy_gridworld_res.png" alt="../data/07/windy_gridworld_res.png" />
+</figure>
+</div>
+</div>
+</div><div class="area right">
+<div id="learned-policy" class="right box block">
+<h2 class="right">Learned Policy</h2>
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:auto;">
+<img src="../decker/code/code-cdbc2998.tex.svg" style="height:300px;width:auto;" alt="code-cdbc2998.tex.svg" />
+</figure>
+</div>
+<p><span class="math inline">\(\varepsilon = 0.1, \alpha=0.5\)</span>, </br>initially <span class="math inline">\(q(S,A) = 0 \forall S,A\)</span>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="policy-improvement-example" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Policy Improvement Example</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="col40">
+<div class="media">
+<figure class="image" style="height:auto;width:240px;">
+<img src="../data/Discussion.png" style="height:auto;width:100%;" alt="../data/Discussion.png" />
+</figure>
+</div>
+<p>You can use the known grid world environment and apply GPI (policy evaluation and policy improvement) in this interactive grid environment using TD learning instead of Dynamic Programming.</p>
+<h2 class="footer" id="section-37"></h2>
+<p><span class="citation">(<a href="#ref-karpathy_mdp" role="doc-biblioref">Karpathy 2015</a>)</span></p>
+</div>
+<div class="col60">
+<div class="media">
+<figure class="iframe" style="width:100%;height:auto;">
+<iframe style="width:100%;height:700px;" allow="fullscreen" data-src="https://cs.stanford.edu/people/karpathy/reinforcejs/gridworld_td.html">
+
+</iframe>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="references" class="unnumbered biblio slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>References</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-arulkumaran2017brief" class="csl-entry">
+Arulkumaran, Kai, Marc P. Deisenroth, Miles Brundage, und Anil A. Bharath. 2017. <span>„Deep Reinforcement Learning: A Brief Survey“</span>. <em>IEEE Signal Processing Magazine</em> 34 (6).
+</div>
+<div id="ref-fortmannroe2012" class="csl-entry">
+Fortmann-Roe, Scott. 2012. <span>„Understanding the Bias-Variance Tradeoff“</span>. <a href="http://scott.fortmann-roe.com/docs/BiasVariance.html">http://scott.fortmann-roe.com/docs/BiasVariance.html</a>.
+</div>
+<div id="ref-haarnoja2018" class="csl-entry">
+Haarnoja, Tuomas, Aurick Zhou, Sehoon Ha, Jie Tan, George Tucker, und Sergey Levine. 2018. <span>„Learning to Walk via Deep Reinforcement Learning“</span>. <em>CoRR</em> abs/1812.11103. <a href="http://arxiv.org/abs/1812.11103">http://arxiv.org/abs/1812.11103</a>.
+</div>
+<div id="ref-deepmind2021" class="csl-entry">
+Hasselt, Hado van, und Diana Borsa. 2021. <span>„Reinforcement Learning Lecture Series 2021“</span>. https://www.deepmind.com/learning-resources/reinforcement-learning-lecture-series-2021.
+</div>
+<div id="ref-karpathy_mdp" class="csl-entry">
+Karpathy, Andrej. 2015. <span>„REINFORCEjs“</span>. <a href="https://github.com/karpathy/reinforcejs">https://github.com/karpathy/reinforcejs</a>.
+</div>
+<div id="ref-satakhutdinov_2018" class="csl-entry">
+Satakhutdinov, Ruslan. 2018. <span>„Deep RL and Control“</span>. Course 10703, Carnegie Mellon University, School of Computer Science.
+</div>
+<div id="ref-silver2015" class="csl-entry">
+Silver, David. 2015. <span>„UCL Course on RL UCL Course on RL UCL Course on Reinforcement Learning“</span>. http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html.
+</div>
+<div id="ref-sutton2018" class="csl-entry">
+Sutton, Richard S., und Andrew G. Barto. 2018. <em>Reinforcement Learning: An Introduction</em>. Second. The MIT Press.
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<code class="force-highlight-styles markdown"
+style="display:none;"></code>
+
+    </div>
+  </div>
+
+  <script type="module">
+    /* Store JSON encoded Pandoc meta data in a global variable. */
+    import initializeDecker from "./../support/js/decker.js";
+    initializeDecker("ec5e152c5.json");
+  </script>
+
+  <script src="../support/vendor/videojs/video.min.js"></script>
+  <script type="module" src="../support/components/custom-dialog.js"></script>
+
+  <script type="module">
+    // import Reveal and all plugins
+    import Reveal from './../support/vendor/reveal/dist/reveal.esm.js';
+    import deckerPlugin from './../support/plugins/decker/decker.js';
+    import uiAnchorsPlugin from './../support/plugins/decker/ui-anchors.js'
+    import mathPlugin from './../support/plugins/math/math.js';
+    import whiteboardPlugin from './../support/plugins/whiteboard/whiteboard.js';
+    import sagePlugin from './../support/plugins/sage/sage.js';
+    import searchPlugin from './../support/plugins/search/search.js';
+    import zoomPlugin from './../support/plugins/zoom/zoom.js';
+    import printPlugin from './../support/plugins/print/print.js';
+    import jinglesPlugin from './../support/plugins/jingles/jingles.js';
+    import quizPlugin from './../support/plugins/quiz/quiz.js';
+    import quizWuePlugin from './../support/plugins/quiz-wue/quiz-wue.js';
+    import explainPlugin from './../support/plugins/explain/explain.js';
+    import chartsPlugin from './../support/plugins/charts/charts.js';
+    import menuPlugin from './../support/plugins/menu/menu.js';
+    import feedbackPlugin from './../support/plugins/feedback/feedback.js';
+    import highlightPlugin from './../support/vendor/reveal/plugin/highlight/highlight.esm.js';
+    import notesPlugin from './../support/vendor/reveal/plugin/notes/notes.esm.js';
+        import captionPlugin from './../support/plugins/live-captioning/live-captioning.js';
+        import a11yPlugin from './../support/plugins/a11y/a11y.js';
+
+    let revealConfig = {
+      // reveal configuration (see https://revealjs.com/config/)
+      ...Decker.meta.reveal,
+
+      // plugin configuration
+      math: { mathjax: String.raw`../support/vendor/mathjax/`, ...Decker.meta.math },
+      chart: Decker.meta.chart,
+      menu: Decker.meta.menu,
+      explain: Decker.meta.explain,
+      feedback: Decker.meta.feedback || Decker.meta["decker-engine"],
+      jingles: Decker.meta.jingles,
+
+      // list of plugins
+      plugins: [
+        deckerPlugin,
+        uiAnchorsPlugin,
+        sagePlugin,
+        mathPlugin,
+        chartsPlugin,
+        whiteboardPlugin,
+        searchPlugin,
+        zoomPlugin,
+        printPlugin,
+        jinglesPlugin,
+        quizPlugin,
+        quizWuePlugin,
+        explainPlugin,
+        menuPlugin,
+        feedbackPlugin,
+        highlightPlugin,
+        notesPlugin,
+                captionPlugin,
+                a11yPlugin,
+      ]
+    };
+
+    Reveal.initialize(revealConfig);
+  </script>
+
+</body>
+<script src="../support/js/inert-polyfill.min.js"></script>
+<!-- script src="../support/js/inert.min.js"></script -->
+<!-- Use the other implementation if things break under Firefox -->
+</html>

@@ -1,0 +1,26 @@
+\documentclass{standalone}
+\usepackage[boxruled,lined]{algorithm2e}
+\usepackage{mathtools}
+\usepackage{amsfonts} 
+\usepackage{xcolor}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\SetKwInput{KwInput}{Input}
+\SetKwInput{KwOutput}{Output}
+\begin{document}
+\pagestyle{empty}
+\begin{algorithm}[H]
+  \textcolor{blue}{Initialize $Q(s,a)$ for all $s \in \mathcal S^+$, $a \in \mathcal A(s)$,   arbitrarily except that $Q(\texttt{terminal}, \cdot) = 0$.}
+\For{each episode} {
+  Initialize $S$ \\
+  Choose $A$ from $S$ using policy derived from $Q$ (e.g. $\epsilon$-greedy) \\
+  \For{each step in the episode, until state $S$ is terminal} {
+    Take action $A$, observe $R, S'$ \\
+    Choose $A'$ from $S'$ using policy derived from $Q$ (e.g. $\epsilon$-greedy)         \\
+    $Q(S, A) \gets Q(S, A) + \alpha \left[R + \gamma Q(S', A') - Q(S, A)\right]$     \\
+    $S \gets S'$; $A \gets A'$;
+  }
+}
+\end{algorithm}
+\end{document}
