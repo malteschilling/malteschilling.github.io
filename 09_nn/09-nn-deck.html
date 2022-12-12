@@ -1,0 +1,2792 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Prof. Dr. Malte Schilling">
+  <title>Deep Reinforcement Learning: 9 - Overview Deep Learning -
+Towards Deep RL</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+  <!-- Default values for CSS variables can live here. They can be overridden by
+  meta data values. -->
+  <link rel="stylesheet" href="../support/css/variables.css">
+
+  <!-- Transfer meta data values from keys `palette.colors` and `css-variables`
+  into a style sheet. Default values can come from `variables.css`. -->
+  <style class="css-declarations">
+    @media (prefers-color-scheme: light) {
+      :root {
+                  --shade7: #1d1f21;
+                  --shade6: #282a2e;
+                  --shade5: #4d4d4c;
+                  --shade4: #969896;
+                  --shade3: #8e908c;
+                  --shade2: #d6d6d6;
+                  --shade1: #e0e0e0;
+                  --shade0: #ffffff;
+                  --base0F-fg: #825449;
+                  --base0F-ffg: #513733;
+                  --base0F-bg: #ceb9b5;
+                  --base0F-bbg: #f0ebea;
+                  --base0F: #a3685a;
+                  --base0E-fg: #6e4887;
+                  --base0E-ffg: #453155;
+                  --base0E-bg: #c4b5d1;
+                  --base0E-bbg: #edeaf1;
+                  --base0E: #8959a8;
+                  --base0D-fg: #257eb3;
+                  --base0D-ffg: #204f6f;
+                  --base0D-bg: #acccec;
+                  --base0D-bbg: #e8f0f9;
+                  --base0D: #2a9ddf;
+                  --base0C-fg: #347b80;
+                  --base0C-ffg: #264d51;
+                  --base0C-bg: #afcacd;
+                  --base0C-bbg: #e8eff0;
+                  --base0C: #3e999f;
+                  --base0B-fg: #6a931c;
+                  --base0B-ffg: #435c20;
+                  --base0B-bg: #c2d8ab;
+                  --base0B-bbg: #edf3e7;
+                  --base0B: #84b819;
+                  --base0A-fg: #bb9212;
+                  --base0A-ffg: #745b1d;
+                  --base0A-bg: #f3d8aa;
+                  --base0A-bbg: #fbf3e7;
+                  --base0A: #eab700;
+                  --base09-fg: #c46c20;
+                  --base09-ffg: #794521;
+                  --base09-bg: #f9c3ab;
+                  --base09-bbg: #fdede7;
+                  --base09: #f5871f;
+                  --base08-fg: #a02526;
+                  --base08-ffg: #632123;
+                  --base08-bg: #e0acac;
+                  --base08-bbg: #f5e8e8;
+                  --base08: #c82829;
+                  --base07: #1d1f21;
+                  --base06: #282a2e;
+                  --base05: #4d4d4c;
+                  --base04: #969896;
+                  --base03: #8e908c;
+                  --base02: #d6d6d6;
+                  --base01: #e0e0e0;
+                  --base00: #ffffff;
+                  --accent7-fg: #825449;
+                  --accent7-ffg: #513733;
+                  --accent7-bg: #ceb9b5;
+                  --accent7-bbg: #f0ebea;
+                  --accent7: #a3685a;
+                  --accent6-fg: #6e4887;
+                  --accent6-ffg: #453155;
+                  --accent6-bg: #c4b5d1;
+                  --accent6-bbg: #edeaf1;
+                  --accent6: #8959a8;
+                  --accent5-fg: #257eb3;
+                  --accent5-ffg: #204f6f;
+                  --accent5-bg: #acccec;
+                  --accent5-bbg: #e8f0f9;
+                  --accent5: #2a9ddf;
+                  --accent4-fg: #347b80;
+                  --accent4-ffg: #264d51;
+                  --accent4-bg: #afcacd;
+                  --accent4-bbg: #e8eff0;
+                  --accent4: #3e999f;
+                  --accent3-fg: #6a931c;
+                  --accent3-ffg: #435c20;
+                  --accent3-bg: #c2d8ab;
+                  --accent3-bbg: #edf3e7;
+                  --accent3: #84b819;
+                  --accent2-fg: #bb9212;
+                  --accent2-ffg: #745b1d;
+                  --accent2-bg: #f3d8aa;
+                  --accent2-bbg: #fbf3e7;
+                  --accent2: #eab700;
+                  --accent1-fg: #c46c20;
+                  --accent1-ffg: #794521;
+                  --accent1-bg: #f9c3ab;
+                  --accent1-bbg: #fdede7;
+                  --accent1: #f5871f;
+                  --accent0-fg: #a02526;
+                  --accent0-ffg: #632123;
+                  --accent0-bg: #e0acac;
+                  --accent0-bbg: #f5e8e8;
+                  --accent0: #c82829;
+              }
+
+      :root.dark {
+                  --shade7: #ffffff;
+                  --shade6: #e0e0e0;
+                  --shade5: #c5c8c6;
+                  --shade4: #b4b7b4;
+                  --shade3: #969896;
+                  --shade2: #373b41;
+                  --shade1: #282a2e;
+                  --shade0: #1d1f21;
+                  --base0F-fg: #ceb9b5;
+                  --base0F-ffg: #f0ebea;
+                  --base0F-bg: #825449;
+                  --base0F-bbg: #513733;
+                  --base0F: #a3685a;
+                  --base0E-fg: #d5c8da;
+                  --base0E-ffg: #f2eff3;
+                  --base0E-bg: #8e7796;
+                  --base0E-bbg: #594b5e;
+                  --base0E: #b294bb;
+                  --base0D-fg: #c1cedb;
+                  --base0D-ffg: #edf0f4;
+                  --base0D-bg: #678298;
+                  --base0D-bbg: #42515f;
+                  --base0D: #81a2be;
+                  --base0C-fg: #c4dbd8;
+                  --base0C-ffg: #edf4f3;
+                  --base0C-bg: #6e9893;
+                  --base0C-bbg: #465f5c;
+                  --base0C: #8abeb7;
+                  --base0B-fg: #bfd0ac;
+                  --base0B-ffg: #ecf1e8;
+                  --base0B-bg: #648627;
+                  --base0B-bbg: #405423;
+                  --base0B: #7da72a;
+                  --base0A-fg: #f6dfbc;
+                  --base0A-ffg: #fcf5ec;
+                  --base0A-bg: #c09f5e;
+                  --base0A-bbg: #77633d;
+                  --base0A: #f0c674;
+                  --base09-fg: #ecc8b6;
+                  --base09-ffg: #f9eeea;
+                  --base09-bg: #b2764d;
+                  --base09-bbg: #6e4a35;
+                  --base09: #de935f;
+                  --base08-fg: #e2b8b8;
+                  --base08-ffg: #f6eaea;
+                  --base08-bg: #a35253;
+                  --base08-bbg: #653637;
+                  --base08: #cc6666;
+                  --base07: #ffffff;
+                  --base06: #e0e0e0;
+                  --base05: #c5c8c6;
+                  --base04: #b4b7b4;
+                  --base03: #969896;
+                  --base02: #373b41;
+                  --base01: #282a2e;
+                  --base00: #1d1f21;
+                  --accent7-fg: #ceb9b5;
+                  --accent7-ffg: #f0ebea;
+                  --accent7-bg: #825449;
+                  --accent7-bbg: #513733;
+                  --accent7: #a3685a;
+                  --accent6-fg: #d5c8da;
+                  --accent6-ffg: #f2eff3;
+                  --accent6-bg: #8e7796;
+                  --accent6-bbg: #594b5e;
+                  --accent6: #b294bb;
+                  --accent5-fg: #c1cedb;
+                  --accent5-ffg: #edf0f4;
+                  --accent5-bg: #678298;
+                  --accent5-bbg: #42515f;
+                  --accent5: #81a2be;
+                  --accent4-fg: #c4dbd8;
+                  --accent4-ffg: #edf4f3;
+                  --accent4-bg: #6e9893;
+                  --accent4-bbg: #465f5c;
+                  --accent4: #8abeb7;
+                  --accent3-fg: #bfd0ac;
+                  --accent3-ffg: #ecf1e8;
+                  --accent3-bg: #648627;
+                  --accent3-bbg: #405423;
+                  --accent3: #7da72a;
+                  --accent2-fg: #f6dfbc;
+                  --accent2-ffg: #fcf5ec;
+                  --accent2-bg: #c09f5e;
+                  --accent2-bbg: #77633d;
+                  --accent2: #f0c674;
+                  --accent1-fg: #ecc8b6;
+                  --accent1-ffg: #f9eeea;
+                  --accent1-bg: #b2764d;
+                  --accent1-bbg: #6e4a35;
+                  --accent1: #de935f;
+                  --accent0-fg: #e2b8b8;
+                  --accent0-ffg: #f6eaea;
+                  --accent0-bg: #a35253;
+                  --accent0-bbg: #653637;
+                  --accent0: #cc6666;
+              }
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+                  --shade7: #ffffff;
+                  --shade6: #e0e0e0;
+                  --shade5: #c5c8c6;
+                  --shade4: #b4b7b4;
+                  --shade3: #969896;
+                  --shade2: #373b41;
+                  --shade1: #282a2e;
+                  --shade0: #1d1f21;
+                  --base0F-fg: #ceb9b5;
+                  --base0F-ffg: #f0ebea;
+                  --base0F-bg: #825449;
+                  --base0F-bbg: #513733;
+                  --base0F: #a3685a;
+                  --base0E-fg: #d5c8da;
+                  --base0E-ffg: #f2eff3;
+                  --base0E-bg: #8e7796;
+                  --base0E-bbg: #594b5e;
+                  --base0E: #b294bb;
+                  --base0D-fg: #c1cedb;
+                  --base0D-ffg: #edf0f4;
+                  --base0D-bg: #678298;
+                  --base0D-bbg: #42515f;
+                  --base0D: #81a2be;
+                  --base0C-fg: #c4dbd8;
+                  --base0C-ffg: #edf4f3;
+                  --base0C-bg: #6e9893;
+                  --base0C-bbg: #465f5c;
+                  --base0C: #8abeb7;
+                  --base0B-fg: #bfd0ac;
+                  --base0B-ffg: #ecf1e8;
+                  --base0B-bg: #648627;
+                  --base0B-bbg: #405423;
+                  --base0B: #7da72a;
+                  --base0A-fg: #f6dfbc;
+                  --base0A-ffg: #fcf5ec;
+                  --base0A-bg: #c09f5e;
+                  --base0A-bbg: #77633d;
+                  --base0A: #f0c674;
+                  --base09-fg: #ecc8b6;
+                  --base09-ffg: #f9eeea;
+                  --base09-bg: #b2764d;
+                  --base09-bbg: #6e4a35;
+                  --base09: #de935f;
+                  --base08-fg: #e2b8b8;
+                  --base08-ffg: #f6eaea;
+                  --base08-bg: #a35253;
+                  --base08-bbg: #653637;
+                  --base08: #cc6666;
+                  --base07: #ffffff;
+                  --base06: #e0e0e0;
+                  --base05: #c5c8c6;
+                  --base04: #b4b7b4;
+                  --base03: #969896;
+                  --base02: #373b41;
+                  --base01: #282a2e;
+                  --base00: #1d1f21;
+                  --accent7-fg: #ceb9b5;
+                  --accent7-ffg: #f0ebea;
+                  --accent7-bg: #825449;
+                  --accent7-bbg: #513733;
+                  --accent7: #a3685a;
+                  --accent6-fg: #d5c8da;
+                  --accent6-ffg: #f2eff3;
+                  --accent6-bg: #8e7796;
+                  --accent6-bbg: #594b5e;
+                  --accent6: #b294bb;
+                  --accent5-fg: #c1cedb;
+                  --accent5-ffg: #edf0f4;
+                  --accent5-bg: #678298;
+                  --accent5-bbg: #42515f;
+                  --accent5: #81a2be;
+                  --accent4-fg: #c4dbd8;
+                  --accent4-ffg: #edf4f3;
+                  --accent4-bg: #6e9893;
+                  --accent4-bbg: #465f5c;
+                  --accent4: #8abeb7;
+                  --accent3-fg: #bfd0ac;
+                  --accent3-ffg: #ecf1e8;
+                  --accent3-bg: #648627;
+                  --accent3-bbg: #405423;
+                  --accent3: #7da72a;
+                  --accent2-fg: #f6dfbc;
+                  --accent2-ffg: #fcf5ec;
+                  --accent2-bg: #c09f5e;
+                  --accent2-bbg: #77633d;
+                  --accent2: #f0c674;
+                  --accent1-fg: #ecc8b6;
+                  --accent1-ffg: #f9eeea;
+                  --accent1-bg: #b2764d;
+                  --accent1-bbg: #6e4a35;
+                  --accent1: #de935f;
+                  --accent0-fg: #e2b8b8;
+                  --accent0-ffg: #f6eaea;
+                  --accent0-bg: #a35253;
+                  --accent0-bbg: #653637;
+                  --accent0: #cc6666;
+              }
+
+      :root.light {
+                  --shade7: #1d1f21;
+                  --shade6: #282a2e;
+                  --shade5: #4d4d4c;
+                  --shade4: #969896;
+                  --shade3: #8e908c;
+                  --shade2: #d6d6d6;
+                  --shade1: #e0e0e0;
+                  --shade0: #ffffff;
+                  --base0F-fg: #825449;
+                  --base0F-ffg: #513733;
+                  --base0F-bg: #ceb9b5;
+                  --base0F-bbg: #f0ebea;
+                  --base0F: #a3685a;
+                  --base0E-fg: #6e4887;
+                  --base0E-ffg: #453155;
+                  --base0E-bg: #c4b5d1;
+                  --base0E-bbg: #edeaf1;
+                  --base0E: #8959a8;
+                  --base0D-fg: #257eb3;
+                  --base0D-ffg: #204f6f;
+                  --base0D-bg: #acccec;
+                  --base0D-bbg: #e8f0f9;
+                  --base0D: #2a9ddf;
+                  --base0C-fg: #347b80;
+                  --base0C-ffg: #264d51;
+                  --base0C-bg: #afcacd;
+                  --base0C-bbg: #e8eff0;
+                  --base0C: #3e999f;
+                  --base0B-fg: #6a931c;
+                  --base0B-ffg: #435c20;
+                  --base0B-bg: #c2d8ab;
+                  --base0B-bbg: #edf3e7;
+                  --base0B: #84b819;
+                  --base0A-fg: #bb9212;
+                  --base0A-ffg: #745b1d;
+                  --base0A-bg: #f3d8aa;
+                  --base0A-bbg: #fbf3e7;
+                  --base0A: #eab700;
+                  --base09-fg: #c46c20;
+                  --base09-ffg: #794521;
+                  --base09-bg: #f9c3ab;
+                  --base09-bbg: #fdede7;
+                  --base09: #f5871f;
+                  --base08-fg: #a02526;
+                  --base08-ffg: #632123;
+                  --base08-bg: #e0acac;
+                  --base08-bbg: #f5e8e8;
+                  --base08: #c82829;
+                  --base07: #1d1f21;
+                  --base06: #282a2e;
+                  --base05: #4d4d4c;
+                  --base04: #969896;
+                  --base03: #8e908c;
+                  --base02: #d6d6d6;
+                  --base01: #e0e0e0;
+                  --base00: #ffffff;
+                  --accent7-fg: #825449;
+                  --accent7-ffg: #513733;
+                  --accent7-bg: #ceb9b5;
+                  --accent7-bbg: #f0ebea;
+                  --accent7: #a3685a;
+                  --accent6-fg: #6e4887;
+                  --accent6-ffg: #453155;
+                  --accent6-bg: #c4b5d1;
+                  --accent6-bbg: #edeaf1;
+                  --accent6: #8959a8;
+                  --accent5-fg: #257eb3;
+                  --accent5-ffg: #204f6f;
+                  --accent5-bg: #acccec;
+                  --accent5-bbg: #e8f0f9;
+                  --accent5: #2a9ddf;
+                  --accent4-fg: #347b80;
+                  --accent4-ffg: #264d51;
+                  --accent4-bg: #afcacd;
+                  --accent4-bbg: #e8eff0;
+                  --accent4: #3e999f;
+                  --accent3-fg: #6a931c;
+                  --accent3-ffg: #435c20;
+                  --accent3-bg: #c2d8ab;
+                  --accent3-bbg: #edf3e7;
+                  --accent3: #84b819;
+                  --accent2-fg: #bb9212;
+                  --accent2-ffg: #745b1d;
+                  --accent2-bg: #f3d8aa;
+                  --accent2-bbg: #fbf3e7;
+                  --accent2: #eab700;
+                  --accent1-fg: #c46c20;
+                  --accent1-ffg: #794521;
+                  --accent1-bg: #f9c3ab;
+                  --accent1-bbg: #fdede7;
+                  --accent1: #f5871f;
+                  --accent0-fg: #a02526;
+                  --accent0-ffg: #632123;
+                  --accent0-bg: #e0acac;
+                  --accent0-bbg: #f5e8e8;
+                  --accent0: #c82829;
+              }
+    }
+    :root {
+          }
+  </style>
+
+  <link rel="stylesheet" href="../support/vendor/reveal/dist/reset.css">
+  <link rel="stylesheet" href="../support/vendor/reveal/dist/reveal.css">
+  <link rel="stylesheet" href="../support/components/components.css">
+  <link rel="stylesheet" href="../support/plugins/decker/ui-anchors.css">
+  <link rel="stylesheet" href="../support/plugins/whiteboard/whiteboard.css">
+  <link rel="stylesheet" href="../support/plugins/menu/menu.css">
+  <link rel="stylesheet" href="../support/plugins/feedback/feedback.css">
+  <link rel="stylesheet" href="../support/plugins/explain/explain.css">
+    <link rel="stylesheet" href="../support/plugins/live-captioning/live-captioning.css">
+    <link rel="stylesheet" href="../support/vendor/videojs/video-js.min.css">
+  <link rel="stylesheet" href="../support/vendor/css/xcode.css">
+  <link rel="stylesheet" href="../support/flyingFocus/flying-focus.css">
+  <link rel="stylesheet" href="../support/plugins/quiz-wue/quiz-wue.css">
+  <link rel="stylesheet" href="../support/css/deck.css">
+  <link rel="stylesheet" href="../support/css/msms-deck.css">
+
+</head>
+
+<body >
+  <div class="reveal">
+    <div class="slides">
+
+      <section id="title-slide">
+
+         <div class="background-on-accent">
+                     <h1>Deep Reinforcement Learning</h1>
+                              <h2>9 - Overview Deep Learning - Towards
+Deep RL</h2>
+                  </div>
+
+
+
+                  <div class="author"> Prof. Dr. Malte Schilling </div>
+
+                  <div class="affiliation"> Autonomous Intelligent
+Systems Group </div>
+
+
+         <img class="logo affiliation-logo light-only" src="./../support/assets/ms-logo-light.svg">
+         <img class="logo affiliation-logo dark-only" src="./../support/assets/ms-logo-dark.svg">
+
+               </section>
+
+
+<section id="overview-lecture" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Overview Lecture</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<ul>
+<li>Off-Policy Learning
+<ul>
+<li>Importance Sampling</li>
+</ul></li>
+<li>Deep Neural Networks</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="recap-off-policy-learning" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Recap – Off-Policy Learning</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Evaluate target policy <span class="math inline">\(\pi(a|s)\)</span> to compute <span class="math inline">\(q_\pi(s,a)\)</span> while following behaviour policy <span class="math inline">\(b(a|s)\)</span>:</p>
+<p><span class="math display">\[{S_1,A_1,R_2,\dots,S_T} ∼ b\]</span></p>
+<p>Why is this important?</p>
+<ul>
+<li>Learn from observing humans or other agents</li>
+<li>Re-use experience generated from old policies <span class="math inline">\(\pi_1, \pi_2, \dots, \pi_{t−1}\)</span></li>
+<li>Learn about optimal policy while following exploratory policy</li>
+<li>Learn about multiple policies while following a single behavioral policy</li>
+</ul>
+</div>
+<div id="section" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="recap-q-learning-off-policy-td-control" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Recap – Q-Learning – Off-Policy TD control</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="col20">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/08/sutton_q_backup.svg" style="height:360px;width:auto;" alt="../data/08/sutton_q_backup.svg" />
+</figure>
+</div>
+</div>
+<div class="col70">
+<ol style="list-style-type: decimal">
+<li>At time step <span class="math inline">\(t\)</span>, we start from state <span class="math inline">\(S_t\)</span> and pick action according to <span class="math inline">\(Q\)</span> values, <span class="math inline">\(A_t = \arg\max_{a \in \mathcal{A}} Q(S_t, a)\)</span>; <span class="math inline">\(\varepsilon\)</span>-greedy is commonly applied.</li>
+<li>With action <span class="math inline">\(A_t\)</span>, we observe reward <span class="math inline">\(R_{t+1}\)</span> and get into the next state <span class="math inline">\(S_{t+1}\)</span>.</li>
+<li>Update the action-value function: <span class="math inline">\(Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha (R_{t+1} + \gamma \max_{a \in \mathcal{A}} Q(S_{t+1}, a) - Q(S_t, A_t))\)</span></li>
+<li><span class="math inline">\(t = t+1\)</span> and repeat from step 1.</li>
+</ol>
+</div>
+<p>Difference to SARSA: Q-learning does not follow the current policy to pick the second action, but rather estimate <span class="math inline">\(q_∗\)</span> out of the best <span class="math inline">\(q\)</span> values independently.</p>
+</div>
+<div id="section-1" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-weng2018rl" role="doc-biblioref">Weng 2018</a>; <a href="#ref-sutton2018" role="doc-biblioref">Sutton und Barto 2018</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="summary-q-learning" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Summary Q-Learning</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Q-Learning is an off-policy approach for learning of action-values <span class="math inline">\(q(s,a)\)</span>:</p>
+<ul>
+<li>Next action is chosen using behaviour policy <span class="math inline">\(A_{t+1} \sim b(·|S_t)\)</span></li>
+<li>But we consider alternative successor action <span class="math inline">\(a&#39; \sim \pi(·|S_t)\)</span></li>
+<li>And update <span class="math inline">\(q(S_t, A_t)\)</span> towards value of alternative action</li>
+</ul>
+<p><span class="math display">\[
+q&#39;(S_t,A_t) \leftarrow q(S_t,A_t) + \alpha_t \Big(R_{t+1} + \gamma \max_{a&#39;}q(S_{t+1},a&#39;) - q(S_t,A_t)\Big)
+\]</span></p>
+</div>
+<div id="section-2" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="variance-when-using-importance-sampling" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Variance when using Importance Sampling</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p><span class="math display">\[
+\mathbb{E}[f(x)] \approx \frac{1}{n}\sum_i f(x_i) \frac{p(x_i)}{q(x_i)}
+\]</span></p>
+<p>When the importance sampling ratio is high, this will introduce large variance:</p>
+<p><span class="math display">\[
+Var(X) = \mathbb{E}[X^2] - \mathbb{E}[X]^2, \text{ with } X = f(x)\frac{p(x)}{q(x)}
+\]</span></p>
+<p>Therefore, we should aim for selecting <span class="math inline">\(q(x)\)</span> appropriately, i.e. in a way where <span class="math inline">\(f(x) p(x)\)</span> is already large.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="importance-sampling-in-rl" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Importance Sampling in RL</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>From a starting state <span class="math inline">\(S_t\)</span>, the probability of the subsequent state–action trajectory occurring under a policy <span class="math inline">\(\pi\)</span> is</p>
+<p><span class="math display">\[
+\begin{eqnarray*}
+p(&amp;A_t, &amp;S_{t+1}, A_{t+1}, \dots, S_T | S_t, A_{t:T-1} \sim \pi) \\
+&amp;=&amp; \fragment{\pi(A_t, S_t) p(S_{t+1} | S_t, A_t) \pi(A_{t+1}, S_{t+1}) \cdots p(S_{T} | S_{T-1}, A_{T-1})}\\
+&amp;=&amp; \fragment{\prod_{k=t}^{T-1} \pi(A_k | S_k) p(S_{k+1} | S_k, A_k)}
+\end{eqnarray*}
+\]</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="importance-sampling-in-rl-1" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Importance Sampling in RL</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>In off-policy RL: we are optimizing policy <span class="math inline">\(\pi\)</span>, but follow behavioral policy <span class="math inline">\(b\)</span>.</p>
+</div>
+<div id="importance-sampling-ratio" class="definition box block">
+<h2 class="definition">Importance Sampling Ratio</h2>
+<p>The relative probability of the trajectory under the target and behavior policies is given as</p>
+<p><span class="math display">\[
+\rho_{t:T-1} \doteq \frac{\prod_{k=t}^{T-1} \pi(A_k | S_k) p(S_{k+1} | S_k, A_k)}
+{\prod_{k=t}^{T-1} b(A_k | S_k) p(S_{k+1} | S_k, A_k)} \fragment{= \prod_{k=t}^{T-1} \frac{\pi(A_k | S_k)}
+{b(A_k | S_k)}}
+\]</span></p>
+</div>
+<div id="section-3" class="box block fragment">
+<h2></h2>
+<p><strong>Note:</strong> The ratio only depends on the probabilities of selecting an action wrt. to the two differing policies! Does not require knowledge on transition probabilities.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="importance-sampling-as-a-correction" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Importance Sampling as a Correction</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Intuition:</p>
+<ul>
+<li>scale down rewards that are rare under <span class="math inline">\(\pi\)</span>, but common under <span class="math inline">\(b\)</span></li>
+<li>scale up rewards that are common under <span class="math inline">\(\pi\)</span>, but rare under <span class="math inline">\(b\)</span></li>
+</ul>
+<p>Importance sampling can dramatically <em>increase variance</em>.</p>
+</div>
+<div id="section-4" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-deepmind2021" role="doc-biblioref">Hasselt und Borsa 2021</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="ordinary-importance-sampling" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>(Ordinary) Importance Sampling</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p><strong>Goal</strong>: estimate the expected returns for the target policy <span class="math inline">\(\pi\)</span> <span class="math display">\[\mathbb{E} [G_t | S_t = s ]\]</span></p>
+<p><em>Available</em>: only returns <span class="math inline">\(G_t\)</span> due to the behavior policy which can give us <span class="math display">\[\mathbb{E} [G_t | S_t = s ] = v_b(s)\]</span></p>
+</div>
+<div id="section-5" class="box block fragment">
+<h2></h2>
+<p>The ratio <span class="math inline">\(\rho_{t:T−1}\)</span> transforms the collected returns to have the right expected value towards the target policy:</p>
+<p><span class="math display">\[\mathbb{E} [\rho_{t:T−1} G_t | S_t = s ] = v_\pi(s)\]</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="importance-sampling-for-off-policy-monte-carlo" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Importance Sampling for Off-Policy Monte-Carlo</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<ul>
+<li>Use returns generated from <span class="math inline">\(b\)</span> to evaluate <span class="math inline">\(\pi\)</span></li>
+<li>Weight return <span class="math inline">\(G_t\)</span> according to similarity between policies</li>
+<li>Multiply importance sampling corrections along whole episode <span class="math display">\[\color{red}G_t^{\pi/b} \color{black}= \frac{\pi(A_t|S_t)}{b(A_t|S_t)} \frac{\pi(A_{t+1}|S_{t+1})}{b(A_{t+1}|S_{t+1})} \dots \frac{\pi(A_T|S_T)}{b(A_T|S_T)} G_t\]</span></li>
+<li>Update value towards corrected return <span class="math display">\[v(S_t) \leftarrow v(S_t) + \alpha \Big( \color{red}G_t^{\pi/b} \color{black} -v(S_t)\Big)\]</span></li>
+</ul>
+</div>
+<div id="section-6" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="importance-sampling-for-off-policy-td" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Importance Sampling for Off-Policy TD</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<ul>
+<li>Use TD targets generated from <span class="math inline">\(b\)</span> to evaluate <span class="math inline">\(\pi\)</span></li>
+<li>Weight TD target <span class="math inline">\(\color{blue}R + \gamma v(S_{t+1})\)</span> according to similarity between policies</li>
+<li>Only need a single importance sampling correction <span class="math display">\[v(S_t) \leftarrow v(S_t) + \alpha \Big( \color{blue} \frac{\pi(A_t|S_t)}{b(A_t|S_t)} (R_{t+1} +\gamma v(S_{t+1})) \color{black} -v(S_t)\Big)\]</span></li>
+<li>Much lower variance than Monte-Carlo importance sampling</li>
+<li>Policies only need to be similar over a single step</li>
+</ul>
+</div>
+<div id="section-7" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="q-learning---no-importance-sampling-needed" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Q-Learning - No Importance Sampling needed</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Q-Learning is off-policy. But we update the value functions:</p>
+<p><span class="math display">\[
+q&#39;(S_t,A_t) \leftarrow q(S_t,A_t) + \alpha_t \Big(R_{t+1} + \gamma \max_{a&#39;}q(S_{t+1},a&#39;) - q(S_t,A_t)\Big)
+\]</span></p>
+</div>
+<div id="section-8" class="box block fragment">
+<h2></h2>
+<ul>
+<li>No importance sampling is required</li>
+<li>Next action is chosen using behaviour policy <span class="math inline">\(A_{t+1} ∼ b(·|S_t)\)</span></li>
+<li>But we consider alternative successor action $A’ ∼ (·|S_t) and update $q(S_t,A_t) towards value of this alternative action</li>
+</ul>
+</div>
+<div id="section-9" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="relationship-between-dp-and-td" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Relationship Between DP and TD</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:1000px;">
+<img src="../data/08/silver_dp_td.svg" style="height:auto;width:100%;" alt="../data/08/silver_dp_td.svg" />
+</figure>
+</div>
+</div>
+<div id="section-10" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="relationship-between-dp-and-td-2" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Relationship Between DP and TD 2</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:1000px;">
+<img src="../data/08/silver_dp_td_equations.svg" style="height:auto;width:100%;" alt="../data/08/silver_dp_td_equations.svg" />
+</figure>
+</div>
+</div>
+<div id="section-11" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="towards-deep-reinforcement-learning" class="section slide level1" data-background-color="#2CA02C">
+<div class="decker">
+<div class="alignment">
+<h1>Towards Deep Reinforcement Learning</h1>
+</div>
+</div>
+</section>
+<section id="drawbacks-of-tabular-methods" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Drawbacks of Tabular methods</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>For tabular methods like basic Q-Learning: we keep a table of all <span class="math inline">\(Q\)</span>-values.</p>
+</div>
+<div id="section-12" class="box block fragment">
+<h2></h2>
+<p>In real world application: not possible to learn about every single state:</p>
+<ul>
+<li>too many states (or even continuous input spaces) to visit in training</li>
+<li>table would be too large for so many states</li>
+</ul>
+<div class="media">
+<figure class="image" style="height:auto;width:1000px;">
+<img src="../data/09/klein_pacman.svg" style="height:auto;width:100%;" alt="../data/09/klein_pacman.svg" />
+</figure>
+</div>
+</div>
+<div id="section-13" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-kleinCS188" role="doc-biblioref">Klein und Abbeel 2014</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="generalization-over-states" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Generalization over States</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>In order to deal with continuous or large state spaces, we want to generalize. For this, we use <em>Function Approximation</em>:</p>
+<ul>
+<li>Learn about a small number of training states from experiences.</li>
+<li>Generalize these experiences to new, similar situations.</li>
+</ul>
+<p>As a basic idea for <em>Deep Reinforcement Learning</em>: use Neural Networks for function approximation.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="value-function-in-grid-world-example" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Value Function in Grid World Example</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="towards-a-more-realistic-grid" class="left box block">
+<h2 class="left">Towards a more realistic Grid</h2>
+<p>We considered this simple discrete grid environment.</p>
+<div class="media">
+<figure class="image" style="height:auto;width:600px;">
+<img src="../data/02/sutton_3_2_gridworld.svg" style="height:auto;width:100%;" alt="../data/02/sutton_3_2_gridworld.svg" />
+</figure>
+</div>
+<p>For a real robot: We would consider a continuous state space (position).</p>
+</div>
+</div><div class="area right">
+<div id="section-14" class="right box block">
+<h2 class="right"></h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/08/grid_vf_to_continous_1.png" style="height:500px;width:auto;" alt="../data/08/grid_vf_to_continous_1.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="a-robot-sampling-a-random-trajectory-in-the-grid-environment" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>A robot sampling a random trajectory in the grid environment</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="section-15" class="left box block">
+<h2 class="left"></h2>
+<p>Environment taken as continuous.</p>
+<p><strong>Observations:</strong> Continuous two dimensional position</p>
+<p><strong>Actions:</strong> Discrete (for now) directions and stepping</p>
+<p><strong>Position Update:</strong> Not completely deterministic</p>
+</div>
+</div><div class="area right">
+<div id="section-16" class="right box block">
+<h2 class="right"></h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/08/grid_vf_to_continous_2.png" style="height:500px;width:auto;" alt="../data/08/grid_vf_to_continous_2.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="introduction-of-a-value-function-over-the-continuous-environment" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Introduction of a Value Function over the continuous Environment</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="section-17" class="left box block">
+<h2 class="left"></h2>
+<p>Environment taken as continuous.</p>
+<p><strong>Observations:</strong> Continuous two dimensional position</p>
+<p><strong>Actions:</strong> Discrete (for now) directions and stepping</p>
+<p><strong>Position Update:</strong> Not completely deterministic</p>
+</div>
+</div><div class="area right">
+<div id="section-18" class="right box block">
+<h2 class="right"></h2>
+<div class="r-stack">
+<p><span class="media"><span class="figure image" style="height:auto;width:auto;"><img src="../data/08/grid_vf_to_continous_3.png" style="height:500px;width:auto;" alt="../data/08/grid_vf_to_continous_3.png" /></span></span> <span class="media"><span class="figure fragment image" style="height:auto;width:auto;"><img src="../data/08/grid_vf_to_continous_4.png" style="height:500px;width:auto;" alt="../data/08/grid_vf_to_continous_4.png" /></span></span> <span class="media"><span class="figure fragment image" style="height:auto;width:auto;"><img src="../data/08/grid_vf_to_continous_5.png" style="height:500px;width:auto;" alt="../data/08/grid_vf_to_continous_5.png" /></span></span> <span class="media"><span class="figure fragment image" style="height:auto;width:auto;"><img src="../data/08/grid_vf_to_continous_6.png" style="height:500px;width:auto;" alt="../data/08/grid_vf_to_continous_6.png" /></span></span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="overview-deep-neural-networks" class="section slide level1" data-background-color="#1f77b4">
+<div class="decker">
+<div class="alignment">
+<h1>Overview Deep Neural Networks</h1>
+</div>
+</div>
+</section>
+<section id="neural-networks" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Neural Networks</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/neural_net.jpeg" style="height:480px;width:auto;" alt="../data/09/neural_net.jpeg" />
+</figure>
+</div>
+</div>
+<div id="section-19" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-cs231_2015" role="doc-biblioref">Karpathy 2015a</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="neural-networks-1" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Neural Networks</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Approach is inspired by how a brain learns. It is characterized by:</p>
+<ul>
+<li>The human brain has approximately <span class="math inline">\(10^{11}\)</span> neurons.</li>
+<li>Each neuron has around <span class="math inline">\(10^4\)</span> to <span class="math inline">\(10^5\)</span> connections.</li>
+<li>The switching time of a neuron is around 0.001 seconds.</li>
+<li>Cognitive operations take above 0.1 s (e.g., face recognition). As a consequence: there can be only around 100 computation steps in sequence involved (100-step-rule).</li>
+<li>Massive parallel computation.</li>
+<li>Very robust (computation).</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="overview-of-deep-learning-architecture" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Overview of Deep Learning Architecture</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="basic-approach-of-deep-learning" class="left box block">
+<h2 class="left">Basic approach of deep learning</h2>
+<ul>
+<li>Raw, high dimensional data is processed in stages.</li>
+<li>Stages are realized in different layers of the network.</li>
+<li>Higher layer extract increasingly abstract features from lower levels</li>
+</ul>
+</div>
+</div><div class="area right">
+<div id="section-20" class="right box block">
+<h2 class="right"></h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/deep_nn_layers.png" style="height:450px;width:auto;" alt="../data/09/deep_nn_layers.png" />
+</figure>
+</div>
+</div>
+<div id="section-21" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-goodfellow2016" role="doc-biblioref">Goodfellow, Bengio, und Courville 2016</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="forms-of-learning" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Forms of Learning</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/learning_forms_6.png" style="height:450px;width:auto;" alt="../data/09/learning_forms_6.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="supervised-learning" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Supervised Learning</h1>
+<div class="layout row columns">
+<div class="area ">
+<div id="section-22" class="top box block">
+<h2 class="top"></h2>
+<p>Teacher provides examples of a situation and a desired output.</p>
+<p>The goal is to learn the functional relation between situations and the desired output.</p>
+</div>
+</div>
+</div>
+<div class="layout row columns">
+<div class="area left">
+<div id="classification" class="left box block">
+<h2 class="left">Classification</h2>
+<ul>
+<li>desired output is taken from a small set of possibilities</li>
+<li>patterns are partitioned into classes as given by desired output</li>
+<li>example: digit recognition</li>
+</ul>
+</div>
+</div><div class="area right">
+<div id="section-23" class="right box block">
+<h2 class="right"></h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/MNIST_supervised_learning.png" style="height:360px;width:auto;" alt="../data/09/MNIST_supervised_learning.png" />
+</figure>
+</div>
+</div>
+<div id="section-24" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-bishop2006" role="doc-biblioref">Bishop 2006</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="classification-as-an-example-task" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Classification as an Example Task</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="r-stack">
+<p><span class="media"><span class="figure fragment image" style="height:auto;width:auto;"><img src="../data/09/overview_Cycle_1_general.png" style="height:450px;width:auto;" alt="../data/09/overview_Cycle_1_general.png" /></span></span> <span class="media"><span class="figure fragment image" style="height:auto;width:auto;"><img src="../data/09/overview_Cycle_2_analytical.png" style="height:450px;width:auto;" alt="../data/09/overview_Cycle_2_analytical.png" /></span></span> <span class="media"><span class="figure fragment image" style="height:auto;width:auto;"><img src="../data/09/overview_Cycle_3_pipeline.png" style="height:450px;width:auto;" alt="../data/09/overview_Cycle_3_pipeline.png" /></span></span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="neural-networks-2" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Neural Networks</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="section-25" class="left box block">
+<h2 class="left"></h2>
+<p>In general, they address the problem of (very) high dimensional input data and project it into lower dimensional spaces.</p>
+<p>A neuronal network can therefore be understood as approximating a function in high dimensional spaces.</p>
+<p>Computation in neural networks relies in such a model on matrix multiplication (multiply input vector with weight matrix describing the connections).</p>
+</div>
+</div><div class="area right">
+<div id="section-26" class="right box block">
+<h2 class="right"></h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/nnet_plot2.jpg" style="height:450px;width:auto;" alt="../data/09/nnet_plot2.jpg" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="simple-perspective-nns-as-special-case-of-regression" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Simple Perspective: NNs as special case of Regression</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:1200px;">
+<img src="../decker/code/code-275c38a8.tex.svg" style="height:auto;width:100%;" alt="code-275c38a8.tex.svg" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="notation-for-neural-network-1" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Notation for Neural Network 1</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>For neural networks the following notations are recommended (as used by Goodfellow <span class="citation">(<a href="#ref-goodfellow2016" role="doc-biblioref">Goodfellow, Bengio, und Courville 2016</a>)</span>).</p>
+<p>In general, superscript <span class="math inline">\((i)\)</span> denotes the <span class="math inline">\(i^{th}\)</span> training example while superscript <span class="math inline">\([l]\)</span> denotes the <span class="math inline">\(l^{th}\)</span> layer.</p>
+<p>A <em>vector</em> is denoted as <span class="math inline">\(\overrightarrow{x}\)</span> (or <span class="math inline">\(\mathbf{x}\)</span>) and a <em>matrix</em> is denoted as <span class="math inline">\(\mathbf{A}\)</span>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="notation-for-neural-network-2" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Notation for Neural Network 2</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/nn_notation.png" style="height:480px;width:auto;" alt="../data/09/nn_notation.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="overview-learning-cycle" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Overview Learning Cycle</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="r-stack">
+<p><span class="media"><span class="figure image" style="height:auto;width:auto;"><img src="../data/09/05_2_withoutBias.png" style="height:480px;width:auto;" alt="../data/09/05_2_withoutBias.png" /></span></span> <span class="media"><span class="figure fragment image" style="height:auto;width:auto;"><img src="../data/09/05_3_withBias.png" style="height:480px;width:auto;" alt="../data/09/05_3_withBias.png" /></span></span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="forward-computation-for-the-single-layer" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Forward computation for the single layer</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>For a single layer, we had as the basic equation for a neural network:</p>
+<p><span class="math display">\[
+\mathbf{\hat{y}} = \mathbf{W} \mathbf{x} + \mathbf{b}
+\]</span></p>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/CS_231_wBias.jpeg" style="height:240px;width:auto;" alt="../data/09/CS_231_wBias.jpeg" />
+</figure>
+</div>
+<p>Or, written with the bias augmented as the first constant entry into the input vector:</p>
+<p><span class="math display">\[
+\mathbf{\hat{y}} = \mathbf{W} \mathbf{x}
+\]</span></p>
+</div>
+<div id="section-27" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-cs231_2015" role="doc-biblioref">Karpathy 2015a</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="a-neuron-model" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>A Neuron Model</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Biological neuron as the main processing unit of nervous systems. It integrates activity from a distributed network of neurons.</p>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/neuron_model.jpeg" style="height:300px;width:auto;" alt="../data/09/neuron_model.jpeg" />
+</figure>
+</div>
+<p>Model of a neuron: weighted input from different sources are summed up. An output function is applied on the integrated inputs.</p>
+</div>
+<div id="section-28" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-cs231_2015" role="doc-biblioref">Karpathy 2015a</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="computation-in-nn-overview-learning-cycle" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Computation in NN: Overview Learning Cycle</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="r-stack">
+<p><span class="media"><span class="figure image" style="height:auto;width:auto;"><img src="../data/09/05_5_updateGD.png" style="height:480px;width:auto;" alt="../data/09/05_5_updateGD.png" /></span></span> <span class="media"><span class="figure fragment image" style="height:auto;width:auto;"><img src="../data/09/05_6_activation.png" style="height:480px;width:auto;" alt="../data/09/05_6_activation.png" /></span></span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="neuron-model-activation-function" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Neuron Model: Activation Function</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>An output function is applied on the integrated collected activities.</p>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/Rojas_Sigmoid.png" style="height:300px;width:auto;" alt="../data/09/Rojas_Sigmoid.png" />
+</figure>
+</div>
+<p>Shown is a sigmoid function for three different constants (<span class="math inline">\(c = 1, 2, 3\)</span>).</p>
+</div>
+<div id="section-29" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-Rojas96" role="doc-biblioref">Rojas 1996</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="activation-function-sigmoid" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Activation Function: Sigmoid</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="section-30" class="left box block">
+<h2 class="left"></h2>
+<p>Logistic sigmoid activation function:</p>
+<p><span class="math display">\[
+\begin{align*}
+        f_{tanh}(a_j) &amp;= \tanh (a_j) \\
+                          &amp;= \frac{\exp(a_j) - \exp(-a_j)}{\exp(a_j) +
+                            \exp(-a_j)}\}
+\end{align*}
+\]</span></p>
+</div>
+</div><div class="area center">
+<div id="section-31" class="center box block">
+<h2 class="center"></h2>
+<ul>
+<li>saturate and squashes numbers to range <span class="math inline">\([0,1]\)</span></li>
+<li>but not zero centered</li>
+<li>direct probabilistic interpretation</li>
+</ul>
+</div>
+</div><div class="area right">
+<div id="section-32" class="right box block">
+<h2 class="right"></h2>
+<p><span class="media"><span class="figure image" style="height:auto;width:420px;"><img src="../data/09/gradient_sigmoid.png" style="height:auto;width:100%;" alt="../data/09/gradient_sigmoid.png" /></span></span> <!--![](../data/09/logistic.png){width=420px}--></p>
+</div>
+</div>
+</div>
+<div class="layout row columns">
+<div class="area ">
+<div id="drawbacks" class="bottom box block">
+<h2 class="bottom">Drawbacks</h2>
+<ul>
+<li>when in saturation: kills gradient</li>
+<li>calculation of exp is expensive</li>
+</ul>
+</div>
+<div id="section-33" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-Rojas96" role="doc-biblioref">Rojas 1996</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="activation-function-rectified-linear-unit" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Activation Function: Rectified-Linear Unit</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="section-34" class="left box block">
+<h2 class="left"></h2>
+<p>Rectified Linear (ReLU) activation function:</p>
+<p><span class="math display">\[
+f_{relu}(a_j) = \max(0, a_j)
+\]</span></p>
+</div>
+</div><div class="area center">
+<div id="section-35" class="center box block">
+<h2 class="center"></h2>
+<ul>
+<li>does not saturate for positive values</li>
+<li>not zero centered</li>
+<li>computationally very efficient</li>
+<li>converges very fast (six times faster than sigmoid in practive)</li>
+</ul>
+</div>
+</div><div class="area right">
+<div id="section-36" class="right box block">
+<h2 class="right"></h2>
+<div class="media">
+<figure class="image" style="height:auto;width:420px;">
+<img src="../data/09/relu.png" style="height:auto;width:100%;" alt="../data/09/relu.png" />
+</figure>
+</div>
+</div>
+<div id="section-37" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-Rojas96" role="doc-biblioref">Rojas 1996</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="classification-example-task" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Classification – Example Task</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/CIFAR_dog_frog.png" style="height:480px;width:auto;" alt="../data/09/CIFAR_dog_frog.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="goal-linear-classifier" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Goal: Linear Classifier</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/CS231_pixelspace.jpeg" style="height:360px;width:auto;" alt="../data/09/CS231_pixelspace.jpeg" />
+</figure>
+</div>
+<p>Visualization of the image space: each image is represented as a single point, three classifiers are shown.</p>
+</div>
+<div id="section-38" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-cs231_2015" role="doc-biblioref">Karpathy 2015a</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="overview-learning-cycle-1" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Overview: Learning Cycle</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/overview_Cycle_7_regularization.png" style="height:360px;width:auto;" alt="../data/09/overview_Cycle_7_regularization.png" />
+</figure>
+</div>
+</div>
+<div id="objective-function-error-loss-cost" class="definition box block">
+<h2 class="definition">Objective Function – Error, Loss, Cost</h2>
+<p>The function we want to minimize (or maximize) is called <em>objective</em> function (or <em>criterion</em>).</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="gradient-descent" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Gradient Descent</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>When analytical approach is not possible or feasible: A basic approach to obtain sequential learning rules is to apply <em>gradient descent</em>.</p>
+<p>If the error function comprises a sum over the data points (cost),</p>
+<p><span class="math display">\[
+E(\vec{w}) = \sum_{i=1}^m E^{(i)}(\vec{w}) = \sum_{i=1}^m E(\vec{x}^{(i)}, \vec{w}) ,
+\]</span></p>
+</div>
+<div id="section-39" class="box block fragment">
+<h2></h2>
+<p>then the gradient descent method</p>
+<p><span class="math display">\[
+\Delta \vec{w} = - \eta \nabla_{\vec{w}} E(\vec{w}) = - \eta \sum_{i=1}^m \nabla_{\vec{w}} E^{(i)}(\vec{w})
+\]</span></p>
+<p>iteratively minimizes the overall error <span class="math inline">\(E(\vec{w})\)</span>, where <span class="math inline">\(\eta &gt; 0\)</span> is the learning rate.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="visualization-of-the-loss-function" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Visualization of the loss function</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/Bishop_5_5.png" style="height:400px;width:auto;" alt="../data/09/Bishop_5_5.png" />
+</figure>
+</div>
+<p>Gradient descent works on the surface of the loss function and iteratively tries to approach a minimum.</p>
+</div>
+<div id="section-40" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-bishop2006" role="doc-biblioref">Bishop 2006</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="gradient-descent-iterative-search-for-minimum" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Gradient Descent: Iterative Search for Minimum</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="section-41" class="left box block">
+<h2 class="left"></h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/errorLandscape_Gradient.png" style="height:420px;width:auto;" alt="../data/09/errorLandscape_Gradient.png" />
+</figure>
+</div>
+</div>
+</div><div class="area right">
+<div id="iterative-optimization-algorithm" class="right box block">
+<h2 class="right">Iterative optimization algorithm</h2>
+<ul>
+<li>start from an initial point <span class="math inline">\(\vec{u}\)</span> (initial guess) on the error function</li>
+<li>Iterate (<span class="math inline">\(k\)</span> = iteration, <span class="math inline">\(\eta\)</span> = learning rate):</li>
+</ul>
+<p>Determine the gradient at that point and make a step: <span class="math inline">\(\vec{w}_{k+1} = \vec{w}_{k} - \eta \nabla_{\vec{w}} E^{(i)}(\vec{w})\)</span></p>
+<p>Until: <span class="math inline">\(\nabla_{\vec{w}} E^{(i)}(\vec{w}) \approx 0\)</span></p>
+<p>Then we found a minimum.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="possible-problems-for-gradient-descents" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Possible Problems for Gradient Descents</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="grid-layout" style="grid-template-columns: 30fr 70fr;">
+<div class="media">
+<figure class="image" style="height:auto;width:180px;">
+<img src="../data/Discussion.png" style="height:auto;width:100%;" alt="../data/Discussion.png" />
+</figure>
+</div>
+<ul>
+<li>What kind of problems could we encounter in gradient descent?</li>
+<li>What might be solutions?</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="gradient-descent-possible-problems" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Gradient Descent: Possible Problems</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="section-42" class="left box block">
+<h2 class="left"></h2>
+<div class="media">
+<figure class="image" style="height:auto;width:640px;">
+<img src="../data/09/GradientDescent.png" style="height:auto;width:100%;" alt="../data/09/GradientDescent.png" />
+</figure>
+</div>
+</div>
+</div><div class="area right">
+<div id="possible-problems" class="right box block">
+<h2 class="right">Possible Problems</h2>
+<ul>
+<li>which minimum is reached depends on the starting point</li>
+<li>too large steps can overshoot the minimum and oscillate</li>
+<li>too small steps can take too long</li>
+<li>flat regions in the error function lead to very small gradients that can not be distinguished from a minimum</li>
+</ul>
+<!--# Gradient Descent: Computation of the Gradient
+
+Computation of the Gradient requires application of the chain rule:
+$$
+\begin{align*}
+\nabla_{\vec{w}} E(\vec{w}) &= \frac{\partial E(\vec{w})}{\partial \vec{w}} \\
+&= \frac{\partial}{\partial \vec{w}} \begin{pmatrix}
+			\frac{1}{2} \sum_{i=1}^{m} ( f(\vec{x}^{(i)}, \vec{w}) - y^{(i)})^2
+		\end{pmatrix}\\
+	&= \begin{pmatrix} \frac{\partial}{\partial w_1 } E(\vec{w}), \dots, \frac{\partial}{\partial w_n} E(\vec{w}) \end{pmatrix}
+\end{align*}
+$$
+
+## {.fragment}
+
+$$
+\begin{align*}
+\frac{\partial}{\partial \vec{w}_1 } E(\vec{w}) = \sum_{i=1}^{m} ( f(\vec{x}^{(i)}, \vec{w}) - y^{(i)}) \frac{\partial}{\partial \vec{w}_1 } f(\vec{x}^{(i)}, \vec{w})
+\end{align*}
+$$
+
+For complex models the chain rule has to be applied recursively.
+-->
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="gradient-descent-computation-for-the-linear-model" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Gradient Descent: Computation for the Linear Model</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Application to neural networks (here shown without the output function) is straight forward:</p>
+<p><span class="math display">\[
+\begin{align*}
+\nabla_{\vec{w}} E(\vec{w}) &amp;= \frac{\partial E(\vec{w})}{\partial \vec{w}} \\
+&amp;= \frac{\partial}{\partial \vec{w}} \begin{pmatrix}
+			\frac{1}{2} \sum_{i=1}^{m} ( \vec{w}^T \vec{x}^{(i)} - y^{(i)})^2
+		\end{pmatrix}\\
+	&amp;=  \sum_{i=1}^{m} ( \vec{w}^T \vec{x}^{(i)} - y^{(i)}) \vec{x}^{(i)}
+ %Error? = missing gradient wrt to w?
+\end{align*}
+\]</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="computation-in-linear-classification-example" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Computation in Linear Classification Example}</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/CS_231_imagemap.jpg" style="height:360px;width:auto;" alt="../data/09/CS_231_imagemap.jpg" />
+</figure>
+</div>
+<p>Classification of images – shown is the simplified mapping of an image to class scores for a linear classifier. Note that this particular set of weights <span class="math inline">\(\mathbf{W}\)</span> is not good at all: the weights assign our cat image a very low cat score.</p>
+</div>
+<div id="section-43" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-cs231_2015" role="doc-biblioref">Karpathy 2015a</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="non-linear-classification-example-spiral-data" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Non-Linear Classification Example: Spiral Data</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="section-44" class="left box block">
+<h2 class="left"></h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/CS_231_spiral_raw.png" style="height:300px;width:auto;" alt="../data/09/CS_231_spiral_raw.png" />
+</figure>
+</div>
+<p>Three classes, constructed from sine and cosine functions.</p>
+<p>Advantage: nicely centered and distributed – no preprocessing required.</p>
+</div>
+</div><div class="area right">
+<div id="section-45" class="right box block fragment">
+<h2 class="right"></h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/CS_231_spiral_linear.png" style="height:360px;width:auto;" alt="../data/09/CS_231_spiral_linear.png" />
+</figure>
+</div>
+<p>The spiral dataset is not easily linearly separable.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="introducing-hidden-layers-mlp" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Introducing Hidden Layers: MLP</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/Bishop_5_1_notation.png" style="height:450px;width:auto;" alt="../data/09/Bishop_5_1_notation.png" />
+</figure>
+</div>
+</div>
+<div id="section-46" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-bishop2006" role="doc-biblioref">Bishop 2006</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="geometric-interpretation-of-mlps-for-classification" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Geometric Interpretation of MLPs for Classification</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<ul>
+<li>First hidden layer: positive responses in stripes and half-spaces of the input space</li>
+<li>Second hidden layer: the combination of stripes and half-spaces causes positive responses in convex polyhedra of the input space</li>
+<li>Output layer: Arbitrary combinations of the previous regions with high neural activity enables the formation of arbitrary decision boundaries</li>
+</ul>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/MLP-interpretation.png" style="height:240px;width:auto;" alt="../data/09/MLP-interpretation.png" />
+</figure>
+</div>
+<!--# Towards Deep Neural Networks {.columns}
+
+## {.left}
+
+Overall, Deep Learning deals with high dimensional input data and tries to learn multiple layers of representation.
+
+Goal is to transform input into gradually higher levels of representation that represent more and more abstract functions of the raw input.
+
+For example for images: edges, local shapes, object parts, etc.
+
+In Deep Learning all those levels should be learnt.
+
+## {.right}
+
+![](../data/09/bengio_1_1_hierarchy.png){height=450px}
+
+## {.footer}
+
+[@bengio2009deep]-->
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="non-linear-classification-example-spiral-data-1" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Non-Linear Classification Example: Spiral Data</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/CS_231_spiral_net.png" style="height:360px;width:auto;" alt="../data/09/CS_231_spiral_net.png" />
+</figure>
+</div>
+<p>Successful classification (<span class="math inline">\(98 \%\)</span>) using a neural network after introducing a hidden layer.</p>
+</div>
+<div id="section-47" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-cs231_2015" role="doc-biblioref">Karpathy 2015a</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="deep-learning" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Deep Learning</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<ul>
+<li>Learning a hierarchy of representations, from simple to complex</li>
+<li>Quintessential deep learning model: Multilayer Perceptrons</li>
+</ul>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/deep_net.png" style="height:320px;width:auto;" alt="../data/09/deep_net.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="computation-in-nn-overview-learning-cycle-1" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Computation in NN: Overview Learning Cycle</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="r-stack">
+<p><span class="media"><span class="figure image" style="height:auto;width:auto;"><img src="../data/09/LearningCycle_C1.png" style="height:480px;width:auto;" alt="../data/09/LearningCycle_C1.png" /></span></span> <span class="media"><span class="figure fragment image" style="height:auto;width:auto;"><img src="../data/09/LearningCycle_C3.png" style="height:480px;width:auto;" alt="../data/09/LearningCycle_C3.png" /></span></span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="multilayer-perceptron-adaptation-of-the-weights" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Multilayer Perceptron: Adaptation of the Weights</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/MLP_2_credit_assignment.png" style="height:380px;width:auto;" alt="../data/09/MLP_2_credit_assignment.png" />
+</figure>
+</div>
+<p>Credit-assignment problem: how a weight contributes to the loss.</p>
+<p>During backpropagation the pushed back error gets more and more diffuse.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="gradient-descent-computation-of-the-gradient" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Gradient Descent: Computation of the Gradient</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Computation of the Gradient requires application of the chain rule: <span class="math display">\[
+\begin{align*}
+\nabla_{\vec{w}} E(\vec{w}) &amp;= \frac{\partial E(\vec{w})}{\partial \vec{w}} \\
+&amp;= \frac{\partial}{\partial \vec{w}} \begin{pmatrix}
+			\frac{1}{2} \sum_{i=1}^{m} ( f(\vec{x}^{(i)}, \vec{w}) - y^{(i)})^2
+		\end{pmatrix}\\
+	&amp;= \begin{pmatrix} \frac{\partial}{\partial w_1 } E(\vec{w}), \dots, \frac{\partial}{\partial w_n} E(\vec{w}) \end{pmatrix}
+\end{align*}
+\]</span></p>
+<p><span class="math display">\[
+\begin{align*}
+\frac{\partial}{\partial \vec{w}_1 } E(\vec{w}) = \sum_{i=1}^{m} ( f(\vec{x}^{(i)}, \vec{w}) - y^{(i)}) \frac{\partial}{\partial \vec{w}_1 } f(\vec{x}^{(i)}, \vec{w})
+\end{align*}
+\]</span></p>
+<p>For complex models the chain rule has to be applied recursively.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="calculating-partial-derivatives-for-hidden-units-z_j" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Calculating partial derivatives: For hidden units <span class="math inline">\(z_j\)</span></h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p><span class="math display">\[
+\begin{align*}
+      \delta_j &amp;= \frac{\partial E_{n}}{\partial a_j} = \sum_{k}\frac{\partial E_{n}}{\partial a_k}\frac {\partial a_k}{\partial a_j} = \sum_{k}\frac{\partial E_{n}}{\partial a_k}\frac {\partial a_k}{\partial z_j}\frac{\partial z_j}{\partial a_j} \\
+                   &amp;= \sum_{k} \delta_k w_{kj} h&#39;(a_j) = h&#39;(a_j) \sum_{k} \delta_k w_{kj}
+\end{align*}
+\]</span></p>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/Bishop_5_7_notation.png" style="height:240px;width:auto;" alt="../data/09/Bishop_5_7_notation.png" />
+</figure>
+</div>
+</div>
+<div id="section-48" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-bishop2006" role="doc-biblioref">Bishop 2006</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="training-deep-neural-networks" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Training Deep Neural Networks</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/gradient_netExample.png" style="height:300px;width:auto;" alt="../data/09/gradient_netExample.png" />
+</figure>
+</div>
+<p>Why is it difficult to learn such Deep Neural Networks consisting of multiple layers?</p>
+<p>There is a huge number of parameters in deep networks. Those have to be trained.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="convolutional-neural-networks" class="section slide level1" data-background-color="#2CA02C">
+<div class="decker">
+<div class="alignment">
+<h1>Convolutional Neural Networks</h1>
+</div>
+</div>
+</section>
+<section id="key-ideas-of-convolutional-neural-networks" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Key ideas of Convolutional Neural Networks</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<ul>
+<li>Convolution</li>
+<li>Non-Linearity (ReLU)</li>
+<li>Pooling/ Sub-Sampling</li>
+<li>Classification – fully connected layer</li>
+</ul>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/Typical_cnn.png" style="height:240px;width:auto;" alt="../data/09/Typical_cnn.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="convolution" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Convolution</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/Convolution_schematic.gif" style="height:360px;width:auto;" alt="../data/09/Convolution_schematic.gif" />
+</figure>
+</div>
+<p>Basic Idea: Convolve a filter on an image — filter slides over the image spatially computing the dot product</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="convolution-shared-weights" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Convolution: Shared Weights</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/stride.jpeg" style="height:300px;width:auto;" alt="../data/09/stride.jpeg" />
+</figure>
+</div>
+<ul>
+<li>Uses a sparse representation: only a local neighborhood of input values is integrated — signals have strong local correlations.</li>
+<li>Sharing of features: single parameter set (kernel/ mask) used on all possible locations — signals where features can appear anywhere, are invariant to translations.</li>
+</ul>
+</div>
+<div id="section-49" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-cs231_2015" role="doc-biblioref">Karpathy 2015a</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="required-parameters-fully-connected-case" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Required Parameters: Fully-Connected Case</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="section-50" class="left box block">
+<h2 class="left"></h2>
+<p>As an example: a <span class="math inline">\(200 \times 200\)</span> image.</p>
+<p>For a fully-connected neural network with <span class="math inline">\(400,000\)</span> hidden units: this would require 16 billion parameters.</p>
+</div>
+</div><div class="area right">
+<div id="section-51" class="right box block">
+<h2 class="right"></h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/lecun_einstein1.png" style="height:450px;width:auto;" alt="../data/09/lecun_einstein1.png" />
+</figure>
+</div>
+</div>
+<div id="section-52" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-lecun2013" role="doc-biblioref"><strong>lecun2013?</strong></a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="required-parameters-convolutional-approach" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Required Parameters: Convolutional Approach</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="section-53" class="left box block">
+<h2 class="left"></h2>
+<p>As an example: a <span class="math inline">\(200 \times 200\)</span> image.</p>
+<p>Convolutional: Shared parameters for a filter, using <span class="math inline">\(10\)</span> feature maps of size <span class="math inline">\(200 \times 200\)</span>, 10 filters of size <span class="math inline">\(10 \times 10\)</span>: only 1000 parameters needed.</p>
+</div>
+</div><div class="area right">
+<div id="section-54" class="right box block">
+<h2 class="right"></h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/lecun_einstein3.png" style="height:450px;width:auto;" alt="../data/09/lecun_einstein3.png" />
+</figure>
+</div>
+</div>
+<div id="section-55" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-lecun2013" role="doc-biblioref"><strong>lecun2013?</strong></a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="convolutions-illustrated" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Convolutions Illustrated</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="r-stack">
+<p><span class="media"><span class="figure image" style="height:auto;width:1200px;"><img src="../data/09/conv_layer1_new.png" style="height:auto;width:100%;" alt="../data/09/conv_layer1_new.png" /></span></span> <span class="media"><span class="figure fragment image" style="height:auto;width:1200px;"><img src="../data/09/conv_layer2.png" style="height:auto;width:100%;" alt="../data/09/conv_layer2.png" /></span></span> <span class="media"><span class="figure fragment image" style="height:auto;width:1200px;"><img src="../data/09/conv_layer3.png" style="height:auto;width:100%;" alt="../data/09/conv_layer3.png" /></span></span> <span class="media"><span class="figure fragment image" style="height:auto;width:1200px;"><img src="../data/09/conv_layer4.png" style="height:auto;width:100%;" alt="../data/09/conv_layer4.png" /></span></span> <span class="media"><span class="figure fragment image" style="height:auto;width:1200px;"><img src="../data/09/conv_layer5.png" style="height:auto;width:100%;" alt="../data/09/conv_layer5.png" /></span></span></p>
+</div>
+</div>
+<div id="section-56" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-cs231_2015" role="doc-biblioref">Karpathy 2015a</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-alexnet-kernels-first-convolutional-layer" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Example: AlexNet – Kernels (first convolutional layer)</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/alexnet_kernels.png" style="height:350px;width:auto;" alt="../data/09/alexnet_kernels.png" />
+</figure>
+</div>
+<p>Convolutional kernels learned by AlexNet’s first layers. The network learned a variety of frequency and orientation-selective kernels.</p>
+</div>
+<div id="section-57" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-Krizhevsky_imagenetclassification" role="doc-biblioref">Krizhevsky, Sutskever, und Hinton 2012</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="stacking-several-convolutional-layers" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Stacking several convolutional layers</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Convolutional layers stacked in a ConvNet</p>
+<div class="media">
+<figure class="image" style="height:auto;width:1200px;">
+<img src="../data/09/conv_layer6.png" style="height:auto;width:100%;" alt="../data/09/conv_layer6.png" />
+</figure>
+</div>
+</div>
+<div id="section-58" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-cs231_2015" role="doc-biblioref">Karpathy 2015a</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="pooling-layer" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Pooling Layer</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="section-59" class="left box block">
+<h2 class="left"></h2>
+<div class="media">
+<figure class="image" style="height:auto;width:420px;">
+<img src="../data/09/pool.jpeg" style="height:auto;width:100%;" alt="../data/09/pool.jpeg" />
+</figure>
+</div>
+</div>
+</div><div class="area right">
+<div id="section-60" class="right box block">
+<h2 class="right"></h2>
+<div class="media">
+<figure class="image" style="height:auto;width:540px;">
+<img src="../data/09/Pooling_schematic.gif" style="height:auto;width:100%;" alt="../data/09/Pooling_schematic.gif" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="layout row columns">
+<div class="area ">
+<div id="section-61" class="bottom box block">
+<h2 class="bottom"></h2>
+<ul>
+<li><p>Basic Idea: Progressively downsample spatial size — after convolutional layer.</p></li>
+<li><p>Advantage: becomes robust against variation of location (subsequently small translations after combining first convolutional layer).</p></li>
+<li><p>Different forms of pooling: max pooling, average pooling, …</p></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="combining-invariants-on-next-level" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Combining Invariants on next level</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:640px;">
+<img src="../data/09/goodfellow_9_11_pooling.png" style="height:auto;width:100%;" alt="../data/09/goodfellow_9_11_pooling.png" />
+</figure>
+</div>
+<p>Cross-Channel Pooling and Invariance to Learned Transformations.</p>
+</div>
+<div id="section-62" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-goodfellow2016" role="doc-biblioref">Goodfellow, Bengio, und Courville 2016</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="fully-connected-layer-classification" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Fully Connected Layer – Classification</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:1200px;">
+<img src="../data/09/clarifai_cnn.png" style="height:auto;width:100%;" alt="../data/09/clarifai_cnn.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="imagenet-competition-development" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>ImageNet Competition Development</h1>
+<div class="layout row columns">
+<div class="area ">
+<div id="section-63" class="top box block">
+<h2 class="top"></h2>
+<p>ImageNet is a dataset of over 15 million labeled high-resolution images belonging to roughly 22,000 categories, collected from the web.</p>
+</div>
+</div>
+</div>
+<div class="layout row columns">
+<div class="area left">
+<div id="accuracy-over-years" class="left box block">
+<h2 class="left">Accuracy over years</h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/image25.png" style="height:360px;width:auto;" alt="../data/09/image25.png" />
+</figure>
+</div>
+</div>
+</div><div class="area right">
+<div id="error-and-depth-of-nns" class="right box block">
+<h2 class="right">Error and Depth of NNs</h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/cs231n_2017_lecture9-2_revolution.png" style="height:360px;width:auto;" alt="../data/09/cs231n_2017_lecture9-2_revolution.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="alexnet-results" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>AlexNet – Results</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/alexnet_validation_1.png" style="height:450px;width:auto;" alt="../data/09/alexnet_validation_1.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="overview-learning-cycle-2" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Overview Learning Cycle</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/LearningCycle_C3.png" style="height:480px;width:auto;" alt="../data/09/LearningCycle_C3.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="deep-reinforcement-learning" class="section slide level1" data-background-color="#2CA02C">
+<div class="decker">
+<div class="alignment">
+<h1>Deep Reinforcement Learning</h1>
+</div>
+</div>
+</section>
+<section id="possible-problems-for-function-approximation" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Possible Problems for Function Approximation</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Goal: apply efficiency and flexibility of TD methods to realistic problems</p>
+</div>
+<div id="problem-deadly-triad" class="box block">
+<h2>Problem: Deadly Triad</h2>
+<p>Approach is …</p>
+<ul>
+<li>off-policy,</li>
+<li>employs non-linear function approximation,</li>
+<li>and uses bootstrapping.</li>
+</ul>
+<p>Combined: can become unstable or does not converge!</p>
+</div>
+<div id="section-64" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-weng2018rl" role="doc-biblioref">Weng 2018</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="deep-q-networks" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Deep Q-Networks</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>… improved and stabilized training of Q-learning when using a Deep Neural Network for function approximation.</p>
+<p>Two innovative mechanisms:</p>
+<div class="incremental">
+<ul class="incremental">
+<li class="fragment"><em>Experience Replay:</em> use a replay buffer for storing experiences.</li>
+<li class="fragment">Periodically Update <em>Target network</em> that are employed for bootstrapping.</li>
+</ul>
+</div>
+</div>
+<div id="section-65" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-weng2018rl" role="doc-biblioref">Weng 2018</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="dqn-architecture-overview" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>DQN Architecture Overview</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/mnih_dqn_architecture.png" style="height:400px;width:auto;" alt="../data/09/mnih_dqn_architecture.png" />
+</figure>
+</div>
+<p>“we developed a novel agent, a deep Q-network (DQN), which is able to combine reinforcement learning with a class of artificial neural network known as deep neural networks.”</p>
+</div>
+<div id="section-66" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-mnih-dqn-2015" role="doc-biblioref">Mnih u. a. 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="goal-of-dqn-approximation-of-q-function" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Goal of DQN: Approximation of Q-Function</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="incremental">
+<ul class="incremental">
+<li class="fragment">Q-learning can be used to find an optimal action-selection policy for any given (finite) Markov decision process (MDP).</li>
+<li class="fragment">It works by learning an action-value function that ultimately gives the expected utility of taking a given action in a given state and following the optimal policy thereafter.</li>
+<li class="fragment">One of the strengths of Q-learning is that it is able to compare the expected utility of the available actions without requiring a model of the environment.</li>
+<li class="fragment">Q-learning learns estimates of the optimal Q-values of an MDP, which means that behavior can be dictated by taking actions greedily with respect to the learned Q-values.</li>
+</ul>
+</div>
+</div>
+<div id="section-67" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-mnih-dqn-2015" role="doc-biblioref">Mnih u. a. 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="problems-for-rl-and-deep-neural-networks" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Problems for RL and Deep Neural Networks</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Reinforcement learning is known to be unstable when a nonlinear function approximator such as a neural network is used to represent the action-value function.</p>
+<p><br />
+</p>
+<p>This instability has several causes:</p>
+<ul>
+<li>the correlations present in the sequence of observations,</li>
+<li>the fact that small updates to <span class="math inline">\(Q\)</span> may significantly change the policy and therefore change the data distribution,</li>
+<li>and the correlations between the action-values and the target values</li>
+</ul>
+</div>
+<div id="section-68" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-mnih-dqn-2015" role="doc-biblioref">Mnih u. a. 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="deep-reinforcement-learning-1" class="section slide level1" data-background-color="#2CA02C">
+<div class="decker">
+<div class="alignment">
+<h1>Deep Reinforcement Learning</h1>
+</div>
+</div>
+</section>
+<section id="dqn-architecture-overview-1" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>DQN Architecture Overview</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/mnih_dqn_architecture.png" style="height:400px;width:auto;" alt="../data/09/mnih_dqn_architecture.png" />
+</figure>
+</div>
+<p><em>“we developed a novel agent, a deep Q-network (DQN), which is able to combine reinforcement learning with a class of artificial neural network known as deep neural networks.”</em></p>
+</div>
+<div id="section-69" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-mnih-dqn-2015" role="doc-biblioref">Mnih u. a. 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="problems-for-rl-and-deep-neural-networks-1" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Problems for RL and Deep Neural Networks</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Reinforcement learning is known to be unstable when a nonlinear function approximator such as a neural network is used to represent the action-value function.</p>
+<p><br />
+</p>
+<p>This instability has several causes:</p>
+<ul>
+<li>the correlations present in the sequence of observations,</li>
+<li>the fact that small updates to <span class="math inline">\(Q\)</span> may significantly change the policy and therefore change the data distribution,</li>
+<li>and the correlations between the action-values and the target values</li>
+</ul>
+</div>
+<div id="section-70" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-mnih-dqn-2015" role="doc-biblioref">Mnih u. a. 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="key-ideas-for-dqn-1.-experience-replay" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Key Ideas for DQN: 1. Experience Replay</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p><em>“First, we used a biologically inspired mechanism termed experience replay that randomizes over the data, thereby removing correlations in the observation sequence and smoothing over changes in the data distribution.”</em></p>
+<ul>
+<li>All episode steps <span class="math inline">\(e_t = (S_t, A_t, R_t, S_{t+1})\)</span> are collected in one replay memory.</li>
+<li>During Q-learning updates: sample steps are drawn randomly from the replay memory.</li>
+</ul>
+<p>Experience replay</p>
+<ul>
+<li>improves data efficiency,</li>
+<li>removes correlations in the observation sequences,</li>
+<li>and smooths over changes in the data distribution</li>
+</ul>
+</div>
+<div id="section-71" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-mnih-dqn-2015" role="doc-biblioref">Mnih u. a. 2015</a>; <a href="#ref-weng2018rl" role="doc-biblioref">Weng 2018</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="key-ideas-for-dqn-2.-stabilize-bootstrapping" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Key Ideas for DQN: 2. Stabilize Bootstrapping</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p><em>“Second, we used an iterative update that adjusts the action-values (Q) towards target values that are only periodically updated, thereby reducing correlations with the target.”</em></p>
+<p><br />
+</p>
+<p>Periodically Updated Target:</p>
+<ul>
+<li>Q is optimized towards target values that are only periodically updated.</li>
+<li>The Q network is cloned and kept frozen as the optimization target every <span class="math inline">\(C\)</span> steps (<span class="math inline">\(C\)</span> is a hyperparameter).</li>
+</ul>
+<p>This modification makes the training more stable as it overcomes the short-term oscillations.</p>
+</div>
+<div id="section-72" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-weng2018rl" role="doc-biblioref">Weng 2018</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="deep-q-network-overview" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Deep Q Network Overview</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/karpathy_qsa.jpg" style="height:360px;width:auto;" alt="../data/09/karpathy_qsa.jpg" />
+</figure>
+</div>
+<p>3-dimensional state space (blue) and 2 actions (red); green nodes represent a NN.</p>
+<p>Left: naive approach that takes multiple forward passes to find the argmax action. Right: more efficient approach, <span class="math inline">\(Q(s,a)\)</span> computation is effectively shared among the neurons in the network.</p>
+</div>
+<div id="section-73" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-karpathy_mdp" role="doc-biblioref">Karpathy 2015b</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="dqn-example-puckworld" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>DQN Example: Puckworld</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="iframe" style="width:100%;height:auto;">
+<iframe style="width:100%;height:700px;" allow="fullscreen" data-src="https://cs.stanford.edu/people/karpathy/reinforcejs/puckworld.html">
+
+</iframe>
+</figure>
+</div>
+</div>
+<div id="section-74" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>; <a href="#ref-karpathy_mdp" role="doc-biblioref">Karpathy 2015b</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-game-space-invaders" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Example Game: Space Invaders</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="video" data-data-autoplay="true" style="height:auto;width:800px;">
+<video controls="1" style="height:auto;width:100%;" data-src="../data/09/41586_2015_BFnature14236_MOESM123_ESM.mov#t=1,">
+
+</video>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="learning-over-time" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Learning over Time</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/41586_2015_Article_BFnature14236_Fig2_HTML.jpg" style="height:400px;width:auto;" alt="../data/09/41586_2015_Article_BFnature14236_Fig2_HTML.jpg" />
+</figure>
+</div>
+</div>
+<div id="section-75" class="footer box block">
+<h2 class="footer"></h2>
+<p>Average score achieved per episode. a) Space Invaders. b) Seaquest. c) Average predicted action-value on a held-out set of states on Space Invaders. d) Average predicted action-value on Seaquest.</p>
+<p><span class="citation">(<a href="#ref-mnih-dqn-2015" role="doc-biblioref">Mnih u. a. 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-learning-in-breakout" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Example: Learning in Breakout</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="video" data-data-autoplay="true" style="height:auto;width:800px;">
+<video controls="1" style="height:auto;width:100%;" data-src="../data/09/41586_2015_BFnature14236_MOESM124_ESM.mov#t=1,">
+
+</video>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-learning-in-breakout-2" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Example: Learning in Breakout 2</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:1000px;">
+<img src="../data/09/mnih_breakoutresults.svg" style="height:auto;width:100%;" alt="../data/09/mnih_breakoutresults.svg" />
+</figure>
+</div>
+</div>
+<div id="section-76" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-mnih-dqn-2015" role="doc-biblioref">Mnih u. a. 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="results---superhuman-performance" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Results - “Superhuman” Performance</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="summary" class="left box block">
+<h2 class="left">Summary</h2>
+<p><em>“Our DQN method outperforms the best existing reinforcement learning methods on 43 [out of 49] of the games without incorporating any of the additional prior knowledge about Atari 2600 games used by other approaches.”</em></p>
+</div>
+</div><div class="area right">
+<div id="section-77" class="right box block">
+<h2 class="right"></h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/mnih_dqn_results.png" style="height:450px;width:auto;" alt="../data/09/mnih_dqn_results.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="layout row columns">
+<div class="area ">
+<div id="section-78" class="bottom footer box block">
+<h2 class="bottom footer"></h2>
+<p><span class="citation">(<a href="#ref-mnih-dqn-2015" role="doc-biblioref">Mnih u. a. 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="references" class="unnumbered biblio slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>References</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-bishop2006" class="csl-entry">
+Bishop, Christopher M. 2006. <em>Pattern Recognition and Machine Learning</em>. Springer.
+</div>
+<div id="ref-goodfellow2016" class="csl-entry">
+Goodfellow, Ian, Yoshua Bengio, und Aaron Courville. 2016. <em>Deep Learning</em>. MIT Press.
+</div>
+<div id="ref-deepmind2021" class="csl-entry">
+Hasselt, Hado van, und Diana Borsa. 2021. <span>„Reinforcement Learning Lecture Series 2021“</span>. https://www.deepmind.com/learning-resources/reinforcement-learning-lecture-series-2021.
+</div>
+<div id="ref-cs231_2015" class="csl-entry">
+Karpathy, Andrej. 2015a. <span>„Convolutional Neural Networks for Visual Recognition“</span>. Course CS231, Stanford University, Lecture Notes.
+</div>
+<div id="ref-karpathy_mdp" class="csl-entry">
+———. 2015b. <span>„REINFORCEjs“</span>. <a href="https://github.com/karpathy/reinforcejs">https://github.com/karpathy/reinforcejs</a>.
+</div>
+<div id="ref-kleinCS188" class="csl-entry">
+Klein, Dan, und Pieter Abbeel. 2014. <span>„UC Berkeley CS188 Intro to AI“</span>. http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html.
+</div>
+<div id="ref-Krizhevsky_imagenetclassification" class="csl-entry">
+Krizhevsky, Alex, Ilya Sutskever, und Geoffrey E. Hinton. 2012. <span>„Imagenet classification with deep convolutional neural networks“</span>. In <em>Advances in Neural Information Processing Systems</em>.
+</div>
+<div id="ref-mnih-dqn-2015" class="csl-entry">
+Mnih, Volodymyr, Koray Kavukcuoglu, David Silver, Andrei A. Rusu, Joel Veness, Marc G. Bellemare, Alex Graves, u. a. 2015. <span>„Human-level control through deep reinforcement learning“</span>. <em>Nature</em> 518 (7540): 529–33. <a href="http://dx.doi.org/10.1038/nature14236">http://dx.doi.org/10.1038/nature14236</a>.
+</div>
+<div id="ref-Rojas96" class="csl-entry">
+Rojas, Raul. 1996. <em>Neural Networks : A Systematic Introduction</em>. Springer.
+</div>
+<div id="ref-silver2015" class="csl-entry">
+Silver, David. 2015. <span>„UCL Course on RL UCL Course on RL UCL Course on Reinforcement Learning“</span>. http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html.
+</div>
+<div id="ref-sutton2018" class="csl-entry">
+Sutton, Richard S., und Andrew G. Barto. 2018. <em>Reinforcement Learning: An Introduction</em>. Second. The MIT Press.
+</div>
+<div id="ref-weng2018rl" class="csl-entry">
+Weng, Lilian. 2018. <span>„A (Long) Peek into Reinforcement Learning“</span>. <a href="https://lilianweng.github.io/lil-log/2018/02/19/a-long-peek-into-reinforcement-learning.html">https://lilianweng.github.io/lil-log/2018/02/19/a-long-peek-into-reinforcement-learning.html</a>.
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<code class="force-highlight-styles markdown"
+style="display:none;"></code>
+
+    </div>
+  </div>
+
+  <script type="module">
+    /* Store JSON encoded Pandoc meta data in a global variable. */
+    import initializeDecker from "./../support/js/decker.js";
+    initializeDecker("44117dc61.json");
+  </script>
+
+  <script src="../support/vendor/videojs/video.min.js"></script>
+  <script type="module" src="../support/components/custom-dialog.js"></script>
+
+  <script type="module">
+    // import Reveal and all plugins
+    import Reveal from './../support/vendor/reveal/dist/reveal.esm.js';
+    import deckerPlugin from './../support/plugins/decker/decker.js';
+    import uiAnchorsPlugin from './../support/plugins/decker/ui-anchors.js'
+    import mathPlugin from './../support/plugins/math/math.js';
+    import whiteboardPlugin from './../support/plugins/whiteboard/whiteboard.js';
+    import sagePlugin from './../support/plugins/sage/sage.js';
+    import searchPlugin from './../support/plugins/search/search.js';
+    import zoomPlugin from './../support/plugins/zoom/zoom.js';
+    import printPlugin from './../support/plugins/print/print.js';
+    import jinglesPlugin from './../support/plugins/jingles/jingles.js';
+    import quizPlugin from './../support/plugins/quiz/quiz.js';
+    import quizWuePlugin from './../support/plugins/quiz-wue/quiz-wue.js';
+    import explainPlugin from './../support/plugins/explain/explain.js';
+    import chartsPlugin from './../support/plugins/charts/charts.js';
+    import menuPlugin from './../support/plugins/menu/menu.js';
+    import feedbackPlugin from './../support/plugins/feedback/feedback.js';
+    import highlightPlugin from './../support/vendor/reveal/plugin/highlight/highlight.esm.js';
+    import notesPlugin from './../support/vendor/reveal/plugin/notes/notes.esm.js';
+        import captionPlugin from './../support/plugins/live-captioning/live-captioning.js';
+        import a11yPlugin from './../support/plugins/a11y/a11y.js';
+
+    let revealConfig = {
+      // reveal configuration (see https://revealjs.com/config/)
+      ...Decker.meta.reveal,
+
+      // plugin configuration
+      math: { mathjax: String.raw`../support/vendor/mathjax/`, ...Decker.meta.math },
+      chart: Decker.meta.chart,
+      menu: Decker.meta.menu,
+      explain: Decker.meta.explain,
+      feedback: Decker.meta.feedback || Decker.meta["decker-engine"],
+      jingles: Decker.meta.jingles,
+
+      // list of plugins
+      plugins: [
+        deckerPlugin,
+        uiAnchorsPlugin,
+        sagePlugin,
+        mathPlugin,
+        chartsPlugin,
+        whiteboardPlugin,
+        searchPlugin,
+        zoomPlugin,
+        printPlugin,
+        jinglesPlugin,
+        quizPlugin,
+        quizWuePlugin,
+        explainPlugin,
+        menuPlugin,
+        feedbackPlugin,
+        highlightPlugin,
+        notesPlugin,
+                captionPlugin,
+                a11yPlugin,
+      ]
+    };
+
+    Reveal.initialize(revealConfig);
+  </script>
+
+</body>
+<script src="../support/js/inert-polyfill.min.js"></script>
+<!-- script src="../support/js/inert.min.js"></script -->
+<!-- Use the other implementation if things break under Firefox -->
+</html>
