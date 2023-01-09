@@ -1,0 +1,3290 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Prof. Dr. Malte Schilling">
+  <title>Deep Reinforcement Learning: 11 - Hierarchical DRL and Policy
+Learning</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+  <!-- Default values for CSS variables can live here. They can be overridden by
+  meta data values. -->
+  <link rel="stylesheet" href="../support/css/variables.css">
+
+  <!-- Transfer meta data values from keys `palette.colors` and `css-variables`
+  into a style sheet. Default values can come from `variables.css`. -->
+  <style class="css-declarations">
+    @media (prefers-color-scheme: light) {
+      :root {
+                  --shade7: #1d1f21;
+                  --shade6: #282a2e;
+                  --shade5: #4d4d4c;
+                  --shade4: #969896;
+                  --shade3: #8e908c;
+                  --shade2: #d6d6d6;
+                  --shade1: #e0e0e0;
+                  --shade0: #ffffff;
+                  --base0F-fg: #825449;
+                  --base0F-ffg: #513733;
+                  --base0F-bg: #ceb9b5;
+                  --base0F-bbg: #f0ebea;
+                  --base0F: #a3685a;
+                  --base0E-fg: #6e4887;
+                  --base0E-ffg: #453155;
+                  --base0E-bg: #c4b5d1;
+                  --base0E-bbg: #edeaf1;
+                  --base0E: #8959a8;
+                  --base0D-fg: #257eb3;
+                  --base0D-ffg: #204f6f;
+                  --base0D-bg: #acccec;
+                  --base0D-bbg: #e8f0f9;
+                  --base0D: #2a9ddf;
+                  --base0C-fg: #347b80;
+                  --base0C-ffg: #264d51;
+                  --base0C-bg: #afcacd;
+                  --base0C-bbg: #e8eff0;
+                  --base0C: #3e999f;
+                  --base0B-fg: #6a931c;
+                  --base0B-ffg: #435c20;
+                  --base0B-bg: #c2d8ab;
+                  --base0B-bbg: #edf3e7;
+                  --base0B: #84b819;
+                  --base0A-fg: #bb9212;
+                  --base0A-ffg: #745b1d;
+                  --base0A-bg: #f3d8aa;
+                  --base0A-bbg: #fbf3e7;
+                  --base0A: #eab700;
+                  --base09-fg: #c46c20;
+                  --base09-ffg: #794521;
+                  --base09-bg: #f9c3ab;
+                  --base09-bbg: #fdede7;
+                  --base09: #f5871f;
+                  --base08-fg: #a02526;
+                  --base08-ffg: #632123;
+                  --base08-bg: #e0acac;
+                  --base08-bbg: #f5e8e8;
+                  --base08: #c82829;
+                  --base07: #1d1f21;
+                  --base06: #282a2e;
+                  --base05: #4d4d4c;
+                  --base04: #969896;
+                  --base03: #8e908c;
+                  --base02: #d6d6d6;
+                  --base01: #e0e0e0;
+                  --base00: #ffffff;
+                  --accent7-fg: #825449;
+                  --accent7-ffg: #513733;
+                  --accent7-bg: #ceb9b5;
+                  --accent7-bbg: #f0ebea;
+                  --accent7: #a3685a;
+                  --accent6-fg: #6e4887;
+                  --accent6-ffg: #453155;
+                  --accent6-bg: #c4b5d1;
+                  --accent6-bbg: #edeaf1;
+                  --accent6: #8959a8;
+                  --accent5-fg: #257eb3;
+                  --accent5-ffg: #204f6f;
+                  --accent5-bg: #acccec;
+                  --accent5-bbg: #e8f0f9;
+                  --accent5: #2a9ddf;
+                  --accent4-fg: #347b80;
+                  --accent4-ffg: #264d51;
+                  --accent4-bg: #afcacd;
+                  --accent4-bbg: #e8eff0;
+                  --accent4: #3e999f;
+                  --accent3-fg: #6a931c;
+                  --accent3-ffg: #435c20;
+                  --accent3-bg: #c2d8ab;
+                  --accent3-bbg: #edf3e7;
+                  --accent3: #84b819;
+                  --accent2-fg: #bb9212;
+                  --accent2-ffg: #745b1d;
+                  --accent2-bg: #f3d8aa;
+                  --accent2-bbg: #fbf3e7;
+                  --accent2: #eab700;
+                  --accent1-fg: #c46c20;
+                  --accent1-ffg: #794521;
+                  --accent1-bg: #f9c3ab;
+                  --accent1-bbg: #fdede7;
+                  --accent1: #f5871f;
+                  --accent0-fg: #a02526;
+                  --accent0-ffg: #632123;
+                  --accent0-bg: #e0acac;
+                  --accent0-bbg: #f5e8e8;
+                  --accent0: #c82829;
+              }
+
+      :root.dark {
+                  --shade7: #ffffff;
+                  --shade6: #e0e0e0;
+                  --shade5: #c5c8c6;
+                  --shade4: #b4b7b4;
+                  --shade3: #969896;
+                  --shade2: #373b41;
+                  --shade1: #282a2e;
+                  --shade0: #1d1f21;
+                  --base0F-fg: #ceb9b5;
+                  --base0F-ffg: #f0ebea;
+                  --base0F-bg: #825449;
+                  --base0F-bbg: #513733;
+                  --base0F: #a3685a;
+                  --base0E-fg: #d5c8da;
+                  --base0E-ffg: #f2eff3;
+                  --base0E-bg: #8e7796;
+                  --base0E-bbg: #594b5e;
+                  --base0E: #b294bb;
+                  --base0D-fg: #c1cedb;
+                  --base0D-ffg: #edf0f4;
+                  --base0D-bg: #678298;
+                  --base0D-bbg: #42515f;
+                  --base0D: #81a2be;
+                  --base0C-fg: #c4dbd8;
+                  --base0C-ffg: #edf4f3;
+                  --base0C-bg: #6e9893;
+                  --base0C-bbg: #465f5c;
+                  --base0C: #8abeb7;
+                  --base0B-fg: #bfd0ac;
+                  --base0B-ffg: #ecf1e8;
+                  --base0B-bg: #648627;
+                  --base0B-bbg: #405423;
+                  --base0B: #7da72a;
+                  --base0A-fg: #f6dfbc;
+                  --base0A-ffg: #fcf5ec;
+                  --base0A-bg: #c09f5e;
+                  --base0A-bbg: #77633d;
+                  --base0A: #f0c674;
+                  --base09-fg: #ecc8b6;
+                  --base09-ffg: #f9eeea;
+                  --base09-bg: #b2764d;
+                  --base09-bbg: #6e4a35;
+                  --base09: #de935f;
+                  --base08-fg: #e2b8b8;
+                  --base08-ffg: #f6eaea;
+                  --base08-bg: #a35253;
+                  --base08-bbg: #653637;
+                  --base08: #cc6666;
+                  --base07: #ffffff;
+                  --base06: #e0e0e0;
+                  --base05: #c5c8c6;
+                  --base04: #b4b7b4;
+                  --base03: #969896;
+                  --base02: #373b41;
+                  --base01: #282a2e;
+                  --base00: #1d1f21;
+                  --accent7-fg: #ceb9b5;
+                  --accent7-ffg: #f0ebea;
+                  --accent7-bg: #825449;
+                  --accent7-bbg: #513733;
+                  --accent7: #a3685a;
+                  --accent6-fg: #d5c8da;
+                  --accent6-ffg: #f2eff3;
+                  --accent6-bg: #8e7796;
+                  --accent6-bbg: #594b5e;
+                  --accent6: #b294bb;
+                  --accent5-fg: #c1cedb;
+                  --accent5-ffg: #edf0f4;
+                  --accent5-bg: #678298;
+                  --accent5-bbg: #42515f;
+                  --accent5: #81a2be;
+                  --accent4-fg: #c4dbd8;
+                  --accent4-ffg: #edf4f3;
+                  --accent4-bg: #6e9893;
+                  --accent4-bbg: #465f5c;
+                  --accent4: #8abeb7;
+                  --accent3-fg: #bfd0ac;
+                  --accent3-ffg: #ecf1e8;
+                  --accent3-bg: #648627;
+                  --accent3-bbg: #405423;
+                  --accent3: #7da72a;
+                  --accent2-fg: #f6dfbc;
+                  --accent2-ffg: #fcf5ec;
+                  --accent2-bg: #c09f5e;
+                  --accent2-bbg: #77633d;
+                  --accent2: #f0c674;
+                  --accent1-fg: #ecc8b6;
+                  --accent1-ffg: #f9eeea;
+                  --accent1-bg: #b2764d;
+                  --accent1-bbg: #6e4a35;
+                  --accent1: #de935f;
+                  --accent0-fg: #e2b8b8;
+                  --accent0-ffg: #f6eaea;
+                  --accent0-bg: #a35253;
+                  --accent0-bbg: #653637;
+                  --accent0: #cc6666;
+              }
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+                  --shade7: #ffffff;
+                  --shade6: #e0e0e0;
+                  --shade5: #c5c8c6;
+                  --shade4: #b4b7b4;
+                  --shade3: #969896;
+                  --shade2: #373b41;
+                  --shade1: #282a2e;
+                  --shade0: #1d1f21;
+                  --base0F-fg: #ceb9b5;
+                  --base0F-ffg: #f0ebea;
+                  --base0F-bg: #825449;
+                  --base0F-bbg: #513733;
+                  --base0F: #a3685a;
+                  --base0E-fg: #d5c8da;
+                  --base0E-ffg: #f2eff3;
+                  --base0E-bg: #8e7796;
+                  --base0E-bbg: #594b5e;
+                  --base0E: #b294bb;
+                  --base0D-fg: #c1cedb;
+                  --base0D-ffg: #edf0f4;
+                  --base0D-bg: #678298;
+                  --base0D-bbg: #42515f;
+                  --base0D: #81a2be;
+                  --base0C-fg: #c4dbd8;
+                  --base0C-ffg: #edf4f3;
+                  --base0C-bg: #6e9893;
+                  --base0C-bbg: #465f5c;
+                  --base0C: #8abeb7;
+                  --base0B-fg: #bfd0ac;
+                  --base0B-ffg: #ecf1e8;
+                  --base0B-bg: #648627;
+                  --base0B-bbg: #405423;
+                  --base0B: #7da72a;
+                  --base0A-fg: #f6dfbc;
+                  --base0A-ffg: #fcf5ec;
+                  --base0A-bg: #c09f5e;
+                  --base0A-bbg: #77633d;
+                  --base0A: #f0c674;
+                  --base09-fg: #ecc8b6;
+                  --base09-ffg: #f9eeea;
+                  --base09-bg: #b2764d;
+                  --base09-bbg: #6e4a35;
+                  --base09: #de935f;
+                  --base08-fg: #e2b8b8;
+                  --base08-ffg: #f6eaea;
+                  --base08-bg: #a35253;
+                  --base08-bbg: #653637;
+                  --base08: #cc6666;
+                  --base07: #ffffff;
+                  --base06: #e0e0e0;
+                  --base05: #c5c8c6;
+                  --base04: #b4b7b4;
+                  --base03: #969896;
+                  --base02: #373b41;
+                  --base01: #282a2e;
+                  --base00: #1d1f21;
+                  --accent7-fg: #ceb9b5;
+                  --accent7-ffg: #f0ebea;
+                  --accent7-bg: #825449;
+                  --accent7-bbg: #513733;
+                  --accent7: #a3685a;
+                  --accent6-fg: #d5c8da;
+                  --accent6-ffg: #f2eff3;
+                  --accent6-bg: #8e7796;
+                  --accent6-bbg: #594b5e;
+                  --accent6: #b294bb;
+                  --accent5-fg: #c1cedb;
+                  --accent5-ffg: #edf0f4;
+                  --accent5-bg: #678298;
+                  --accent5-bbg: #42515f;
+                  --accent5: #81a2be;
+                  --accent4-fg: #c4dbd8;
+                  --accent4-ffg: #edf4f3;
+                  --accent4-bg: #6e9893;
+                  --accent4-bbg: #465f5c;
+                  --accent4: #8abeb7;
+                  --accent3-fg: #bfd0ac;
+                  --accent3-ffg: #ecf1e8;
+                  --accent3-bg: #648627;
+                  --accent3-bbg: #405423;
+                  --accent3: #7da72a;
+                  --accent2-fg: #f6dfbc;
+                  --accent2-ffg: #fcf5ec;
+                  --accent2-bg: #c09f5e;
+                  --accent2-bbg: #77633d;
+                  --accent2: #f0c674;
+                  --accent1-fg: #ecc8b6;
+                  --accent1-ffg: #f9eeea;
+                  --accent1-bg: #b2764d;
+                  --accent1-bbg: #6e4a35;
+                  --accent1: #de935f;
+                  --accent0-fg: #e2b8b8;
+                  --accent0-ffg: #f6eaea;
+                  --accent0-bg: #a35253;
+                  --accent0-bbg: #653637;
+                  --accent0: #cc6666;
+              }
+
+      :root.light {
+                  --shade7: #1d1f21;
+                  --shade6: #282a2e;
+                  --shade5: #4d4d4c;
+                  --shade4: #969896;
+                  --shade3: #8e908c;
+                  --shade2: #d6d6d6;
+                  --shade1: #e0e0e0;
+                  --shade0: #ffffff;
+                  --base0F-fg: #825449;
+                  --base0F-ffg: #513733;
+                  --base0F-bg: #ceb9b5;
+                  --base0F-bbg: #f0ebea;
+                  --base0F: #a3685a;
+                  --base0E-fg: #6e4887;
+                  --base0E-ffg: #453155;
+                  --base0E-bg: #c4b5d1;
+                  --base0E-bbg: #edeaf1;
+                  --base0E: #8959a8;
+                  --base0D-fg: #257eb3;
+                  --base0D-ffg: #204f6f;
+                  --base0D-bg: #acccec;
+                  --base0D-bbg: #e8f0f9;
+                  --base0D: #2a9ddf;
+                  --base0C-fg: #347b80;
+                  --base0C-ffg: #264d51;
+                  --base0C-bg: #afcacd;
+                  --base0C-bbg: #e8eff0;
+                  --base0C: #3e999f;
+                  --base0B-fg: #6a931c;
+                  --base0B-ffg: #435c20;
+                  --base0B-bg: #c2d8ab;
+                  --base0B-bbg: #edf3e7;
+                  --base0B: #84b819;
+                  --base0A-fg: #bb9212;
+                  --base0A-ffg: #745b1d;
+                  --base0A-bg: #f3d8aa;
+                  --base0A-bbg: #fbf3e7;
+                  --base0A: #eab700;
+                  --base09-fg: #c46c20;
+                  --base09-ffg: #794521;
+                  --base09-bg: #f9c3ab;
+                  --base09-bbg: #fdede7;
+                  --base09: #f5871f;
+                  --base08-fg: #a02526;
+                  --base08-ffg: #632123;
+                  --base08-bg: #e0acac;
+                  --base08-bbg: #f5e8e8;
+                  --base08: #c82829;
+                  --base07: #1d1f21;
+                  --base06: #282a2e;
+                  --base05: #4d4d4c;
+                  --base04: #969896;
+                  --base03: #8e908c;
+                  --base02: #d6d6d6;
+                  --base01: #e0e0e0;
+                  --base00: #ffffff;
+                  --accent7-fg: #825449;
+                  --accent7-ffg: #513733;
+                  --accent7-bg: #ceb9b5;
+                  --accent7-bbg: #f0ebea;
+                  --accent7: #a3685a;
+                  --accent6-fg: #6e4887;
+                  --accent6-ffg: #453155;
+                  --accent6-bg: #c4b5d1;
+                  --accent6-bbg: #edeaf1;
+                  --accent6: #8959a8;
+                  --accent5-fg: #257eb3;
+                  --accent5-ffg: #204f6f;
+                  --accent5-bg: #acccec;
+                  --accent5-bbg: #e8f0f9;
+                  --accent5: #2a9ddf;
+                  --accent4-fg: #347b80;
+                  --accent4-ffg: #264d51;
+                  --accent4-bg: #afcacd;
+                  --accent4-bbg: #e8eff0;
+                  --accent4: #3e999f;
+                  --accent3-fg: #6a931c;
+                  --accent3-ffg: #435c20;
+                  --accent3-bg: #c2d8ab;
+                  --accent3-bbg: #edf3e7;
+                  --accent3: #84b819;
+                  --accent2-fg: #bb9212;
+                  --accent2-ffg: #745b1d;
+                  --accent2-bg: #f3d8aa;
+                  --accent2-bbg: #fbf3e7;
+                  --accent2: #eab700;
+                  --accent1-fg: #c46c20;
+                  --accent1-ffg: #794521;
+                  --accent1-bg: #f9c3ab;
+                  --accent1-bbg: #fdede7;
+                  --accent1: #f5871f;
+                  --accent0-fg: #a02526;
+                  --accent0-ffg: #632123;
+                  --accent0-bg: #e0acac;
+                  --accent0-bbg: #f5e8e8;
+                  --accent0: #c82829;
+              }
+    }
+    :root {
+          }
+  </style>
+
+  <link rel="stylesheet" href="../support/vendor/reveal/dist/reset.css">
+  <link rel="stylesheet" href="../support/vendor/reveal/dist/reveal.css">
+  <link rel="stylesheet" href="../support/components/components.css">
+  <link rel="stylesheet" href="../support/plugins/decker/ui-anchors.css">
+  <link rel="stylesheet" href="../support/plugins/whiteboard/whiteboard.css">
+  <link rel="stylesheet" href="../support/plugins/menu/menu.css">
+  <link rel="stylesheet" href="../support/plugins/feedback/feedback.css">
+  <link rel="stylesheet" href="../support/plugins/explain/explain.css">
+    <link rel="stylesheet" href="../support/plugins/live-captioning/live-captioning.css">
+    <link rel="stylesheet" href="../support/vendor/videojs/video-js.min.css">
+  <link rel="stylesheet" href="../support/vendor/css/xcode.css">
+  <link rel="stylesheet" href="../support/flyingFocus/flying-focus.css">
+  <link rel="stylesheet" href="../support/plugins/quiz-wue/quiz-wue.css">
+  <link rel="stylesheet" href="../support/css/deck.css">
+  <link rel="stylesheet" href="../support/css/msms-deck.css">
+  
+</head>
+
+<body >
+  <div class="reveal">
+    <div class="slides">
+
+      <section id="title-slide">
+
+         <div class="background-on-accent">
+                     <h1>Deep Reinforcement Learning</h1>
+                              <h2>11 - Hierarchical DRL and Policy
+Learning</h2>
+                  </div>
+
+         
+         
+                  <div class="author"> Prof. Dr. Malte Schilling </div>
+         
+                  <div class="affiliation"> Autonomous Intelligent
+Systems Group </div>
+         
+         
+         <img class="logo affiliation-logo light-only" src="./../support/assets/ms-logo-light.svg">
+         <img class="logo affiliation-logo dark-only" src="./../support/assets/ms-logo-dark.svg">
+
+               </section>
+
+
+<section id="overview-lecture" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Overview Lecture</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<ul>
+<li>Recap: The Deadly Triad – causes of instability</li>
+<li>Hierarchical DRL</li>
+<li>Policy Learning</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="approximation-in-rl-the-deadly-triad" class="section slide level1" data-background-color="#2CA02C">
+<div class="decker">
+<div class="alignment">
+<h1>Approximation in RL – The Deadly Triad</h1>
+</div>
+</div>
+</section>
+<section id="recap-approximation-used-in-rl" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Recap: Approximation used in RL</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p><strong>Goal</strong> (value-based): estimate the long-term return for a given state (or state, action pair).</p>
+<p><span class="math display">\[
+\begin{eqnarray*} 
+v(s) &amp;=&amp; \mathbb{E}[G_t \vert S_t = s] \\
+&amp;=&amp; \fragment{\mathbb{E} [R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \dots \vert S_t = s] }
+\end{eqnarray*}\]</span></p>
+<p><strong>General Approach</strong>: Learn from experience – how to balance exploration-exploitation? This can be very unefficient and costly.</p>
+</div>
+<div id="different-dimensions-decisions-to-consider" class="box block fragment">
+<h2>Different dimensions / decisions to consider:</h2>
+<ul>
+<li>bootstrapping: Monte-Carlo <span class="math inline">\(\leftrightarrow\)</span> Temporal Difference Learning</li>
+<li>on-policy <span class="math inline">\(\leftrightarrow\)</span> off-policy</li>
+<li>function approximation</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="recap-classes-of-function-approximation" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Recap –Classes of Function Approximation</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>The choice of function approximation depends on the task and yourgoals:</p>
+<ul>
+<li><strong>Tabular</strong>: good theory but does not scale/generalise</li>
+<li><strong>Linear</strong>: reasonably good theory, but requires good features</li>
+<li><strong>Non-linear</strong>: less well-understood, but scales well. Flexible, and less reliant on picking good features first (e.g., by hand)</li>
+</ul>
+<p>(Deep) neural nets often perform quite well, and are a popular choice.</p>
+</div>
+<div id="section" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-deepmind2021" role="doc-biblioref">Hasselt und Borsa 2021</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="convergence-of-prediction-algorithms" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Convergence of Prediction Algorithms</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<table>
+<thead>
+<tr class="header">
+<th align="center">On/Off-Policy</th>
+<th>Algorithm</th>
+<th align="center">Table Lookup</th>
+<th align="center">Linear Approx.</th>
+<th align="center">Non-Linear</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">On-Policy</td>
+<td>MC</td>
+<td align="center">✔︎</td>
+<td align="center">✔︎</td>
+<td align="center">✔︎</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td>TD</td>
+<td align="center">✔︎</td>
+<td align="center">✔︎</td>
+<td align="center">❌</td>
+</tr>
+<tr class="odd">
+<td align="center">Off-Policy</td>
+<td>MC</td>
+<td align="center">✔︎</td>
+<td align="center">✔︎</td>
+<td align="center">✔︎</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td>TD</td>
+<td align="center">✔︎</td>
+<td align="center">❌</td>
+<td align="center">❌</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="section-1" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="bootstrapping-monte-carlo" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>1) Bootstrapping: Monte-Carlo</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="monte-carlo" class="left box block">
+<h2 class="left">Monte-Carlo</h2>
+<p>Compute estimate directly from samples without bootstrapping. Averaging over many trajectories.</p>
+<ul>
+<li>requires full episodes and termination</li>
+<li>no bias</li>
+<li>but variance, quite noisy</li>
+</ul>
+</div>
+</div><div class="area right">
+<div id="section-2" class="right box block">
+<h2 class="right"></h2>
+<div class="r-stack">
+<p><span class="media"><span class="figure image" style="height:auto;width:auto;"><img src="../data/10/cliffworld-path1.svg" style="height:450px;width:auto;" alt="../data/10/cliffworld-path1.svg" /></span></span> <span class="media"><span class="figure fragment image" style="height:auto;width:auto;"><img src="../data/10/cliffworld-path2.svg" style="height:450px;width:auto;" alt="../data/10/cliffworld-path2.svg" /></span></span> <span class="media"><span class="figure fragment image" style="height:auto;width:auto;"><img src="../data/10/cliffworld-mc.svg" style="height:450px;width:auto;" alt="../data/10/cliffworld-mc.svg" /></span></span></p>
+</div>
+<p><span class="math display">\[v(S_t) \leftarrow R_{t+1} + \gamma R_{t+2} + \dots \]</span></p>
+</div>
+<div id="section-3" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-greydanus2019the" role="doc-biblioref">Greydanus und Olah 2019</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="bootstrapping-temporal-difference-learning" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>1) Bootstrapping: Temporal-Difference Learning</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="temporal-difference-learning" class="left box block">
+<h2 class="left">Temporal Difference Learning</h2>
+<p>Use single-step (or <span class="math inline">\(n-\)</span>step) reward from experience, but estimate following return from current value function</p>
+<ul>
+<li>can be applied online and in non-terminating environments</li>
+<li>variance is low</li>
+<li>but can be biased (over-estimation bias)</li>
+</ul>
+</div>
+</div><div class="area right">
+<div id="section-4" class="right box block">
+<h2 class="right"></h2>
+<div class="r-stack">
+<p><span class="media"><span class="figure image" style="height:auto;width:auto;"><img src="../data/10/cliffworld-path1.svg" style="height:450px;width:auto;" alt="../data/10/cliffworld-path1.svg" /></span></span> <span class="media"><span class="figure fragment image" style="height:auto;width:auto;"><img src="../data/10/cliffworld-path2.svg" style="height:450px;width:auto;" alt="../data/10/cliffworld-path2.svg" /></span></span> <span class="media"><span class="figure fragment image" style="height:auto;width:auto;"><img src="../data/10/cliffworld-td.svg" style="height:450px;width:auto;" alt="../data/10/cliffworld-td.svg" /></span></span></p>
+</div>
+<p><span class="math display">\[v(S_t) \leftarrow R_{t+1} + \gamma v(S_{t+1}) \]</span></p>
+</div>
+<div id="section-5" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-greydanus2019the" role="doc-biblioref">Greydanus und Olah 2019</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="bootstrapping---path-perspective" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>1) Bootstrapping - Path-Perspective</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Intersections between two trajectories are handled differently:</p>
+<div class="media">
+<figure class="image" style="height:auto;width:1200px;">
+<img src="../data/10/cliffworld-comparison.png" style="height:auto;width:100%;" alt="../data/10/cliffworld-comparison.png" />
+</figure>
+</div>
+<p>Unlike MC, TD updates merge intersections so that the return flows backwards to all preceding states.</p>
+</div>
+<div id="section-6" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-greydanus2019the" role="doc-biblioref">Greydanus und Olah 2019</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="bootstrapping---comparison-estimation-of-values" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>1) Bootstrapping - Comparison Estimation of values</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="monte-carlo-1" class="left box block">
+<h2 class="left">Monte-Carlo</h2>
+<p>Monte Carlo is averaging over real trajectories.</p>
+</div>
+</div><div class="area right">
+<div id="td-learning" class="right box block">
+<h2 class="right">TD learning</h2>
+<p>TD Learning is averaging over possible paths. Nested expectations correspond to averaging across all possible paths.</p>
+</div>
+</div>
+</div>
+<div class="layout row columns">
+<div class="area ">
+<div id="comparison" class="bottom box block">
+<h2 class="bottom">Comparison</h2>
+<ul>
+<li>TD learning never averages over fewer trajectories than Monte Carlo (there are never fewer simulated trajectories than real ones)</li>
+<li>Therefore, TD learning has the chance to average over more of the experience.</li>
+<li>TD learning is the better estimator (lower variance) which explains why TD tends to outperform Monte Carlo in tabular environments.</li>
+</ul>
+</div>
+<div id="section-7" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-greydanus2019the" role="doc-biblioref">Greydanus und Olah 2019</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="q-functions" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Q-Functions</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Directly estimate the value of a state and an action which allows to compare different actions directly.</p>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/11/q_function.png" style="height:400px;width:auto;" alt="../data/11/q_function.png" />
+</figure>
+</div>
+</div>
+<div id="section-8" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-greydanus2019the" role="doc-biblioref">Greydanus und Olah 2019</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="q-functions-update-bootstrapping" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Q-Functions: Update – Bootstrapping</h1>
+<div class="layout row columns">
+<div class="area ">
+<div id="section-9" class="top box block">
+<h2 class="top"></h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/11/q_function.png" style="height:160px;width:auto;" alt="../data/11/q_function.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="layout row columns">
+<div class="area left">
+<div id="monte-carlo-2" class="left box block">
+<h2 class="left">Monte-Carlo</h2>
+<p><span class="math display">\[q(S_t, A_t) \leftarrow R_{t+1} + \gamma R_{t+2} + \dots \]</span></p>
+</div>
+</div><div class="area center">
+<div id="td-learning-sarsa" class="center box block">
+<h2 class="center">TD Learning: SARSA</h2>
+<p><span class="math display">\[q(S_t, A_t) \leftarrow R_{t+1} + \gamma q(S_{t+1}, A_{t+1}) \]</span></p>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/11/distill_sarsa.png" aria-label="Sarsa uses the Q-value associated with a_{t+1} to estimate the next state’s value." title="Sarsa uses the Q-value associated with a_{t+1} to estimate the next state’s value." style="height:80px;width:auto;" alt="../data/11/distill_sarsa.png" />
+<figcaption>
+Sarsa uses the Q-value associated with <span class="math inline">\(a_{t+1}\)</span> to estimate the next state’s value.
+</figcaption>
+</figure>
+</div>
+</div>
+</div><div class="area right">
+<div id="q-learning" class="right box block">
+<h2 class="right">Q-Learning</h2>
+<p><span class="math display">\[q(S_t, A_t) \leftarrow R_{t+1} + \gamma \arg\max_{a&#39;} q(S_{t+1}, a&#39;) \]</span></p>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/11/distill_q_learning.png" aria-label="Q-learning estimates value under the optimal policy by choosing the max Q-value." title="Q-learning estimates value under the optimal policy by choosing the max Q-value." style="height:80px;width:auto;" alt="../data/11/distill_q_learning.png" />
+<figcaption>
+Q-learning estimates value under the optimal policy by choosing the max Q-value.
+</figcaption>
+</figure>
+</div>
+</div>
+<div id="section-10" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-greydanus2019the" role="doc-biblioref">Greydanus und Olah 2019</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="q-learning-path-perspective" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Q-Learning: Path Perspective</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="iframe print iframe" style="width:1200px;height:auto;">
+<iframe style="width:100%;height:550px;" allow="fullscreen" data-src="https://distill.pub/2019/paths-perspective-on-value-learning/">
+
+</iframe>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="recap-2-off-policy-learning" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Recap – 2) Off-Policy Learning</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Evaluate target policy <span class="math inline">\(\pi(a|s)\)</span> to compute <span class="math inline">\(q_\pi(s,a)\)</span> while following behaviour policy <span class="math inline">\(b(a|s)\)</span>:</p>
+<p><span class="math display">\[{S_1,A_1,R_2,\dots,S_T} ∼ b\]</span></p>
+<p>Why is this important?</p>
+<ul>
+<li>Learn from observing humans or other agents</li>
+<li>Re-use experience generated from old policies <span class="math inline">\(\pi_1, \pi_2, \dots, \pi_{t−1}\)</span></li>
+<li>Learn about optimal policy while following exploratory policy</li>
+<li>Learn about multiple policies while following a single behavioral policy</li>
+</ul>
+</div>
+<div id="section-11" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="off-policy-learning" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>2) Off-Policy Learning</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="q-learning-1" class="left box block">
+<h2 class="left">Q-Learning</h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/11/distill_q_learning.png" aria-label="Q-learning estimates value under the optimal policy by choosing the max Q-value." title="Q-learning estimates value under the optimal policy by choosing the max Q-value." style="height:200px;width:auto;" alt="../data/11/distill_q_learning.png" />
+<figcaption>
+Q-learning estimates value under the optimal policy by choosing the max Q-value.
+</figcaption>
+</figure>
+</div>
+</div>
+</div><div class="area right">
+<div id="off-policy-learning-1" class="right box block">
+<h2 class="right">Off-Policy Learning</h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/11/distill_off_policy.png" aria-label="Off-policy value learning weights Q-values by an arbitrary policy." title="Off-policy value learning weights Q-values by an arbitrary policy." style="height:200px;width:auto;" alt="../data/11/distill_off_policy.png" />
+<figcaption>
+Off-policy value learning weights Q-values by an arbitrary policy.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="layout row columns">
+<div class="area ">
+<div id="going-off-policy" class="bottom box block">
+<h2 class="bottom">Going Off-Policy</h2>
+<ul>
+<li>learn from different policy, from observation, reuse</li>
+</ul>
+<p>But this can diverge. <strong>Possible Solution</strong>: Use Importance Sampling</p>
+</div>
+<div id="section-12" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-greydanus2019the" role="doc-biblioref">Greydanus und Olah 2019</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="convergence-of-prediction-algorithms-1" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Convergence of Prediction Algorithms</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<table>
+<thead>
+<tr class="header">
+<th align="center">On/Off-Policy</th>
+<th>Algorithm</th>
+<th align="center">Table Lookup</th>
+<th align="center">Linear Approx.</th>
+<th align="center">Non-Linear</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">On-Policy</td>
+<td>MC</td>
+<td align="center">✔︎</td>
+<td align="center">✔︎</td>
+<td align="center">✔︎</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td>TD</td>
+<td align="center">✔︎</td>
+<td align="center">✔︎</td>
+<td align="center">❌</td>
+</tr>
+<tr class="odd">
+<td align="center">Off-Policy</td>
+<td>MC</td>
+<td align="center">✔︎</td>
+<td align="center">✔︎</td>
+<td align="center">✔︎</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td>TD</td>
+<td align="center">✔︎</td>
+<td align="center">❌</td>
+<td align="center">❌</td>
+</tr>
+</tbody>
+</table>
+<p>TD does not follow the gradient of any objective function. This is why TD can diverge when off-policy or using non-linear function approximation.</p>
+</div>
+<div id="section-13" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="function-approximation-dealing-with-large-state-spaces" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>3) Function Approximation: Dealing with Large State Spaces</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="large-state-space" class="left box block">
+<h2 class="left">Large State Space</h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/11/large-cliffworld-states.svg" style="height:240px;width:auto;" alt="../data/11/large-cliffworld-states.svg" />
+</figure>
+</div>
+<p>Large/infinite state spaces are a characteristic of many interesting RL problems.</p>
+</div>
+</div><div class="area center">
+<div id="tabular-value-functions" class="center box block">
+<h2 class="center">Tabular Value Functions</h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/11/large-cliffworld-path.svg" style="height:240px;width:auto;" alt="../data/11/large-cliffworld-path.svg" />
+</figure>
+</div>
+<p>Tabular value functions keep value estimates for each state, and don’t generalize.</p>
+</div>
+</div><div class="area right">
+<div id="function-approximation" class="right box block fragment">
+<h2 class="right">Function Approximation</h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/11/large-cliffworld-approx.svg" style="height:240px;width:auto;" alt="../data/11/large-cliffworld-approx.svg" />
+</figure>
+</div>
+<p>E.g., Euclidean Averagers save memory and let agents generalize over states.</p>
+</div>
+<div id="section-14" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-greydanus2019the" role="doc-biblioref">Greydanus und Olah 2019</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="function-approximation-dealing-with-large-state-spaces-1" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>3) Function Approximation: Dealing with Large State Spaces</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Problem in General:</p>
+<ul>
+<li>Change function from one sample <span class="math inline">\(\rightarrow\)</span> affects whole function approximation – we are aiming for a moving target.</li>
+<li>As a tradeoff for generalization: We are integrating states that are assumed nearby. But this can be dangerous and depends on definition of a neighborhood.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="fct.-approx.-generalization-over-neighborhoods" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>3) Fct. Approx.: Generalization over Neighborhoods</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="cliff-world-approximation" class="left box block">
+<h2 class="left">Cliff World Approximation</h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/11/large-cliffworld-approx.svg" style="height:320px;width:auto;" alt="../data/11/large-cliffworld-approx.svg" />
+</figure>
+</div>
+<p>Using Euclidean distance lead to smooth value function.</p>
+</div>
+</div><div class="area right">
+<div id="adding-long-barrier" class="right box block">
+<h2 class="right">Adding long barrier</h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/11/large-cliffworld-barrier.svg" style="height:320px;width:auto;" alt="../data/11/large-cliffworld-barrier.svg" />
+</figure>
+</div>
+<p>Averaging leads now to bad value updates across the introduced barrier.</p>
+</div>
+<div id="section-15" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-greydanus2019the" role="doc-biblioref">Greydanus und Olah 2019</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="function-approximation-1" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>3) Function Approximation</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="section-16" class="left box block">
+<h2 class="left"></h2>
+<p>Euclidean averaging leads to the poor generalization in Monte Carlo and TD updates.</p>
+<p>However, TD learning amplifies these errors dramatically whereas Monte Carlo does not – as it distributes these updates more efficiently.</p>
+</div>
+</div><div class="area right">
+<div id="section-17" class="right box block">
+<h2 class="right"></h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/11/compare-function-approx.svg" style="height:480px;width:auto;" alt="../data/11/compare-function-approx.svg" />
+</figure>
+</div>
+</div>
+<div id="section-18" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-greydanus2019the" role="doc-biblioref">Greydanus und Olah 2019</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="summary-deadly-triad" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Summary Deadly Triad</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Three elements that can interfere with divergence: With only two present, we can avoid instability.</p>
+<ul>
+<li>Function approximation: Allows for generalization, required for realistic tasks.</li>
+<li>Bootstrapping: Update targets based on the existing estimates leads to more efficient learning.</li>
+<li>Off-Policy training: Crucial for Online Learning, meaning learning from a single stream of experience how to adapt many policies.</li>
+</ul>
+</div>
+<div id="countermeasures" class="box block">
+<h2>Countermeasures</h2>
+<p>We can’t counter all these individually, but DQN showed a way how to balance these issues (target networks for example). Other possibilities include, e.g., using <span class="math inline">\(n\)</span>-step returns.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="deep-reinforcement-learning" class="section slide level1" data-background-color="#2CA02C">
+<div class="decker">
+<div class="alignment">
+<h1>Deep Reinforcement Learning</h1>
+</div>
+</div>
+</section>
+<section id="recap-control-with-value-function-approximation" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Recap – Control with Value Function Approximation</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:800px;">
+<img src="../.decker/code/code-0c284fe2.tex.svg" style="height:auto;width:100%;" alt="code-0c284fe2.tex.svg" />
+</figure>
+</div>
+<p><strong>Policy evaluation</strong>: Approximate policy evaluation, <span class="math inline">\(\hat{q}(·, ·, \vec{w}) ≈ q_\pi\)</span></p>
+<p><strong>Policy improvement</strong>: <span class="math inline">\(\varepsilon\)</span>-greedy policy improvement</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="recap-action-value-function-approximation" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Recap – Action-Value Function Approximation</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<ul>
+<li><p>Approximate the action-value function <span class="math inline">\(\hat{q}(S, A, \vec{w}) \approx q_\pi(S, A)\)</span></p></li>
+<li><p>Minimize mean-squared error between approximate action-value function <span class="math inline">\(\hat{q}(S,A,\vec{w})\)</span> and true action-value function <span class="math inline">\(q_\pi(S,A)\)</span>:</p></li>
+</ul>
+<p><span class="math display">\[
+J(\vec{w}) = \mathbb{E}_\pi [ (q_\pi(S,A) - \hat{q}(S,A,\vec{w}))^2 ]
+\]</span></p>
+<ul>
+<li>Use stochastic gradient descent to find a local minimum <span class="math display">\[
+\begin{eqnarray*}
+− \frac{1}{2} \nabla_\vec{w} J(\vec{w}) = (q_\pi (S , A) − \hat{q}(S , A, \vec{w})) \nabla_\vec{w} \hat{q}(S , A, \vec{w})\\
+\Delta \vec{w} = \alpha \Big( q_\pi(S, A) − \hat{q}(S, A, \vec{w})) \nabla_\vec{w} \hat{q}(S, A, \vec{w})
+\end{eqnarray*}
+\]</span></li>
+</ul>
+</div>
+<div id="section-19" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
+<!--# TASK
+
+::: columns-30-70
+
+![](../data/Discussion.png){width=180px}
+
+TODO
+
+:::-->
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="recap-dqn-architecture-overview" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Recap – DQN Architecture Overview</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/mnih_dqn_architecture.png" style="height:400px;width:auto;" alt="../data/09/mnih_dqn_architecture.png" />
+</figure>
+</div>
+<p>“we developed a novel agent, a deep Q-network (DQN), which is able to combine reinforcement learning with a class of artificial neural network known as deep neural networks.”</p>
+</div>
+<div id="section-20" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-mnih-dqn-2015" role="doc-biblioref">Mnih u. a. 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="recap-overview-learning-cycle" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Recap – Overview Learning Cycle</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/LearningCycle_C3.png" style="height:480px;width:auto;" alt="../data/09/LearningCycle_C3.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="recap-goal-of-dqn-approximation-of-q-function" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Recap – Goal of DQN: Approximation of Q-Function</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<ul>
+<li>Q-learning can be used to find an optimal action-selection policy for any given (finite) Markov decision process (MDP).</li>
+<li>It works by learning an action-value function that ultimately gives the expected utility of taking a given action in a given state and following the optimal policy thereafter.</li>
+<li>One of the strengths of Q-learning is that it is able to compare the expected utility of the available actions without requiring a model of the environment.</li>
+<li>Q-learning learns estimates of the optimal Q-values of an MDP, which means that behavior can be dictated by taking actions greedily with respect to the learned Q-values.</li>
+</ul>
+</div>
+<div id="section-21" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-mnih-dqn-2015" role="doc-biblioref">Mnih u. a. 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="recap-deep-q-networks" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Recap – Deep Q-Networks</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>… improved and stabilized training of Q-learning when using a Deep Neural Network for function approximation.</p>
+<p>Two innovative mechanisms:</p>
+<ul>
+<li><em>Experience Replay:</em> use a replay buffer for storing experiences.</li>
+<li>Periodically Update <em>Target network</em> that are employed for bootstrapping.</li>
+</ul>
+</div>
+<div id="section-22" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-weng2018rl" role="doc-biblioref">Weng 2018a</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="sampling-in-experience-replay-construction-of-a-batch" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Sampling in Experience Replay – Construction of a batch</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p><strong>Goal</strong> : Distribution of Examples during Training should match the Distribution of real world input:</p>
+<ul>
+<li>Small batch (one element) <span class="math inline">\(\Rightarrow\)</span> oscillations in weight updates</li>
+<li>For larger batch <span class="math inline">\(\Rightarrow\)</span> gets more stable, but for increasingly larger batches the effect gets diminished</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="use-importance-sampling-to-compensate-for-biased-sampling-during-learning-the-neural-network." class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Use Importance Sampling to compensate for biased sampling during learning the Neural Network.</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p><strong>Approach</strong>: Use importance sampling for constructing more meaningful batches.</p>
+<p>Problem for non-uniform sampling: selection of particular (and using the TD error very noisy) examples <span class="math inline">\(\rightarrow\)</span> can become unstable</p>
+<p>In DRL: Probably the distribution in the replay memory is (even in the uniform case) not matching the one of the optimal policy and we have to live with a certain bias.</p>
+<p>The small (more fine-tuning) weight changes proposed from already well approximated samples would get ignored.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-learning-in-breakout-2" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Example: Learning in Breakout 2</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:880px;">
+<img src="../data/09/mnih_breakoutresults.svg" style="height:auto;width:100%;" alt="../data/09/mnih_breakoutresults.svg" />
+</figure>
+</div>
+</div>
+<div id="section-23" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-mnih-dqn-2015" role="doc-biblioref">Mnih u. a. 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="results---superhuman-performance" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Results - “Superhuman” Performance</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="summary" class="left box block">
+<h2 class="left">Summary</h2>
+<p><em>“Our DQN method outperforms the best existing reinforcement learning methods on 43 [out of 49] of the games without incorporating any of the additional prior knowledge about Atari 2600 games used by other approaches.”</em></p>
+</div>
+</div><div class="area right">
+<div id="section-24" class="right box block">
+<h2 class="right"></h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/mnih_dqn_results.png" style="height:450px;width:auto;" alt="../data/09/mnih_dqn_results.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="layout row columns">
+<div class="area ">
+<div id="section-25" class="bottom footer box block">
+<h2 class="bottom footer"></h2>
+<p><span class="citation">(<a href="#ref-mnih-dqn-2015" role="doc-biblioref">Mnih u. a. 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="drawbacks-of-dqn-and-other-drl-methods" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Drawbacks of DQN (and other DRL methods)</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="section-26" class="left box block">
+<h2 class="left"></h2>
+<div class="incremental">
+<ul class="incremental">
+<li class="fragment">Delayed Rewards (makes Credit Assignment even more difficult)</li>
+<li class="fragment">Overfitting towards a specific niche and showing no generalization</li>
+<li class="fragment">many real world scenarios are non-Markovian or non-stationary (e.g. when other agents are co-adapting)</li>
+</ul>
+</div>
+</div>
+</div><div class="area right">
+<div id="section-27" class="right box block">
+<h2 class="right"></h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/09/mnih_dqn_results.png" style="height:480px;width:auto;" alt="../data/09/mnih_dqn_results.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="layout row columns">
+<div class="area ">
+<div id="section-28" class="bottom footer box block">
+<h2 class="bottom footer"></h2>
+<p><span class="citation">(<a href="#ref-mnih-dqn-2015" role="doc-biblioref">Mnih u. a. 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="problematic-markov-assumption" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Problematic: Markov Assumption</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>In many real world scenarios the Markov Property does not hold.</p>
+<p><br />
+</p>
+<p>In ATARI games: many require information on direction of movement.</p>
+<p><br />
+</p>
+<p>Simple Solution: add information from different time steps – as input 4 frames were used.</p>
+</div>
+<div id="but-difficult-in-non-stationary-environments" class="box block fragment">
+<h2>But difficult in non-stationary environments</h2>
+<ul>
+<li>in game like scenarios, opponents can use different strategies (rock-paper-scissor),</li>
+<li>or other agents co-adapt and learn over time as well.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="delayed-rewards" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Delayed Rewards</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="section-29" class="left box block">
+<h2 class="left"></h2>
+<p><em>“games demanding more temporally extended planning strategies still constitute a major challenge for all existing agents including DQN (e.g., Montezuma’s Revenge)”</em></p>
+<ul>
+<li>It’s difficult to explore large state spaces with sparse and delayed rewards.</li>
+<li>An Objective Function might not provide good guidance where to continue exploration.</li>
+</ul>
+</div>
+</div><div class="area right">
+<div id="section-30" class="right box block">
+<h2 class="right"></h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/10/montezumas_revenge.jpg" style="height:480px;width:auto;" alt="../data/10/montezumas_revenge.jpg" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="layout row columns">
+<div class="area ">
+<div id="section-31" class="bottom footer box block">
+<h2 class="bottom footer"></h2>
+<p><span class="citation">(<a href="#ref-mnih-dqn-2015" role="doc-biblioref">Mnih u. a. 2015</a>; <a href="#ref-kulkarni2016" role="doc-biblioref">Kulkarni u. a. 2016</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="difficult-problems-for-drl" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Difficult Problems for DRL</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Large state spaces are difficult to explore, in particular, sparse and delayed Rewards.</p>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/11/bellemare_2016_hardDRL.png" style="height:400px;width:auto;" alt="../data/11/bellemare_2016_hardDRL.png" />
+</figure>
+</div>
+<p>The Objective Function doesn’t provide good guidance where to continue exploration.</p>
+</div>
+<div id="section-32" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-bellemare2016" role="doc-biblioref">Bellemare u. a. 2016</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="evolutionary-robotics-perspective" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Evolutionary Robotics Perspective</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/10/lehman2011deceptive.svg" style="height:180px;width:auto;" alt="../data/10/lehman2011deceptive.svg" />
+</figure>
+</div>
+<blockquote>
+<p>Objective functions often suffer from the pathology of local optima, that is, dead ends in the search space with respect to increasing the value of the objective function. In this way, landscapes induced by objective (e.g., fitness) functions are often deceptive.</p>
+</blockquote>
+<blockquote>
+<p>the more ambitious the goal, the more difficult it may be to articulate an appropriate objective function and the more likely it is that search can be deceived by local optima (Ficici and Pollack, 1998; Zaera et al., 1996). The problem is that the objective function does not necessarily reward the stepping stones in the search space that ultimately lead to the objective.</p>
+</blockquote>
+</div>
+<div id="section-33" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-lehman2011" role="doc-biblioref">Lehman und Stanley 2011</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="deceptive-objectives" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Deceptive Objectives</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/11/deceptive_function.png" style="height:320px;width:auto;" alt="../data/11/deceptive_function.png" />
+</figure>
+</div>
+<p>Landscapes induced by objective functions are often deceptive – the objective function is misleading.</p>
+<p>Often, stepping stones are required — initially, objective might get worse.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="search-for-stepping-stones-as-a-search-for-novelty" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Search for Stepping Stones as a Search for novelty</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Try to cover all possible behaviors:</p>
+<ul>
+<li>use novelty as a proxy for finding stepping stones;</li>
+<li>in-stead of searching for a final objective, the learning method is rewarded for finding any instance whose functionality is significantly different from what has been discovered before.</li>
+</ul>
+<p><strong>Assumption</strong>: Behavioral space is not unbound, but reasonably structured.</p>
+<p>Novelty search is not like exhaustive search, but assumes that the number of novel behaviors is reasonable and limited in many practical domains.</p>
+<p>Exploit sparseness of space of behaviors to decide novelty = requires a form of memory.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-solve-deceptive-maze" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Example: Solve Deceptive Maze</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/10/lehman2011deceptive.svg" style="height:240px;width:auto;" alt="../data/10/lehman2011deceptive.svg" />
+</figure>
+</div>
+<blockquote>
+<ol style="list-style-type: lower-alpha">
+<li>Conflations of behavior are indicated in gray for reducing the amount of information in the behavioral characterization … only geographically similar behaviors are conflated by a rectangle that is a part of a regular grid,</li>
+<li>characterizing behavior by fitness … behaviors that end in very different locations are conflated by the circle centered on the goal with radius equal to a particular fitness</li>
+</ol>
+</blockquote>
+</div>
+<div id="section-34" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-lehman2011" role="doc-biblioref">Lehman und Stanley 2011</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="use-hierarchical-drl-to-explore-behavioral-space" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Use Hierarchical DRL to Explore Behavioral Space</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Find stepping stones to construct overall behavior as chain:</p>
+<ul>
+<li>divide overall problem into subgoals and learn those individually</li>
+</ul>
+<p>When the environment provides delayed rewards, we adopt a strategy</p>
+<ul>
+<li>to first learn ways to achieve intrinsically generated goals, and</li>
+<li>subsequently learn an optimal policy to chain them together.</li>
+</ul>
+</div>
+<div id="section-35" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-kulkarni2016" role="doc-biblioref">Kulkarni u. a. 2016</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="use-intrinsic-motivation-to-explore-large-parts-of-behavioral-space" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Use intrinsic motivation to explore large parts of behavioral space</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Intrinsically motivated agents can explore new behavior for its own sake rather than to directly solve problems. Such intrinsic behaviors could eventually help the agent solve tasks posed by the environment.</p>
+</div>
+<div id="intrinsic-motivation" class="definition box block">
+<h2 class="definition">Intrinsic Motivation</h2>
+<p>“Intrinsic motivation is defined as the doing of an activity for its inherent satisfaction rather than for some separable consequence. When intrinsically motivated, a person is moved to act for the fun or challenge entailed rather than because of external products, pressures, or rewards.”</p>
+</div>
+<div id="section-36" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-ryan2000" role="doc-biblioref">Ryan und Deci 2000</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-discrete-mdp-with-delayed-rewards" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Example: Discrete MDP with delayed rewards</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:1100px;">
+<img src="../.decker/code/code-671eedff.tex.svg" style="height:auto;width:100%;" alt="code-671eedff.tex.svg" />
+</figure>
+</div>
+<p><strong>States</strong>: 6 possible states and the agent always starts at <span class="math inline">\(s_2\)</span>.</p>
+<p><strong>Action</strong></p>
+<ul>
+<li>The agent moves left deterministically when it chooses left action;</li>
+<li>but the action right only succeeds 50% of the time, resulting in a left move otherwise.</li>
+</ul>
+<p><strong>Reward</strong>: The terminal state is <span class="math inline">\(s_1\)</span> and the agent receives</p>
+<ul>
+<li>the reward of <span class="math inline">\(1\)</span> when it first visits <span class="math inline">\(s_6\)</span> and then <span class="math inline">\(s_1\)</span>.</li>
+<li>The reward for going to <span class="math inline">\(s_1\)</span> without visiting <span class="math inline">\(s_6\)</span> is <span class="math inline">\(0.01\)</span>.</li>
+</ul>
+</div>
+<div id="section-37" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-kulkarni2016" role="doc-biblioref">Kulkarni u. a. 2016</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-discrete-mdp-with-delayed-rewards-1" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Example: Discrete MDP with delayed rewards</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Q-Learning: unable to find optimal policy, directly going to <span class="math inline">\(S_1\)</span> to obtain a reward of <span class="math inline">\(0.01\)</span>.</p>
+<p><strong>Hierarchical Q Learning</strong>:</p>
+<ul>
+<li>learns to choose goals <span class="math inline">\(s_4, s_5 or s_6\)</span>,</li>
+<li>This leads the agent to visit <span class="math inline">\(s_6\)</span> before going back to <span class="math inline">\(s_1\)</span>.</li>
+</ul>
+<p>Therefore, the agent obtains a significantly higher average reward of around 0.13.</p>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/11/kulkarni_explore_mdp.png" style="height:240px;width:auto;" alt="../data/11/kulkarni_explore_mdp.png" />
+</figure>
+</div>
+</div>
+<div id="section-38" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-kulkarni2016" role="doc-biblioref">Kulkarni u. a. 2016</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="dealing-with-delayed-rewards" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Dealing with Delayed Rewards</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="col60">
+<p><em>“When the environment provides delayed rewards, we adopt a strategy to first learn ways to achieve intrinsically generated goals, and subsequently learn an optimal policy to chain them together.”</em></p>
+<h2 id="approach">Approach</h2>
+<ul>
+<li>Use a hierarchical representation.</li>
+<li>Exploration: Driven by a search for novelty (<strong>Intrinsic Motivation</strong>). This tries to cover all possible behaviors during exploration, find stepping stones.</li>
+</ul>
+</div>
+<div class="col40">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/10/kulkarni_hierarchical.svg" style="height:480px;width:auto;" alt="../data/10/kulkarni_hierarchical.svg" />
+</figure>
+</div>
+</div>
+</div>
+<div id="section-39" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-kulkarni2016" role="doc-biblioref">Kulkarni u. a. 2016</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="hierarchical-approach-works-on-different-timescales" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Hierarchical Approach: Works on different timescales</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="col60">
+<blockquote>
+<ol style="list-style-type: lower-alpha">
+<li>the top level module (meta-controller) takes in the state and picks a new goal,</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>the lower-level module (controller) uses both the state and the chosen goal to select actions either until the goal is reached or the episode is terminated.</li>
+</ol>
+</blockquote>
+<p><em>“The meta-controller then chooses another goal and steps (a-b) repeat. We train our model using stochastic gradient descent at different temporal scales.”</em></p>
+</div>
+<div class="col40">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/10/kulkarni_hierarchical.svg" style="height:480px;width:auto;" alt="../data/10/kulkarni_hierarchical.svg" />
+</figure>
+</div>
+</div>
+</div>
+<div id="section-40" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-kulkarni2016" role="doc-biblioref">Kulkarni u. a. 2016</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="temporal-abstraction-in-hdrl" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Temporal Abstraction in hDRL</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="temporal-abstraction" class="definition left box block">
+<h2 class="definition left">Temporal Abstraction</h2>
+<p>The process of breaking down a complex task into a sequence of simpler sub-tasks, or “options”. Each option is a self-contained policy that can be executed for a certain period of time before returning control to the overarching learning agent.</p>
+</div>
+</div><div class="area right">
+<div id="section-41" class="right box block">
+<h2 class="right"></h2>
+<div class="media">
+<figure class="image" style="height:auto;width:640px;">
+<img src="../data/11/kulkarni_temporal_abstraction.png" style="height:auto;width:100%;" alt="../data/11/kulkarni_temporal_abstraction.png" />
+</figure>
+</div>
+</div>
+<div id="section-42" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-Precup2000TemporalAI" role="doc-biblioref">Precup und Sutton 2000</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="hierarchical-drl-algorithm" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Hierarchical DRL Algorithm</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="col60">
+<p><em>the agent uses a two-stage hierarchy consisting of a controller and a meta-controller.</em></p>
+<blockquote>
+<ol style="list-style-type: decimal">
+<li>The meta-controller receives <span class="math inline">\(s_t\)</span> and chooses a goal <span class="math inline">\(g_t\)</span>.</li>
+<li>The controller then selects an action <span class="math inline">\(a_t\)</span> using <span class="math inline">\(s_t\)</span> and <span class="math inline">\(g_t\)</span>. The goal <span class="math inline">\(g_t\)</span> remains in place for the next few time steps either until it is achieved or a terminal state is reached.</li>
+</ol>
+</blockquote>
+<p><em>The internal critic is responsible for evaluating whether a goal has been reached and providing a reward <span class="math inline">\(r_t(g)\)</span></em></p>
+<p><em>The objective function for the controller is to maximize cumulative intrinsic reward.</em></p>
+</div>
+<div class="col40">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/10/kulkarni_hierarchical.svg" style="height:480px;width:auto;" alt="../data/10/kulkarni_hierarchical.svg" />
+</figure>
+</div>
+</div>
+</div>
+<div id="section-43" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-kulkarni2016" role="doc-biblioref">Kulkarni u. a. 2016</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="intrinsic-motivation---constructing-a-representation" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Intrinsic Motivation - Constructing a Representation</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="early-learning-phase" class="left box block">
+<h2 class="left">Early Learning Phase</h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/10/montezuma_im_early.jpg" style="height:420px;width:auto;" alt="../data/10/montezuma_im_early.jpg" />
+</figure>
+</div>
+<p>Select key as (sub)goal – but fails.</p>
+</div>
+</div><div class="area right">
+<div id="intermediate-phase" class="right box block">
+<h2 class="right">Intermediate Phase</h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/10/montezuma_im_ladder.jpg" style="height:420px;width:auto;" alt="../data/10/montezuma_im_ladder.jpg" />
+</figure>
+</div>
+<p>Select ladder successful as goal.</p>
+</div>
+</div>
+</div>
+<div class="layout row columns">
+<div class="area ">
+<div id="section-44" class="bottom footer box block">
+<h2 class="bottom footer"></h2>
+<p><span class="citation">(<a href="#ref-kulkarni2016" role="doc-biblioref">Kulkarni u. a. 2016</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="intrinsic-motivation---constructing-an-abstraction" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Intrinsic Motivation - Constructing an Abstraction</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="intermediate-phase-1" class="left box block">
+<h2 class="left">Intermediate Phase</h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/10/montezuma_im_ladder.jpg" style="height:420px;width:auto;" alt="../data/10/montezuma_im_ladder.jpg" />
+</figure>
+</div>
+<p>Select ladder successful as goal.</p>
+</div>
+</div><div class="area right">
+<div id="intermediate-phase-2" class="right box block">
+<h2 class="right">Intermediate Phase</h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/10/montezuma_im_key.jpg" style="height:420px;width:auto;" alt="../data/10/montezuma_im_key.jpg" />
+</figure>
+</div>
+<p>Select key successful as goal.</p>
+</div>
+</div>
+</div>
+<div class="layout row columns">
+<div class="area ">
+<div id="section-45" class="bottom footer box block">
+<h2 class="bottom footer"></h2>
+<p><span class="citation">(<a href="#ref-kulkarni2016" role="doc-biblioref">Kulkarni u. a. 2016</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="learning-with-intrinsic-motivation" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Learning with Intrinsic Motivation</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/10/montezuma_learning.svg" style="height:480px;width:auto;" alt="../data/10/montezuma_learning.svg" />
+</figure>
+</div>
+</div>
+<div id="section-46" class="bottom footer box block">
+<h2 class="bottom footer"></h2>
+<p><span class="citation">(<a href="#ref-kulkarni2016" role="doc-biblioref">Kulkarni u. a. 2016</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="policy-learning" class="section slide level1" data-background-color="#2CA02C">
+<div class="decker">
+<div class="alignment">
+<h1>Policy Learning</h1>
+</div>
+</div>
+</section>
+<section id="overview-rl-methods" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Overview RL Methods</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="model-based-rl" class="left box block">
+<h2 class="left">Model-based RL</h2>
+<div class="check-cross">
+<ul class="task-list">
+<li><input type="checkbox" disabled="" checked="" />
+‘Easy’ to learn a model (supervised learning)</li>
+<li><input type="checkbox" disabled="" checked="" />
+Learns ‘all there is to know’ from data</li>
+<li><input type="checkbox" disabled="" />
+Uses compute &amp; capacity on irrelevant details</li>
+<li><input type="checkbox" disabled="" />
+Computing policy (=planning) is non-trivial and expensive (in compute)</li>
+</ul>
+</div>
+</div>
+</div><div class="area right">
+<div id="value-based-rl" class="right box block">
+<h2 class="right">Value-based RL</h2>
+<div class="check-cross">
+<ul class="task-list">
+<li><input type="checkbox" disabled="" checked="" />
+Easy to generate policy (e.g., <span class="math inline">\(\pi(a|s) = \mathbb{1}(a = \arg\max_a q(s, a))\)</span>)</li>
+<li><input type="checkbox" disabled="" checked="" />
+Close to true objective</li>
+<li><input type="checkbox" disabled="" checked="" />
+Fairly well-understood, good algorithms exist</li>
+<li><input type="checkbox" disabled="" />
+Still not the true objective:<ul>
+<li>May focus capacity on irrelevant details</li>
+<li>Small value error can lead to larger policy error</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="section-47" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-deepmind2021" role="doc-biblioref">Hasselt und Borsa 2021</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="policy-gradient" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Policy Gradient</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="col30">
+<p>Don’t approximate a value-based function.</p>
+<p><br />
+</p>
+<p><strong>Goal:</strong> Instead, directly learn the policy with a parametrized function <span class="math inline">\(\pi(a \vert s; \theta)\)</span>.</p>
+</div>
+<div class="col70">
+<div class="media">
+<figure class="image" style="height:auto;width:100%;">
+<img src="../data/11/karpathy_policy.png" style="height:auto;width:100%;" alt="../data/11/karpathy_policy.png" />
+</figure>
+</div>
+</div>
+</div>
+<div id="section-48" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-kaparthyblogPG" role="doc-biblioref">Karpathy 2016</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="overview-rl-methods-2" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Overview RL Methods 2</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="value-based-rl-1" class="left box block">
+<h2 class="left">Value-based RL</h2>
+<div class="check-cross">
+<ul class="task-list">
+<li><input type="checkbox" disabled="" checked="" />
+Easy to generate policy</li>
+<li><input type="checkbox" disabled="" checked="" />
+Close to true objective</li>
+<li><input type="checkbox" disabled="" checked="" />
+Fairly well-understood, good algorithms exist</li>
+<li><input type="checkbox" disabled="" />
+Still not the true objective:<ul>
+<li>May focus capacity on irrelevant details</li>
+<li>Small value error can lead to larger policy error</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div><div class="area right">
+<div id="policy-based-rl" class="right box block">
+<h2 class="right">Policy-based RL</h2>
+<div class="check-cross">
+<ul>
+<li><input type="checkbox" disabled="" checked="" />
+Right objective!</li>
+<li>More pros and cons on later slide</li>
+</ul>
+</div>
+</div>
+<div id="section-49" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-deepmind2021" role="doc-biblioref">Hasselt und Borsa 2021</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="policy-based-reinforcement-learning" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Policy-Based Reinforcement Learning</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>We already approximated the value or action-value function using parameters <span class="math inline">\(\theta\)</span>:</p>
+<p><span class="math display">\[
+V_\theta(s) ≈ V_\pi(s), Q_\theta(s, a) ≈ Q_\pi(s, a)
+\]</span></p>
+<p>A policy was generated directly from the value function, e.g., using <span class="math inline">\(\varepsilon\)</span>-greedy.</p>
+<p>But we can also directly parametrise the policy <span class="math inline">\(\pi_\theta(s,a) = P(a | s,\theta)\)</span></p>
+<p>We will focus again on model-free reinforcement learning.</p>
+</div>
+<div id="section-50" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="recap-policy-learning-in-multi-armed-bandits" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Recap – Policy Learning in Multi-Armed Bandits</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="section-51" class="left box block">
+<h2 class="left"></h2>
+<p>Consider action selection as a probability distribution:</p>
+<ul>
+<li>For each action: Consider an (estimated) preference <span class="math inline">\(H_t(a)\)</span> of that action which</li>
+<li>can be directly used to express a probability for selecting that action (as a soft-max distribution)</li>
+</ul>
+<p><span class="math display">\[p(A_t = a) = \frac{e^{H_t(a)}}{\sum_{b=1}^k e^{H_t(b)}} = \pi_t(a)\]</span></p>
+</div>
+</div><div class="area right">
+<div id="gradient-bandit-algorithm" class="right box block">
+<h2 class="right">Gradient Bandit Algorithm</h2>
+<p>Learn / adapt the action preference function directly using stochastic gradient ascent:</p>
+<p><span class="math display">\[\begin{eqnarray*}
+H_{t+1}(A_t) &amp;=&amp;  H_{t}(A_t) + \alpha (R_t - \bar{R}_t) (1-\pi_t(A_t)), &amp;\text{ and} \\
+H_{t+1}(a) &amp;=&amp; H_{t}(a) - \alpha (R_t - \bar{R}_t) \pi_t(a) &amp; \text{ for all }a \neq A_t
+\end{eqnarray*}
+\]</span></p>
+</div>
+<div id="section-52" class="footer box block">
+<h2 class="footer"></h2>
+<p>Following <span class="citation">(<a href="#ref-sutton2018" role="doc-biblioref">Sutton und Barto 2018</a>)</span>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="value-based-and-policy-based-rl" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Value-Based and Policy-Based RL</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="section-53" class="left box block">
+<h2 class="left"></h2>
+<h3 id="value-based">Value Based</h3>
+<ul>
+<li>Learnt Value Function</li>
+<li>Implicit policy (e.g. <span class="math inline">\(\varepsilon\)</span>-greedy)</li>
+</ul>
+<h3 id="policy-based">Policy Based</h3>
+<ul>
+<li>No Value Function</li>
+<li>Learnt Policy</li>
+</ul>
+<h3 id="actor-critic">Actor-Critic</h3>
+<ul>
+<li>Learnt Value Function</li>
+<li>Learnt Policy</li>
+</ul>
+</div>
+</div><div class="area right">
+<div id="overview-approaches" class="right box block">
+<h2 class="right">Overview Approaches</h2>
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:640px;">
+<img src="../.decker/code/code-b9383c81.tex.svg" style="height:auto;width:100%;" alt="code-b9383c81.tex.svg" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="advantages-of-policy-based-rl" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Advantages of Policy-Based RL</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="advantages" class="left box block">
+<h2 class="left">Advantages:</h2>
+<ul>
+<li>Better convergence properties</li>
+<li>Effective in high-dimensional or continuous action spaces</li>
+<li>Can learn stochastic policies</li>
+</ul>
+</div>
+</div><div class="area right">
+<div id="disadvantages" class="right box block">
+<h2 class="right">Disadvantages:</h2>
+<ul>
+<li>Typically converge to a local rather than global optimum</li>
+<li>Evaluating a policy is typically inefficient and high variance</li>
+</ul>
+</div>
+<div id="section-54" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="stochastic-policies" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Stochastic policies</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Why could we need stochastic policies?</p>
+<ul>
+<li>In MDPs, there is always an optimal deterministic policy</li>
+<li>But, most problems are not fully observable:
+<ul>
+<li>This is the common case, especially with function approximation.</li>
+<li>The optimal policy may then be stochastic.</li>
+</ul></li>
+<li>Search space is smoother for stochastic policies <span class="math inline">\(\Rightarrow\)</span> we can use gradients</li>
+<li>Provides some ‘exploration’ during learning</li>
+</ul>
+</div>
+<div id="section-55" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-deepmind2021" role="doc-biblioref">Hasselt und Borsa 2021</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-aliased-gridworld" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Example: Aliased Gridworld</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="section-56" class="left box block">
+<h2 class="left"></h2>
+<ul>
+<li>The agent cannot differentiate the two white states.</li>
+<li>Consider features of the following form (for all N, E, S, W): <span class="math display">\[\phi(s) = \overbrace{(\underbrace{1}_{up} \underbrace{0}_{right} \underbrace{1}_{down} \underbrace{0}_{left})}^{\text{walls=state}}\]</span></li>
+</ul>
+</div>
+</div><div class="area right">
+<div id="section-58" class="right box block">
+<h2 class="right"></h2>
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:480px;">
+<img src="../.decker/code/code-ccc9d9f5.tex.svg" style="height:auto;width:100%;" alt="code-ccc9d9f5.tex.svg" />
+</figure>
+</div>
+</div>
+<div id="section-59" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
+</div>
+</div>
+</div>
+<div class="layout row columns">
+<div class="area ">
+<div id="section-57" class="bottom box block">
+<h2 class="bottom"></h2>
+<p>Compare a <strong>deterministic</strong> and <strong>stochastic</strong> policy.</p>
+<!--* Compare value-based RL, using an approximate value function $Q_\theta(s, a) = f (\phi(s, a), \theta)$
+* to policy-based RL, using a parametrised policy $\phi_\theta(s,a) = g(\phi(s,a),\theta)$
+-->
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-aliased-gridworld-2" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Example: Aliased Gridworld 2</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="section-60" class="left box block">
+<h2 class="left"></h2>
+<ul>
+<li>Under aliasing, an optimal deterministic policy will either
+<ul>
+<li>move East in both white states (shown by red arrows)</li>
+<li>or move West in both white states (gray arrows).</li>
+</ul></li>
+</ul>
+</div>
+</div><div class="area right">
+<div id="section-62" class="right box block">
+<h2 class="right"></h2>
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:480px;">
+<img src="../.decker/code/code-d7c68a4f.tex.svg" style="height:auto;width:100%;" alt="code-d7c68a4f.tex.svg" />
+</figure>
+</div>
+</div>
+<div id="section-63" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
+</div>
+</div>
+</div>
+<div class="layout row columns">
+<div class="area ">
+<div id="section-61" class="bottom box block">
+<h2 class="bottom"></h2>
+<p>Either way, it can get stuck and never reach the money.</p>
+<p>Value-based RL learns a near-deterministic policy, e.g., greedy or <span class="math inline">\(\varepsilon\)</span>-greedy. So it will traverse the corridor for a long time.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-aliased-gridworld-3" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Example: Aliased Gridworld 3</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="section-64" class="left box block">
+<h2 class="left"></h2>
+<p>An optimal <strong>stochastic</strong> policy will randomly move E or W in white states:</p>
+<p><span class="math display">\[
+\begin{eqnarray*}
+\pi_\theta(\text{wall to N and S, move E}) &amp;=&amp; 0.5 \\
+\pi_\theta(\text{wall to N and S, move W}) &amp;=&amp; 0.5
+\end{eqnarray*}
+\]</span></p>
+</div>
+</div><div class="area right">
+<div id="section-66" class="right box block">
+<h2 class="right"></h2>
+<div class="media">
+<figure class="render image rendered" style="height:auto;width:480px;">
+<img src="../.decker/code/code-03f130d8.tex.svg" style="height:auto;width:100%;" alt="code-03f130d8.tex.svg" />
+</figure>
+</div>
+</div>
+<div id="section-67" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
+</div>
+</div>
+</div>
+<div class="layout row columns">
+<div class="area ">
+<div id="section-65" class="bottom box block">
+<h2 class="bottom"></h2>
+<p>It will reach the goal state in a few steps with high probability.</p>
+<p>Policy-based RL can learn the optimal stochastic policy. Even, when optimal policy does not give equal probability (which differs from random tie-breaking with values).</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="policy-learning-objective" class="section slide level1" data-background-color="#2CA02C">
+<div class="decker">
+<div class="alignment">
+<h1>Policy Learning Objective</h1>
+</div>
+</div>
+</section>
+<section id="policy-objective-functions" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Policy Objective Functions</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p><strong>Goal</strong>: given policy <span class="math inline">\(\pi_\theta(s, a)\)</span>, find best parameters <span class="math inline">\(\theta\)</span></p>
+<p>How do we measure the quality of a policy <span class="math inline">\(\pi_\theta\)</span>?</p>
+<ul>
+<li>In episodic environments: We can use the average total return per episode</li>
+<li>In continuing environments: We can use the average reward per step.</li>
+</ul>
+</div>
+<div id="section-68" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-deepmind2021" role="doc-biblioref">Hasselt und Borsa 2021</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="policy-objective-functions-episodic-environments" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Policy Objective Functions: Episodic Environments</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Episodic-return objective:</p>
+<p><span class="math display">\[
+\begin{eqnarray*}
+J_G(\theta) &amp;=&amp; \mathbb{E}_{S_0 \sim d_0, \pi_0 } \Big( \sum_{t=0}^{\infty} \gamma^t R_{t+1}\Big)\\
+&amp;=&amp; \mathbb{E}_{S_0 \sim d_0, \pi_0 } \Big(G_0\Big)\\
+&amp;=&amp; \mathbb{E}_{S_0 \sim d_0 } \Big( \mathbb{E}_{\pi_0 } (G_t | S_t = S_0) \Big)\\
+&amp;=&amp; \mathbb{E}_{S_0 \sim d_0 } \Big( v_{\pi_0} (G_t | S_t = S_0) \Big)
+\end{eqnarray*}
+\]</span></p>
+<p>where <span class="math inline">\(d_0\)</span> is the start-state distribution. This objective equals the expected value of the start state.</p>
+</div>
+<div id="section-69" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-deepmind2021" role="doc-biblioref">Hasselt und Borsa 2021</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="policy-objective-functions-average-reward-objective" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Policy Objective Functions: Average Reward Objective</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p><span class="math display">\[
+\begin{eqnarray*}
+J_R(\theta) &amp;=&amp; \mathbb{E}_{\pi_\theta } \Big( R_{t+1}\Big)\\
+&amp;=&amp; \mathbb{E}_{S_t \sim d_{\pi_\theta} } \Big( \mathbb{E}_{A_t \sim \pi_{\theta}(S_t) } (R_{t+1} | S_t) \Big)\\
+&amp;=&amp; \sum_s d_{\pi_\theta} (s) \sum_a \pi_\theta(s,a) \sum_r p(r |s,a)r
+\end{eqnarray*}
+\]</span></p>
+<p>where <span class="math inline">\(d_\pi(s) = p(S_t = s | \pi)\)</span> is the probability of being in state <span class="math inline">\(s\)</span> in the long run (Think of it as the ratio of time spent in <span class="math inline">\(s\)</span> under policy <span class="math inline">\(\pi\)</span>).</p>
+</div>
+<div id="section-70" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-deepmind2021" role="doc-biblioref">Hasselt und Borsa 2021</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="policy-gradients" class="section slide level1" data-background-color="#2CA02C">
+<div class="decker">
+<div class="alignment">
+<h1>Policy Gradients</h1>
+</div>
+</div>
+</section>
+<section id="policy-optimisation" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Policy Optimisation</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Policy based reinforcement learning is an optimization problem.</p>
+<ul>
+<li>Find <span class="math inline">\(\theta\)</span> that maximises <span class="math inline">\(J(\theta)\)</span></li>
+<li>We will focus on stochastic gradient ascent, which is often quite efficient (and easy to use with deep nets).</li>
+<li>Different approaches that do not use gradient
+<ul>
+<li>Hill climbing / simulated annealing</li>
+<li>Genetic algorithms / evolutionary strategies</li>
+</ul></li>
+</ul>
+</div>
+<div id="section-71" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-deepmind2021" role="doc-biblioref">Hasselt und Borsa 2021</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="policy-gradient-1" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Policy Gradient</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="section-72" class="left box block">
+<h2 class="left"></h2>
+<p><strong>Approach</strong>: Ascent the gradient of the objective <span class="math inline">\(J(\theta)\)</span></p>
+<p><span class="math display">\[
+\Delta \theta = \alpha \nabla_\theta J(\theta)
+\]</span></p>
+<ul>
+<li>Policy Gradient <span class="math display">\[\nabla_\theta J(\theta) = \begin{pmatrix}
+ \frac{\partial J(\theta)}{\partial \theta_1}\\
+ \vdots \\
+ \frac{\partial J(\theta)}{\partial \theta_n}
+  \end{pmatrix}\]</span></li>
+<li><span class="math inline">\(\alpha\)</span> is a step-size parameter</li>
+</ul>
+<p>Stochastic policies help ensure that <span class="math inline">\(J(\theta)\)</span> is (mostly) smooth.</p>
+</div>
+</div><div class="area right">
+<div id="gradient-ascent" class="right box block">
+<h2 class="right">Gradient Ascent</h2>
+<div class="media">
+<figure class="image" style="height:auto;width:640px;">
+<img src="../data/11/gradient_ascent.png" style="height:auto;width:100%;" alt="../data/11/gradient_ascent.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="computing-gradients-by-finite-differences" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Computing Gradients by Finite Differences</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>To evaluate policy gradient of <span class="math inline">\(\pi_\theta (s, a)\)</span></p>
+<ul>
+<li>For each dimension <span class="math inline">\(k \in\)</span> [1, n]$
+<ul>
+<li>Estimate <span class="math inline">\(k-\)</span>th partial derivative of objective function w.r.t. <span class="math inline">\(\theta\)</span></li>
+<li>By perturbing <span class="math inline">\(\theta\)</span> by small amount <span class="math inline">\(\varepsilon\)</span> in <span class="math inline">\(k-\)</span>th dimension <span class="math display">\[\frac{\partial J(\theta)}{\partial \theta_k} ≈ \frac{J(\theta + \varepsilon u_k) - J(\theta)}{\varepsilon}\]</span> where <span class="math inline">\(u_k\)</span> is unit vector with <span class="math inline">\(1\)</span> in <span class="math inline">\(k-\)</span>th component, <span class="math inline">\(0\)</span> elsewhere</li>
+</ul></li>
+<li>Uses <span class="math inline">\(n\)</span> evaluations to compute policy gradient in <span class="math inline">\(n\)</span> dimensions</li>
+</ul>
+<p>Characteristics:</p>
+<ul>
+<li>Simple, noisy, inefficient - but sometimes effective</li>
+<li>Works for arbitrary policies, even if policy is not differentiable</li>
+</ul>
+</div>
+<div id="section-73" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-silver2015" role="doc-biblioref">Silver 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-learning-to-walk-on-aibo" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Example: Learning to Walk on AIBO</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="section-74" class="left box block">
+<h2 class="left"></h2>
+<p><strong>Goal</strong>: learn a fast walk on AIBO robot that can be applied in RoboCup</p>
+<p>Parametrize AIBO walking policy and learn directly these parameters through reinforcement learning</p>
+</div>
+</div><div class="area right">
+<div id="section-75" class="right box block">
+<h2 class="right"></h2>
+<div class="media">
+<figure class="image">
+<img src="../data/11/kohl_2004_training_env.png" alt="../data/11/kohl_2004_training_env.png" />
+</figure>
+</div>
+</div>
+<div id="section-76" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-kohl2004aibo" role="doc-biblioref">Kohl und Stone 2004</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="aibo-parameters-of-gait-for-stepping" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>AIBO Parameters of gait for Stepping</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="section-77" class="left box block">
+<h2 class="left"></h2>
+<p>Each leg is performing a half-elliptical locus. Each pair of diagonally opposite legs in phase with each other and perfectly out of phase with the other two.</p>
+<p>Four parameters define this elliptical locus:</p>
+<ul>
+<li>length of the ellipse;</li>
+<li>height of the ellipse;</li>
+<li>position of the ellipse on x axis;</li>
+<li>position of the ellipse on y axis.</li>
+</ul>
+<p>Overall: 12 parameters (for front, rear, plus height, timing).</p>
+</div>
+</div><div class="area right">
+<div id="section-78" class="right box block">
+<h2 class="right"></h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/11/kohl_2004_aibo_leg.png" style="height:480px;width:auto;" alt="../data/11/kohl_2004_aibo_leg.png" />
+</figure>
+</div>
+</div>
+<div id="section-79" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-kohl2004aibo" role="doc-biblioref">Kohl und Stone 2004</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-policy-gradient-approach" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Example: Policy Gradient Approach</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="section-80" class="left box block">
+<h2 class="left"></h2>
+<p><strong>Goal</strong>: optimize forward speed as the sole objective function.</p>
+<p><strong>Approach</strong>: Policy gradient reinforcement learning – consider possible sets of parameter assignments that define a policy which is then executed on the robot.</p>
+<p>Gradient is estimated in parameter space, and then moved towards an optimum.</p>
+</div>
+</div><div class="area right">
+<div id="section-81" class="right box block">
+<h2 class="right"></h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/11/kohl_2004_averaging_gradient.png" style="height:480px;width:auto;" alt="../data/11/kohl_2004_averaging_gradient.png" />
+</figure>
+</div>
+</div>
+<div id="section-82" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-kohl2004aibo" role="doc-biblioref">Kohl und Stone 2004</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-policy-gradient-approach-1" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Example: Policy Gradient Approach</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="section-83" class="left box block">
+<h2 class="left"></h2>
+<ul>
+<li>Start with <span class="math inline">\(t\)</span> random policies <span class="math inline">\({R_1, \dots, R_t}\)</span> near initial policiy <span class="math inline">\(\pi\)</span>: <span class="math inline">\(R_i = {\theta_1 + \Delta_1, \dots, \theta_N + \Delta_N}\)</span> with <span class="math inline">\(\Delta_j\)</span> chosen randomly from <span class="math inline">\(+\epsilon_j, 0, −\epsilon_j\)</span> (<span class="math inline">\(\epsilon_j\)</span> is a fixed value that is small relative to <span class="math inline">\(\theta_j\)</span>)</li>
+<li>Evaluate all policies on actual robot.</li>
+<li>Estimate the gradient in each parameter dimension through averaging over the score variations wrt. variation in that parameter.</li>
+</ul>
+</div>
+</div><div class="area right">
+<div id="section-84" class="right box block">
+<h2 class="right"></h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/11/kohl_2004_averaging_gradient.png" style="height:480px;width:auto;" alt="../data/11/kohl_2004_averaging_gradient.png" />
+</figure>
+</div>
+</div>
+<div id="section-85" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-kohl2004aibo" role="doc-biblioref">Kohl und Stone 2004</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-results-learning-of-gaits" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Example: Results – Learning of Gaits</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="section-86" class="left box block">
+<h2 class="left"></h2>
+<p>Use <span class="math inline">\(t = 15\)</span> policies per iteration.</p>
+<p>As there was significant noise in each evaluation, each set of parameters was evaluated three times.</p>
+<p>Training was stopped after reaching a peak policy at 23 iterations, which amounted to just over 1000 field traversals in about 3 hours.</p>
+</div>
+</div><div class="area right">
+<div id="section-87" class="right box block">
+<h2 class="right"></h2>
+<div class="media">
+<figure class="image" style="height:auto;width:640px;">
+<img src="../data/11/kohl_2004_learning_curve.png" style="height:auto;width:100%;" alt="../data/11/kohl_2004_learning_curve.png" />
+</figure>
+</div>
+</div>
+<div id="section-88" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-kohl2004aibo" role="doc-biblioref">Kohl und Stone 2004</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-results-comparison" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Example: Results Comparison</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="aibo-performance" class="left box block">
+<h2 class="left">Aibo Performance</h2>
+<p>Velocity (given in <span class="math inline">\(mm/s\)</span>) from different teams as of 2004.</p>
+</div>
+<div id="section-89" class="small box block">
+<h2 class="small"></h2>
+<table>
+<thead>
+<tr class="header">
+<th>Team</th>
+<th align="right">Hand-Tuned Gaits</th>
+<th align="right">Learned Gaits</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CMU (2002)</td>
+<td align="right">200</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td>German Team</td>
+<td align="right">230</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td><strong>UT Austin Villa</strong></td>
+<td align="right">245</td>
+<td align="right"><strong>291</strong></td>
+</tr>
+<tr class="even">
+<td>UNSW</td>
+<td align="right"><strong>254</strong></td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td>Hornby (1999)</td>
+<td align="right"></td>
+<td align="right">170</td>
+</tr>
+<tr class="even">
+<td>UNSW</td>
+<td align="right"></td>
+<td align="right">270</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div><div class="area right">
+<div id="section-90" class="right box block">
+<h2 class="right"></h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/11/kohl_2004_learned_gait.png" style="height:80%;width:auto;" alt="../data/11/kohl_2004_learned_gait.png" />
+</figure>
+</div>
+</div>
+<div id="section-91" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-kohl2004aibo" role="doc-biblioref">Kohl und Stone 2004</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="results-aibo-parameters-for-stepping" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Results – AIBO Parameters for Stepping</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="found-parameters" class="left box block">
+<h2 class="left">Found Parameters</h2>
+</div>
+<div id="section-93" class="tiny box block">
+<h2 class="tiny"></h2>
+<table>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th align="right">Initial V.</th>
+<th align="right"><span class="math inline">\(\epsilon\)</span></th>
+<th align="right">Best V.</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Front locus:</strong></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td>(height)</td>
+<td align="right">4.2</td>
+<td align="right">0.35</td>
+<td align="right">4.081</td>
+</tr>
+<tr class="odd">
+<td>(x offset)</td>
+<td align="right">2.8</td>
+<td align="right">0.35</td>
+<td align="right">0.574</td>
+</tr>
+<tr class="even">
+<td>(y offset)</td>
+<td align="right">4.9</td>
+<td align="right">0.35</td>
+<td align="right">5.152</td>
+</tr>
+<tr class="odd">
+<td><strong>Rear locus:</strong></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td>(height)</td>
+<td align="right">5.6</td>
+<td align="right">0.35</td>
+<td align="right">6.02</td>
+</tr>
+<tr class="odd">
+<td>(x offset)</td>
+<td align="right">0.0</td>
+<td align="right">0.35</td>
+<td align="right">0.217</td>
+</tr>
+<tr class="even">
+<td>(y offset)</td>
+<td align="right">-2.8</td>
+<td align="right">0.35</td>
+<td align="right">-2.982</td>
+</tr>
+<tr class="odd">
+<td>Locus length</td>
+<td align="right">4.893</td>
+<td align="right">0.35</td>
+<td align="right">5.285</td>
+</tr>
+<tr class="even">
+<td>Locus skew mult.</td>
+<td align="right">0.035</td>
+<td align="right">0.175</td>
+<td align="right">0.049</td>
+</tr>
+<tr class="odd">
+<td>Front height</td>
+<td align="right">7.7</td>
+<td align="right">0.35</td>
+<td align="right">7.483</td>
+</tr>
+<tr class="even">
+<td>Rear height</td>
+<td align="right">11.2</td>
+<td align="right">0.35</td>
+<td align="right">10.843</td>
+</tr>
+<tr class="odd">
+<td>Cycle time</td>
+<td align="right">0.704</td>
+<td align="right">0.016</td>
+<td align="right">0.679</td>
+</tr>
+<tr class="even">
+<td>Time on ground</td>
+<td align="right">0.5</td>
+<td align="right">0.05</td>
+<td align="right">0.430</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="section-94" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-kohl2004aibo" role="doc-biblioref">Kohl und Stone 2004</a>)</span></p>
+</div>
+</div><div class="area right">
+<div id="section-92" class="right box block">
+<h2 class="right"></h2>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/11/kohl_2004_aibo_leg.png" style="height:480px;width:auto;" alt="../data/11/kohl_2004_aibo_leg.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-learned-aibo-gaits" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Example: Learned AIBO Gaits</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="initial-gait" class="left box block">
+<h2 class="left">Initial Gait</h2>
+<div class="media">
+<figure class="video" style="height:auto;width:100%;">
+<video controls="1" allow="autoplay" data-autoplay="1" style="height:auto;width:100%;" data-src="../data/11/initial.mp4">
+
+</video>
+</figure>
+</div>
+</div>
+</div><div class="area center">
+<div id="learned-gait" class="center box block">
+<h2 class="center">Learned Gait</h2>
+<div class="media">
+<figure class="video" style="height:auto;width:100%;">
+<video controls="1" allow="autoplay" data-autoplay="1" style="height:auto;width:100%;" data-src="../data/11/finished.mp4">
+
+</video>
+</figure>
+</div>
+<div class="media">
+<figure class="video" style="height:auto;width:100%;">
+<video controls="1" allow="autoplay" data-autoplay="1" style="height:auto;width:100%;" data-src="../data/11/finished-front.mp4">
+
+</video>
+</figure>
+</div>
+</div>
+</div><div class="area right">
+<div id="learned-gait-images" class="right box block">
+<h2 class="right">Learned Gait Images</h2>
+<div class="media">
+<figure class="image" style="height:auto;width:100%;">
+<img src="../data/11/kohl_2004_learned_gait.png" style="height:auto;width:100%;" alt="../data/11/kohl_2004_learned_gait.png" />
+</figure>
+</div>
+</div>
+<div id="section-95" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-kohl2004aibo" role="doc-biblioref">Kohl und Stone 2004</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="gradients-on-parameterized-policies" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Gradients on parameterized policies</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>How to compute this gradient <span class="math inline">\(\nabla_\theta J(\theta)\)</span>?</p>
+<ul>
+<li>Approximate stochastically.</li>
+<li>Assume policy <span class="math inline">\(\pi_\theta\)</span> is differentiable almost everywhere (e.g., neural net).</li>
+</ul>
+</div>
+<div id="reward" class="box block">
+<h2>Reward</h2>
+<p>For average reward <span class="math inline">\(\nabla_\theta J(\theta) = \nabla \theta \mathbb{E}_{\pi_\theta} (R)\)</span></p>
+<p>How does <span class="math inline">\(\mathbb{E}(R)\)</span> depend on <span class="math inline">\(\theta\)</span>?</p>
+</div>
+<div id="section-96" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-deepmind2021" role="doc-biblioref">Hasselt und Borsa 2021</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="policy-gradient-theorem" class="section slide level1" data-background-color="#2CA02C">
+<div class="decker">
+<div class="alignment">
+<h1>Policy Gradient Theorem</h1>
+</div>
+</div>
+</section>
+<section id="policy-gradient-theorem-1" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Policy Gradient Theorem</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Problem: we want to estimate a (reward) function <span class="math inline">\(f\)</span> and optimize over this using gradient ascent. How can we estimate the gradient?</p>
+<p><span class="math display">\[\begin{align*}
+\nabla_{\theta} E_x[f(x)] &amp;= \nabla_{\theta} \sum_x p(x) f(x) &amp; \text{definition of expectation} \\
+&amp; = \sum_x \nabla_{\theta} p(x) f(x) &amp; \text{swap sum and gradient} \\
+&amp; = \sum_x p(x) \frac{\nabla_{\theta} p(x)}{p(x)} f(x) &amp; \text{both multiply and divide by } p(x) \\
+&amp; = \sum_x p(x) \nabla_{\theta} \log p(x) f(x) &amp; \text{use the fact that } \nabla_{\theta} \log(z) = \frac{1}{z} \nabla_{\theta} z \\
+&amp; = E_x[f(x) \nabla_{\theta} \log p(x) ] &amp; \text{definition of expectation}
+\end{align*}\]</span></p>
+<p><span class="math inline">\(p(x) = p(a \mid \text{Image})\)</span> will be our policy - note: gradient comes from policy.</p>
+</div>
+<div id="section-97" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-kaparthyblogPG" role="doc-biblioref">Karpathy 2016</a>)</span>, for more information and overview of PG algorithms see <span class="citation">(<a href="#ref-weng2018PG" role="doc-biblioref">Weng 2018b</a>)</span>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="backpropagation-of-gradient-information" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Backpropagation of Gradient Information</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>Problem: stochastic sampling (select an action) is non-differentiable</p>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/11/karpathy_nondiff1.png" style="height:120px;width:auto;" alt="../data/11/karpathy_nondiff1.png" />
+</figure>
+</div>
+</div>
+<div id="section-98" class="box block fragment">
+<h2></h2>
+<p>Solution for ‘red’ parameters: update independently using policy gradients</p>
+<p>= encouraging samples that led to low loss.</p>
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="../data/11/karpathy_nondiff2.png" style="height:200px;width:auto;" alt="../data/11/karpathy_nondiff2.png" />
+</figure>
+</div>
+</div>
+<div id="section-99" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-kaparthyblogPG" role="doc-biblioref">Karpathy 2016</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="recap---attention-mechanisms-in-nn" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Recap - Attention Mechanisms in NN</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="col40">
+<p>A goal is to learn this as well: Attend to which part of the context?</p>
+<p>For example, a RNN can attend over the output of another RNN. At every time step, it focuses on different positions in the other RNN.</p>
+<p>In order to learn to attend, attention has to be differentiable.</p>
+</div>
+<div class="col60">
+<div class="media">
+<figure class="image" style="height:auto;width:800px;">
+<img src="../data/11/rnn_attentional_01.svg" style="height:auto;width:100%;" alt="../data/11/rnn_attentional_01.svg" />
+</figure>
+</div>
+</div>
+</div>
+<div id="section-100" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-colahsBlog_RNN" role="doc-biblioref">Olah 2015</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="policy-gradient-training" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Policy Gradient Training</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p>For comparison: Training of a NN using supervised learning:</p>
+<div class="media">
+<figure class="image" style="height:auto;width:800px;">
+<img src="../data/11/karpathy_sl.png" style="height:auto;width:100%;" alt="../data/11/karpathy_sl.png" />
+</figure>
+</div>
+</div>
+<div id="section-101" class="box block fragment">
+<h2></h2>
+<p>Training a policy network in reinforcement learning:</p>
+<div class="media">
+<figure class="image" style="height:auto;width:800px;">
+<img src="../data/11/karpathy_rl.png" style="height:auto;width:100%;" alt="../data/11/karpathy_rl.png" />
+</figure>
+</div>
+</div>
+<div id="section-102" class="footer box block">
+<h2 class="footer"></h2>
+<p><span class="citation">(<a href="#ref-kaparthyblogPG" role="doc-biblioref">Karpathy 2016</a>)</span>, for more information and overview of PG algorithms see <span class="citation">(<a href="#ref-weng2018PG" role="doc-biblioref">Weng 2018b</a>)</span>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="comparison-advantages-of-methods" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Comparison: Advantages of Methods</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="value-based-methods" class="left box block">
+<h2 class="left">Value-based Methods</h2>
+<ul>
+<li>Simple – can be realized as tables, still convergence guarantees.</li>
+<li>Efficiency and Speed – bootstraping speeds up learning</li>
+</ul>
+</div>
+</div><div class="area right">
+<div id="policy-gradient-methods" class="right box block fragment">
+<h2 class="right">Policy Gradient Methods</h2>
+<ul>
+<li>Applicable in large and continuous action spaces</li>
+<li>Employ stochastic policies</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="layout row columns">
+<div class="area ">
+<div id="further-considerations" class="bottom box block fragment">
+<h2 class="bottom">Further considerations:</h2>
+<ul>
+<li>Do you want to access directly a value, e.g. for other methods?</li>
+<li>The state representation of the problem might lends itself more easily to either a value function or a policy function.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="actor-critic-method" class="columns slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Actor-Critic Method</h1>
+<div class="layout row columns">
+<div class="area left">
+<div id="section-103" class="left box block">
+<h2 class="left"></h2>
+<p>Combination of both methods is widely used in <strong>Actor-Critic</strong> approaches – learning both:</p>
+<p><br />
+</p>
+<ul>
+<li>an actor policy allowing to use Policy Gradients and</li>
+<li>a value-based function that allows to do the updates during each timestep using bootstrapping.</li>
+</ul>
+</div>
+</div><div class="area right">
+<div id="section-104" class="right box block">
+<h2 class="right"></h2>
+<div class="media">
+<figure class="image" style="height:auto;width:480px;">
+<img src="../data/11/aralkumaran_actorCritic.svg" style="height:auto;width:100%;" alt="../data/11/aralkumaran_actorCritic.svg" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="layout row columns">
+<div class="area ">
+<div id="section-105" class="bottom footer box block">
+<h2 class="bottom footer"></h2>
+<p><span class="citation">(<a href="#ref-arulkumaran2017brief" role="doc-biblioref">Arulkumaran u. a. 2017</a>)</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="references" class="unnumbered biblio slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>References</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-arulkumaran2017brief" class="csl-entry">
+Arulkumaran, Kai, Marc P. Deisenroth, Miles Brundage, und Anil A. Bharath. 2017. <span>„Deep Reinforcement Learning: A Brief Survey“</span>. <em>IEEE Signal Processing Magazine</em> 34 (6).
+</div>
+<div id="ref-bellemare2016" class="csl-entry">
+Bellemare, Marc G., Sriram Srinivasan, Georg Ostrovski, Tom Schaul, David Saxton, und Rémi Munos. 2016. <span>„Unifying Count-Based Exploration and Intrinsic Motivation“</span>. In <em>Proceedings of the 30th International Conference on Neural Information Processing Systems</em>, 1479–87. NIPS’16. Red Hook, NY, USA: Curran Associates Inc.
+</div>
+<div id="ref-greydanus2019the" class="csl-entry">
+Greydanus, Sam, und Chris Olah. 2019. <span>„The Paths Perspective on Value Learning“</span>. <em>Distill</em>. doi:<a href="https://doi.org/10.23915/distill.00020">10.23915/distill.00020</a>.
+</div>
+<div id="ref-deepmind2021" class="csl-entry">
+Hasselt, Hado van, und Diana Borsa. 2021. <span>„Reinforcement Learning Lecture Series 2021“</span>. https://www.deepmind.com/learning-resources/reinforcement-learning-lecture-series-2021.
+</div>
+<div id="ref-kaparthyblogPG" class="csl-entry">
+Karpathy, Andrej. 2016. <span>„Deep Reinforcement Learning: Pong from Pixels“</span>. <a href="http://karpathy.github.io/2016/05/31/rl/">http://karpathy.github.io/2016/05/31/rl/</a>.
+</div>
+<div id="ref-kohl2004aibo" class="csl-entry">
+Kohl, Nate, und Peter Stone. 2004. <span>„Policy Gradient Reinforcement Learning for Fast Quadrupedal Locomotion.“</span> In <em>ICRA</em>, 2619–24. IEEE.
+</div>
+<div id="ref-kulkarni2016" class="csl-entry">
+Kulkarni, Tejas D., Karthik Narasimhan, Ardavan Saeedi, und Joshua B. Tenenbaum. 2016. <span>„Hierarchical Deep Reinforcement Learning: Integrating Temporal Abstraction and Intrinsic Motivation“</span>. <em>CoRR</em> abs/1604.06057. <a href="http://arxiv.org/abs/1604.06057">http://arxiv.org/abs/1604.06057</a>.
+</div>
+<div id="ref-lehman2011" class="csl-entry">
+Lehman, J., und K. O. Stanley. 2011. <span>„Abandoning Objectives: Evolution Through the Search for Novelty Alone“</span>. <em>Evolutionary Computation</em> 19 (2): 189–223. doi:<a href="https://doi.org/10.1162/EVCO_a_00025">10.1162/EVCO_a_00025</a>.
+</div>
+<div id="ref-mnih-dqn-2015" class="csl-entry">
+Mnih, Volodymyr, Koray Kavukcuoglu, David Silver, Andrei A. Rusu, Joel Veness, Marc G. Bellemare, Alex Graves, u. a. 2015. <span>„Human-level control through deep reinforcement learning“</span>. <em>Nature</em> 518 (7540): 529–33. <a href="http://dx.doi.org/10.1038/nature14236">http://dx.doi.org/10.1038/nature14236</a>.
+</div>
+<div id="ref-colahsBlog_RNN" class="csl-entry">
+Olah, Christopher. 2015. <span>„Understanding LSTM Networks“</span>. <a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/">http://colah.github.io/posts/2015-08-Understanding-LSTMs/</a>.
+</div>
+<div id="ref-Precup2000TemporalAI" class="csl-entry">
+Precup, Doina, und Richard S. Sutton. 2000. <span>„Temporal abstraction in reinforcement learning“</span>. In <em>International Conference on Machine Learning</em>.
+</div>
+<div id="ref-ryan2000" class="csl-entry">
+Ryan, Richard M., und Edward L. Deci. 2000. <span>„Intrinsic and Extrinsic Motivations: Classic Definitions and New Directions“</span>. <em>Contemporary Educational Psychology</em> 25 (1): 54–67. doi:<a href="https://doi.org/10.1006/ceps.1999.1020">https://doi.org/10.1006/ceps.1999.1020</a>.
+</div>
+<div id="ref-silver2015" class="csl-entry">
+Silver, David. 2015. <span>„UCL Course on RL UCL Course on RL UCL Course on Reinforcement Learning“</span>. http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html.
+</div>
+<div id="ref-sutton2018" class="csl-entry">
+Sutton, Richard S., und Andrew G. Barto. 2018. <em>Reinforcement Learning: An Introduction</em>. Second. The MIT Press.
+</div>
+<div id="ref-weng2018rl" class="csl-entry">
+Weng, Lilian. 2018a. <span>„A (Long) Peek into Reinforcement Learning“</span>. <a href="https://lilianweng.github.io/lil-log/2018/02/19/a-long-peek-into-reinforcement-learning.html">https://lilianweng.github.io/lil-log/2018/02/19/a-long-peek-into-reinforcement-learning.html</a>.
+</div>
+<div id="ref-weng2018PG" class="csl-entry">
+———. 2018b. <span>„Policy Gradient Algorithms“</span>. <a href="https://lilianweng.github.io/lil-log/2018/04/08/policy-gradient-algorithms.html">https://lilianweng.github.io/lil-log/2018/04/08/policy-gradient-algorithms.html</a>.
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<code class="force-highlight-styles markdown"
+style="display:none;"></code>
+
+    </div>
+  </div>
+
+  <script type="module">
+    /* Store JSON encoded Pandoc meta data in a global variable. */
+    import initializeDecker from "./../support/js/decker.js";
+    initializeDecker("40cfe6d65.json");
+  </script>
+
+  <script src="../support/vendor/videojs/video.min.js"></script>
+  <script type="module" src="../support/components/custom-dialog.js"></script>
+
+  <script type="module">
+    // import Reveal and all plugins
+    import Reveal from './../support/vendor/reveal/dist/reveal.esm.js';
+    import deckerPlugin from './../support/plugins/decker/decker.js';
+    import uiAnchorsPlugin from './../support/plugins/decker/ui-anchors.js'
+    import mathPlugin from './../support/plugins/math/math.js';
+    import whiteboardPlugin from './../support/plugins/whiteboard/whiteboard.js';
+    import sagePlugin from './../support/plugins/sage/sage.js';
+    import searchPlugin from './../support/plugins/search/search.js';
+    import zoomPlugin from './../support/plugins/zoom/zoom.js';
+    import printPlugin from './../support/plugins/print/print.js';
+    import jinglesPlugin from './../support/plugins/jingles/jingles.js';
+    import quizPlugin from './../support/plugins/quiz/quiz.js';
+    import quizWuePlugin from './../support/plugins/quiz-wue/quiz-wue.js';
+    import explainPlugin from './../support/plugins/explain/explain.js';
+    import chartsPlugin from './../support/plugins/charts/charts.js';
+    import menuPlugin from './../support/plugins/menu/menu.js';
+    import feedbackPlugin from './../support/plugins/feedback/feedback.js';
+    import highlightPlugin from './../support/vendor/reveal/plugin/highlight/highlight.esm.js';
+    import notesPlugin from './../support/vendor/reveal/plugin/notes/notes.esm.js';
+        import captionPlugin from './../support/plugins/live-captioning/live-captioning.js';
+        import a11yPlugin from './../support/plugins/a11y/a11y.js';
+
+    let revealConfig = {
+      // reveal configuration (see https://revealjs.com/config/)
+      ...Decker.meta.reveal,
+
+      // plugin configuration
+      math: { mathjax: String.raw`../support/vendor/mathjax/`, ...Decker.meta.math },
+      chart: Decker.meta.chart,
+      menu: Decker.meta.menu,
+      explain: Decker.meta.explain,
+      feedback: Decker.meta.feedback || Decker.meta["decker-engine"],
+      jingles: Decker.meta.jingles,
+
+      // list of plugins
+      plugins: [
+        deckerPlugin,
+        uiAnchorsPlugin,
+        sagePlugin,
+        mathPlugin,
+        chartsPlugin,
+        whiteboardPlugin,
+        searchPlugin,
+        zoomPlugin,
+        printPlugin,
+        jinglesPlugin,
+        quizPlugin,
+        quizWuePlugin,
+        explainPlugin,
+        menuPlugin,
+        feedbackPlugin,
+        highlightPlugin,
+        notesPlugin,
+                captionPlugin,
+                a11yPlugin,
+      ]
+    };
+
+    Reveal.initialize(revealConfig);
+  </script>
+
+</body>
+<script src="../support/js/inert-polyfill.min.js"></script>
+<!-- script src="../support/js/inert.min.js"></script -->
+<!-- Use the other implementation if things break under Firefox -->
+</html>
