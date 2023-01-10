@@ -1,0 +1,27 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{verbatim}
+\usepackage{latexsym}
+\usetikzlibrary{positioning}
+\begin{document}
+\pagestyle{empty}
+  \begin{tikzpicture}[scale=3/4]
+    \draw[line width=0.3 mm] (-3.5, 2) -- (0, 0) node[above left = 3mm, rotate = -28] {$q_w = q_\pi$};  % y = -1/2x
+    \draw[line width=0.3 mm] (-3.5,-1.16666) -- (0, 0) node[below left, rotate=20] {$\pi = \varepsilon\textrm{-greedy}(q_w)$}; % y= 1/3*x
+    \node at (1., 0) {$q_w \approx \pi_*$};
+    
+    \node at (-4, -0.25) {Starting $\vec{w}$};
+    \node[draw,circle,fill,scale=1/4,blue!50] (one)  at (-3.5, 0.5) {};
+    \node[draw,circle,fill,scale=1/4,blue!50] (two)  at (-3, -1) {};
+    \node[draw,circle,fill,scale=1/4,blue!50] (three)at (-2.5, 0.25) {};
+    \node[draw,circle,fill,scale=1/4,blue!50] (four) at (-2, -2/3) {};
+    \node[draw,circle,fill,scale=1/4,blue!50] (five) at (-1.5, 0.) {};
+    \node[draw,circle,fill,scale=1/4,blue!50] (six)  at (-1, -1/3) {};
+
+    \draw[-stealth,blue!50] (one) -- (two);
+    \draw[-stealth,blue!50] (two) -- (three);
+    \draw[-stealth,blue!50] (three) -- (four);
+    \draw[-stealth,blue!50] (four) --(five);
+    \draw[-stealth,blue!50] (five) -- (six);
+  \end{tikzpicture}
+\end{document}

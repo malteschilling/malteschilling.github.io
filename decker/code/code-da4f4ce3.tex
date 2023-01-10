@@ -1,0 +1,14 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{verbatim}
+\usetikzlibrary{positioning}
+\begin{document}
+\pagestyle{empty}
+  \begin{tikzpicture}
+    \node (pi) at (-1, 0) {$\pi$};
+    \node (v)  at ( 1, 0) {$V$};
+    \path[->] (pi) edge[bend left = 90] (v);
+    \path[->] (v)  edge[bend left = 90] (pi);
+
+  \end{tikzpicture}
+\end{document}

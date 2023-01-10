@@ -1,0 +1,28 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{verbatim}
+\begin{document}
+\pagestyle{empty}
+  \begin{tikzpicture}
+    \node[draw,rectangle,fill,gray!75] (l) at (-3, 0) {};
+    \node[draw,circle,scale=2/3] (b) at (-2, 0) {\scriptsize B};
+    \node[draw,circle,scale=0.25,fill] at (-1.5, 0) {};
+    \node[draw,circle,scale=2/3] (a) at (-1, 0) {\scriptsize A};
+    \node[draw,circle,scale=0.25,fill] at (-.5, 0) {};
+    \node[draw,rectangle,fill,gray!75] (r) at (0, 0) {};
+    
+    \node[draw,circle,scale=0.25,fill] at (-2.5, 0) {};
+    \node[draw,circle,scale=0.25,fill] at (-2.5, 0.19) {};
+    \path[-stealth] (b) edge[bend left=-30] (l);
+    
+    \path[-stealth] (b) edge[bend left=40] (l);
+    
+    \draw[-stealth]  (b) -- (l);
+    \draw[-stealth] (a) -- (b);
+    \draw[-stealth]  (a) -- (r);
+	 \node at (-1.5, 0.2) {\scriptsize 0};
+	 \node at (-1.5, -0.2) {\scriptsize left};
+	 \node at (-.5, 0.2) {\scriptsize 0};
+	 \node at (-.5, -0.2) {\scriptsize right};
+  \end{tikzpicture}
+\end{document}

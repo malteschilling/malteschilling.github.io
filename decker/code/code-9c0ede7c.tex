@@ -1,0 +1,53 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{verbatim}
+\usetikzlibrary{matrix,positioning}
+\begin{document}
+\pagestyle{empty}
+  \begin{tikzpicture}
+    \node[draw,rectangle] (l) at (-3, 0) {$S_1$};
+    \node[draw,circle,scale=2/3] (a) at (-2, 0) {$S_2$};
+    \node[draw,circle,scale=2/3] (b) at (-1, 0) {$S_3$};
+    \node[draw,circle,scale=2/3] (c) at (+0, 0) {$S_4$};
+    \node[draw,circle,scale=2/3] (d) at (+1, 0) {$S_5$};
+    \node[draw,circle,scale=2/3] (e) at (+2, 0) {$S_6$};
+    
+    \path[-stealth] (a) edge[red,bend left=+20] (b);
+    \path[stealth-] (a) edge[red,bend left=-20] (b);
+    \path[stealth-] (a) edge[blue,bend left=-50] (b);
+    \node [blue] at (-1.5, -0.5) {\scriptsize 1.0};
+    \node [red] at (-1.5, 0.3) {\scriptsize 0.5};
+    
+    \path[-stealth] (b) edge[red,bend left=+20] (c);
+    \path[stealth-] (b) edge[red,bend left=-20] (c);
+    \path[stealth-] (b) edge[blue,bend left=-50] (c);
+    \node [blue] at (-.5, -0.5) {\scriptsize 1.0};
+    \node [red] at (-.5, 0.3) {\scriptsize 0.5};
+    
+    \path[-stealth] (c) edge[red,bend left=+20] (d);
+    \path[stealth-] (c) edge[red,bend left=-20] (d);
+    \path[stealth-] (c) edge[blue,bend left=-50] (d);
+    \node [blue] at (0.5, -0.5) {\scriptsize 1.0};
+    \node [red] at (0.5, 0.3) {\scriptsize 0.5};
+    
+    \path[-stealth] (d) edge[red,bend left=+20] (e);
+    \path[stealth-] (d) edge[red,bend left=-20] (e);
+    \path[stealth-] (d) edge[blue,bend left=-50] (e);
+    \node [blue] at (1.5, -0.5) {\scriptsize 1.0};
+    \node [red] at (1.5, 0.3) {\scriptsize 0.5};
+    
+    \path[-stealth] (l) edge[red,bend left=+20] (a);
+    \path[stealth-] (l) edge[red,bend left=-20] (a);
+    \path[stealth-] (l) edge[blue,bend left=-50] (a);
+    \node [blue] at (-2.4, -0.5) {\scriptsize 1.0};
+    \node [red] at (-2.4, 0.3) {\scriptsize 0.5};
+    
+    \node at (-8, 0) {$r=$};
+\matrix[matrix of math nodes,left delimiter=\lbrace] at (-4,0) (mat)
+{
+1\\
+1/100\\
+};
+
+  \end{tikzpicture}
+\end{document}

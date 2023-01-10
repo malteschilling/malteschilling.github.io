@@ -1,0 +1,39 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{verbatim}
+\begin{document}
+\pagestyle{empty}
+\begin{tikzpicture}
+
+
+  % TD 1 step
+  \node[draw,circle,scale=1.2, fill=white, line width=0.5mm] (s_0) at (0,0) {};
+  \foreach \xa in {-2} {
+      \node[draw,circle,fill,scale=0.8] (b0\xa) at (\xa,0) {};
+      \node[draw,circle,scale=1.2, fill=white,line width=0.5mm] (s0\xs) at (\xa-2,0) {};
+	\foreach \xaa in {-2, 2} {
+      		\node[draw,circle,fill,scale=0.8] (ba\xaa) at (\xa+\xs+\xaa,-6) {};
+		\foreach \xsb in {-1, 1} {
+			\node[draw,circle,scale=1.2, fill=white,line width=0.5mm] (s\xsb) at (\xa+\xs+\xaa+\xsb,-8) {};
+			\draw[-stealth, line width=0.5mm] (ba\xaa) -- (s\xsb);
+			\draw[-, dashed, line width=0.5mm] (s\xsb) -- (\xa+\xs+\xaa+\xsb,-9);
+		}
+		\draw[-stealth, line width=0.5mm] (s\xs) -- (ba\xaa);
+      	}
+	\draw[-stealth, line width=0.5mm] (b\xa) -- (s\xs);
+      }
+      \draw[-stealth, line width=0.5mm] (s) -- (b\xa);
+      
+      \node[draw,circle,fill,scale=0.8] (bta) at (-5,-10) {};
+      \node[minimum size=0.5cm, fill=white, draw] (bts) at (-5,-12) {T};
+
+      \draw[-stealth, line width=0.5mm] (-5,-8.3) -- (bta);
+      \draw[-stealth, line width=0.5mm] (bta) -- (bts);
+      %\node[draw,circle,scale=0.6] (r\xa) at (\xa+.5,-2) {};
+      %\draw[-stealth] (s) -- (b\xa);
+      %\draw[-stealth] (b\xa) -- (l\xa);
+      %\draw[-stealth] (b\xa) -- (r\xa);
+  }
+
+\end{tikzpicture}
+\end{document}
