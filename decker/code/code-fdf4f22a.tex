@@ -1,0 +1,27 @@
+\documentclass{standalone}
+\usepackage[boxruled,lined]{algorithm2e}
+\usepackage{mathtools}
+\usepackage{amsfonts} 
+\usepackage[dvipsnames]{xcolor}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\SetKwInput{KwInput}{Input}
+\SetKwInput{KwOutput}{Output}
+\begin{document}
+\pagestyle{empty}
+\begin{algorithm}[H]
+  \textbf{function} One-step Actor Critic \\
+  	Initialize $s, \theta$ \\
+
+  	\For{t $=0, 1, \dots$} {
+  	Sample $A_t \sim \pi_\theta(S_t)$ \\
+  	Sample $R_{t+1} \text{ and } S_{t+1}$ \\
+  	$\Delta_t = R_{t+1} + \gamma v_{\vec{w}}(S_{t+1}) -v_{\vec{w}}(S_{t})$\\
+  	$\vec{w} \leftarrow \vec{w} + \beta \Delta_t \nabla_{\vec{w}} v_{\vec{w}}(S_t)$\\
+  	$S \leftarrow S', A \leftarrow A'$
+  
+}
+
+\end{algorithm}
+\end{document}

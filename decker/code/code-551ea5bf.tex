@@ -1,0 +1,27 @@
+\documentclass{standalone}
+\usepackage[boxruled,lined]{algorithm2e}
+\usepackage{mathtools}
+\usepackage{amsfonts} 
+\usepackage[dvipsnames]{xcolor}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\SetKwInput{KwInput}{Input}
+\SetKwInput{KwOutput}{Output}
+\begin{document}
+\pagestyle{empty}
+\begin{algorithm}[H]
+  \textbf{function} One-step Actor Critic \\
+  	Initialize $s, \theta$ \\
+
+  	\For{t $=0, 1, \dots$} {
+  	Sample $A_t \sim \pi_\theta(S_t)$ \\
+  	Sample $R_{t+1} \text{and} S_{t+1}$ \\
+  	Choose $A'$ as a function of $\hat{q}(S', ,\vec{w})$, e.g. $\varepsilon$-greedy\\
+  	$\vec{w} \leftarrow \vec{w} + \alpha [R + \gamma \hat{q}(S',A',\vec{w}) -\hat{q}(S,A,\vec{w})]\nabla\hat{q}(S,A,\vec{w})$\\
+  	$S \leftarrow S', A \leftarrow A'$
+  
+}
+
+\end{algorithm}
+\end{document}
